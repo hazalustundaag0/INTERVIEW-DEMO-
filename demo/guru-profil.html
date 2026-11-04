@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Profilim - Interview Demo</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  <link rel="stylesheet" href="../theme.css">
+  <script src="js/advisors.js"></script>
+  <script src="gate.js"></script>
+<link rel="stylesheet" href="avatar.css"></head>
+<body class="guru-profile-editor">
+  <main><section class="guru-profile-content" aria-labelledby="guru-profile-heading">
+      <header class="guru-profile-heading">
+        <h1 id="guru-profile-heading">Profilim</h1>
+        <p>Danışanların seni bu bilgilerle görür.</p>
+        <div class="guru-profile-completion" aria-labelledby="guru-profile-completion-title">
+          <div class="guru-profile-completion-heading">
+            <h2 id="guru-profile-completion-title">Profil tamamlanma durumu</h2>
+            <strong id="guru-profile-completion-value" aria-live="polite">0%</strong>
+          </div>
+          <div class="guru-profile-completion-track" role="progressbar" aria-label="Profil tamamlanma durumu" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <span id="guru-profile-completion-fill"></span>
+          </div>
+          <p id="guru-profile-missing" aria-live="polite"></p>
+        </div>
+      </header>
+
+      <div class="guru-profile-columns">
+        <div class="guru-profile-form-card" id="guru-profile-sections" aria-label="Profil düzenleme bölümleri"></div>
+
+        <aside class="guru-profile-preview" aria-labelledby="guru-profile-preview-heading">
+          <div class="guru-profile-preview-header">
+            <h2 id="guru-profile-preview-heading">Danışanın göreceği önizleme</h2>
+            <div class="guru-profile-preview-controls">
+              <div class="guru-profile-preview-links">
+                <a id="guru-profile-visitor-preview" class="guru-profile-visitor-preview" href="danisman.html?id=selin-arslan&amp;onizleme=1">Ziyaretçi gibi önizle</a>
+              </div>
+              <label class="guru-profile-publish-toggle">
+                <input id="guru-profile-published" type="checkbox" role="switch" aria-label="Profil yayında">
+                <span>Profil yayında</span>
+              </label>
+            </div>
+          </div>
+          <article class="guru-profile-preview-card">
+            <div class="guru-profile-preview-hero">
+              <div class="guru-profile-preview-avatar" id="preview-avatar" aria-hidden="true">SA</div>
+              <div class="guru-profile-preview-identity">
+                <strong id="preview-name">Selin Arslan</strong>
+                <span id="preview-title">Kıdemli Satış Direktörü &amp; Mentor</span>
+              </div>
+              <span class="guru-profile-preview-experience" id="preview-experience">12+ yıl deneyim</span>
+            </div>
+            <section class="guru-profile-preview-section">
+              <h3>Hakkında</h3>
+              <p id="preview-about"></p>
+            </section>
+            <section class="guru-profile-preview-section">
+              <h3>Sektörler</h3>
+              <ul id="preview-sectors" class="guru-profile-preview-tags"></ul>
+            </section>
+            <section class="guru-profile-preview-section">
+              <h3>Uzmanlık alanları</h3>
+              <ul id="preview-tags" class="guru-profile-preview-tags"></ul>
+            </section>
+            <section class="guru-profile-preview-section">
+              <h3>Seans bilgileri</h3>
+              <dl><div><dt>Seans süresi</dt><dd>50 dakika</dd></div><div><dt>Ücret</dt><dd id="preview-price">1.500 ₺</dd></div><div><dt>Seans sayısı</dt><dd>2 seans</dd></div></dl>
+            </section>
+          </article>
+        </aside>
+      </div>
+    </section></main>
+
+  <div class="guru-profile-toast" id="guru-profile-toast" role="status" aria-live="polite"></div>
+  <div class="guru-profile-dialog-backdrop" id="guru-profile-dialog" hidden>
+    <section class="guru-profile-dialog" role="dialog" aria-modal="true" aria-labelledby="guru-profile-dialog-title" aria-describedby="guru-profile-dialog-copy">
+      <h2 id="guru-profile-dialog-title">Değişiklikler kaydedilmedi</h2>
+      <p id="guru-profile-dialog-copy">Kaydetmeden sayfadan çıkmak istiyor musun?</p>
+      <div>
+        <button type="button" id="guru-profile-leave">Kaydetmeden çık</button>
+        <button type="button" id="guru-profile-stay">Vazgeç</button>
+      </div>
+    </section>
+  </div>
+  <div class="guru-profile-dialog-backdrop" id="guru-profile-publish-dialog" hidden>
+    <section class="guru-profile-dialog" role="dialog" aria-modal="true" aria-labelledby="guru-profile-publish-title" aria-describedby="guru-profile-publish-copy">
+      <h2 id="guru-profile-publish-title">Profili yayından kaldır</h2>
+      <p id="guru-profile-publish-copy">Profilin danışan dizininde ve arama sonuçlarında görünmeyecek. Devam etmek istiyor musun?</p>
+      <div>
+        <button type="button" id="guru-profile-publish-confirm">Yayından kaldır</button>
+        <button type="button" id="guru-profile-publish-cancel">Vazgeç</button>
+      </div>
+    </section>
+  </div>
+  <script src="guru-profil.js"></script>
+  <script src="nav.js"></script>
+<script src="avatar.js"></script></body>
+</html>

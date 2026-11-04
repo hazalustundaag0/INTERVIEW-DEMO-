@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ödev Detayı · Interview Demo</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL@24,400,0,0" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link rel="stylesheet" href="../theme.css">
+  <script src="gate.js"></script>
+<link rel="stylesheet" href="avatar.css"></head>
+<body class="min-h-screen bg-background font-['IBM_Plex_Sans'] text-[#1E1E1C] antialiased">
+  <main class="mx-auto w-full px-4 py-8 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 items-start gap-6">
+      <aside class="w-full">
+        <div class="flex min-h-[580px] flex-col justify-between rounded-[10px] border border-outline-variant bg-white p-4 shadow-sm">
+          <div>
+            <div class="mb-2 flex items-center gap-2 border-b border-outline-variant px-4 py-2">
+              
+              <span class="text-[14px] font-semibold text-[#51409D]">Interview Demo</span>
+            </div>
+            <nav class="flex flex-col gap-1">
+              <a class="rounded-lg px-4 py-2 text-[14px] text-[#51409D] hover:bg-surface-container-low" href="ana.html">Ana Ekran</a>
+              <a class="rounded-lg px-4 py-2 text-[14px] text-[#51409D] hover:bg-surface-container-low" href="profil.html">Profilim</a>
+              <a class="rounded-lg px-4 py-2 text-[14px] text-[#51409D] hover:bg-surface-container-low" href="cv.html">CV'm</a>
+              <a class="rounded-lg px-4 py-2 text-[14px] text-[#51409D] hover:bg-surface-container-low" href="seanslar.html">Seanslarım</a>
+              <a class="rounded-lg px-4 py-2 text-[14px] text-[#51409D] hover:bg-surface-container-low" href="hikaye-giris.html">Hikâyem</a>
+              <a aria-current="page" class="rounded-[8px] bg-[#51409D] px-4 py-2 text-[14px] font-semibold text-white" href="odevler.html">Ödevlerim</a>
+            </nav>
+          </div>
+          <div class="mt-8 flex items-center gap-3 border-t border-outline-variant px-1 pt-4">
+            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#DEDaf4] bg-[#EEECFF] text-[14px] font-semibold text-[#51409D] demo-avatar" data-demo-avatar></div>
+            <div><div class="text-[14px] font-semibold text-[#51409D]">Elif Yılmaz</div><div class="text-[11px] text-[#51409D]">Aday</div></div>
+          </div>
+        </div>
+      </aside>
+
+      <section class="w-full">
+        <div class="rounded-[10px] border border-outline-variant bg-white p-5 shadow-sm sm:p-8">
+          <a class="mb-4 inline-flex items-center gap-2 text-[14px] font-semibold text-[#51409D] hover:underline" href="odevler.html">← Ödevlerim</a>
+          <h1 id="task-title" class="text-[24px] font-semibold leading-tight text-[#1E1E1C]">Ödev</h1>
+          <span id="task-status" class="mt-3 inline-flex rounded-full bg-[#EEECFF] px-2.5 py-1 text-[12px] font-semibold text-[#51409D]"></span>
+          <div id="task-content" class="mt-6"></div>
+          <div class="mt-7 border-t border-outline-variant pt-5">
+            <a class="inline-flex items-center justify-center rounded-[8px] bg-[#51409D] px-5 py-2.5 text-[14px] font-semibold text-white shadow-sm hover:opacity-90" href="odevler.html">Ödevlerim'e dön</a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      const defaults = [
+        { id: 'sunum', baslik: 'Daha önce hazırlanmış bir sunum veya rapor', tur: 'Belge', sonTarih: '15 Ocak', durum: 'bekliyor' },
+        { id: 'ilan', baslik: 'Hedef rolün iş ilanı', tur: 'Belge', sonTarih: '10 Ocak', durum: 'teslim', teslimTarihi: '12 Ocak', tip: 'link', icerik: 'https://www.linkedin.com/jobs/view/ornek-ilan', aciklama: '' }
+      ];
+      const key = new URLSearchParams(location.search).get('id');
+      const title = document.getElementById('task-title');
+      const status = document.getElementById('task-status');
+      const content = document.getElementById('task-content');
+      let tasks;
+
+      try {
+        const saved = localStorage.getItem('demoOdevler');
+        tasks = saved === null ? defaults : JSON.parse(saved);
+        if (!Array.isArray(tasks)) throw new TypeError('demoOdevler bir JSON dizisi olmalı.');
+        if (saved === null) localStorage.setItem('demoOdevler', JSON.stringify(defaults));
+      } catch (error) {
+        console.error('demoOdevler verisi okunamadı.', error);
+        tasks = [];
+      }
+
+      const task = tasks.find(function (item) { return item.id === key; });
+      if (!task || task.durum !== 'teslim') {
+        title.textContent = 'Teslim edilmiş ödev bulunamadı';
+        status.classList.add('hidden');
+        const message = document.createElement('p');
+        message.className = 'rounded-[8px] border border-outline-variant bg-surface-container-low p-4 text-[14px] text-muted';
+        message.textContent = 'Bu ödev henüz teslim edilmemiş ya da listede bulunamadı.';
+        content.appendChild(message);
+        return;
+      }
+
+      title.textContent = task.baslik;
+      status.textContent = 'Teslim edildi · ' + (task.teslimTarihi || '');
+
+      if (task.tip === 'dosya') {
+        const info = typeof task.icerik === 'object' && task.icerik !== null
+          ? task.icerik
+          : { ad: String(task.icerik || ''), boyut: '' };
+        const row = document.createElement('div');
+        row.className = 'flex flex-col gap-3 rounded-[8px] border border-outline-variant bg-surface-container-low p-4 sm:flex-row sm:items-center sm:justify-between';
+        const fileName = document.createElement('div');
+        fileName.className = 'min-w-0 break-all text-[14px] font-semibold text-[#1E1E1C]';
+        fileName.textContent = info.ad + (info.boyut ? ' · ' + info.boyut : '');
+        const check = document.createElement('span');
+        check.className = 'inline-flex items-center gap-1 text-[13px] font-semibold text-[#51409D]';
+        check.innerHTML = '<span class="material-symbols-outlined text-[18px]" aria-hidden="true">check_circle</span> Teslim edildi';
+        row.append(fileName, check);
+        const note = document.createElement('p');
+        note.className = 'mt-3 text-[13px] text-muted';
+        note.textContent = 'Danışmanın bu dosyayı görebilir.';
+        content.append(row, note);
+      } else if (task.tip === 'metin') {
+        const answer = document.createElement('div');
+        answer.className = 'whitespace-pre-wrap rounded-[8px] border border-outline-variant bg-surface-container-low p-4 text-[14px] leading-6 text-[#1E1E1C]';
+        answer.setAttribute('aria-readonly', 'true');
+        answer.textContent = String(task.icerik || '');
+        content.appendChild(answer);
+      } else if (task.tip === 'link') {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'rounded-[8px] border border-outline-variant bg-surface-container-low p-4';
+        const urlText = document.createElement('p');
+        urlText.className = 'mb-3 break-all text-[14px] text-[#1E1E1C]';
+        urlText.textContent = String(task.icerik || '');
+        const open = document.createElement('a');
+        let safeUrl;
+        try {
+          safeUrl = new URL(String(task.icerik || ''), location.href);
+        } catch (error) {
+          safeUrl = null;
+        }
+        open.textContent = 'Bağlantıyı aç';
+        open.className = 'text-[14px] font-semibold text-[#51409D] underline underline-offset-2';
+        if (safeUrl && ['http:', 'https:'].includes(safeUrl.protocol)) {
+          open.href = safeUrl.href;
+          open.target = '_blank';
+          open.rel = 'noopener noreferrer';
+        } else {
+          open.setAttribute('aria-disabled', 'true');
+          open.classList.add('opacity-50', 'pointer-events-none');
+        }
+        wrapper.append(urlText, open);
+        content.appendChild(wrapper);
+      } else {
+        const message = document.createElement('p');
+        message.className = 'rounded-[8px] border border-outline-variant bg-surface-container-low p-4 text-[14px] text-muted';
+        message.textContent = 'Bu ödev için görüntülenecek bir teslim içeriği yok.';
+        content.appendChild(message);
+      }
+    })();
+  </script>
+  <script src="nav.js"></script>
+  <script src="ortak.js"></script>
+  <script src="secim.js"></script>
+<script src="avatar.js"></script></body>
+</html>

@@ -1,0 +1,925 @@
+<!DOCTYPE html><html lang="tr" style=""><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interview Demo · Ana Sayfa</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+  <link rel="stylesheet" href="../theme.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"IBM Plex Sans"', 'sans-serif'],
+          },
+          colors: {
+            canvas: '#FAF8FF',
+            card: '#FFFFFF',
+            'card-subtle': '#F5F2FF',
+            border: {
+              DEFAULT: '#E9E4F5',
+              subtle: '#DDD6FE',
+              focus: '#7E3AF2',
+            },
+            brand: {
+              DEFAULT: '#6347D1',
+              dark: '#4338CA',
+              light: '#EEF2FF',
+            },
+            accent: {
+              berry: '#A855F7',
+              magenta: '#9333EA',
+              pink: '#C026D3',
+            },
+            text: {
+              primary: '#1E1B4B',
+              secondary: '#6B7280',
+              muted: '#9CA3AF',
+            },
+            cream: {
+              50: '#FAF8FF',
+              100: '#EEF2FF',
+              200: '#E9E4F5',
+            },
+            petrol: {
+              800: '#4338CA',
+              700: '#4338CA',
+              600: '#6347D1',
+              100: '#EEF2FF',
+              50: '#FAF8FF',
+            },
+            rust: {
+              500: '#6347D1',
+              600: '#A855F7',
+              50: '#EEF2FF',
+            },
+            neutral: {
+              charcoal: '#1E1B4B',
+              body: '#1E1B4B',
+              secondary: '#6B7280',
+              muted: '#9CA3AF',
+              border: '#E9E4F5',
+            }
+          },
+          letterSpacing: {
+            heading: '-0.025em',
+            badge: '0.08em',
+          },
+          borderRadius: {
+            card: '12px',
+            pill: '9999px',
+          },
+          boxShadow: {
+            'elevation-sm': '0 2px 8px -2px rgba(30, 27, 75, 0.04), 0 1px 4px -1px rgba(30, 27, 75, 0.02)',
+            'elevation-card': '0 8px 24px -4px rgba(30, 27, 75, 0.06), 0 2px 6px -1px rgba(30, 27, 75, 0.03)',
+            'elevation-hover': '0 12px 32px -4px rgba(30, 27, 75, 0.10), 0 4px 12px -2px rgba(30, 27, 75, 0.04)',
+            'chip-active': '0 2px 6px rgba(126, 58, 242, 0.35)',
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; scroll-padding-top: 4rem; }
+    body {
+      font-family: 'IBM Plex Sans', sans-serif;
+      background-color: var(--surface-background);
+      color: #1E1E1C;
+      -webkit-font-smoothing: antialiased;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .material-symbols-outlined.fill {
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    body.public-landing [class~="bg-[#51409D]"] { background-color: #51409D !important; }
+    body.public-landing [class~="text-[#BCB7F5]"] { color: #51409D !important; }
+    body.public-landing [class~="border-[#51409D]"] { border-color: #DEDaf4 !important; }
+    body.public-landing :is(.landing-user-menu a, .landing-secondary-cta, .landing-hero-actions a, .landing-first-session-cta):focus-visible {
+      outline: 3px solid #51409D;
+      outline-offset: 3px;
+    }
+    body.public-landing .landing-first-session-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      border: 1px solid #DEDaf4;
+      border-radius: .75rem;
+      background: rgba(255,255,255,.78);
+      padding: .65rem .85rem;
+      color: #4338CA;
+      font-size: .875rem;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    body.public-landing .landing-first-session-cta:hover,
+    body.public-landing .landing-first-session-cta:focus-visible {
+      background: #fff;
+      text-decoration: underline;
+      text-underline-offset: .2rem;
+    }
+    body.public-landing .landing-badge-dot { background-color: #51409D !important; }
+    body.public-landing .landing-section-rule { width: 2rem; background-color: #51409D !important; }
+    body.public-landing .landing-video-play:disabled {
+      cursor: default;
+      opacity: .8;
+    }
+    body.public-landing .landing-video-soon {
+      border: 1px solid #DEDaf4;
+      border-radius: 999px;
+      background: #fff;
+      padding: .2rem .65rem;
+      color: #51409D;
+      font-size: .75rem;
+      font-weight: 600;
+    }
+    body.public-landing .landing-hero-section {
+      position: relative;
+      isolation: isolate;
+      width: min(100%, 1280px);
+      margin-top: 1.5rem;
+      overflow: hidden;
+      border: 1px solid #e4def5;
+      border-radius: 2rem;
+      background:
+        radial-gradient(ellipse at 87% 14%, rgba(196, 181, 253, .48), transparent 34%),
+        linear-gradient(125deg, #fff 9%, #f8f6ff 58%, #eeecff 100%);
+      box-shadow: 0 20px 55px rgba(67, 53, 130, .09);
+    }
+    body.public-landing .landing-hero-section::before {
+      position: absolute;
+      z-index: -1;
+      top: -13rem;
+      right: -9rem;
+      width: 31rem;
+      height: 31rem;
+      border: 1px solid rgba(81, 64, 157, .11);
+      border-radius: 50%;
+      box-shadow: 0 0 0 2.5rem rgba(81, 64, 157, .025), 0 0 0 5rem rgba(81, 64, 157, .02);
+      content: "";
+      pointer-events: none;
+    }
+    body.public-landing .landing-hero-copy > div:first-child {
+      border-color: #d7cff5;
+      box-shadow: 0 4px 14px rgba(81, 64, 157, .08);
+    }
+    body.public-landing .landing-hero-copy h1 {
+      max-width: none;
+      color: #211a50;
+      font-size: clamp(2.35rem, 4.2vw, 3.8rem);
+      letter-spacing: -.045em;
+      line-height: 1.1;
+    }
+    body.public-landing .landing-hero-copy > p {
+      max-width: 39rem;
+      color: #4b5563;
+    }
+    body.public-landing .landing-hero-actions > a:first-child {
+      background: linear-gradient(135deg, #51409d, #6b58bd) !important;
+      box-shadow: 0 9px 22px rgba(81, 64, 157, .22);
+      transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+    }
+    body.public-landing .landing-hero-actions > a:first-child:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 13px 28px rgba(81, 64, 157, .28);
+    }
+    body.public-landing .landing-hero-actions > a:nth-child(2) {
+      background: rgba(255,255,255,.8);
+      box-shadow: 0 4px 12px rgba(67, 53, 130, .05);
+    }
+    body.public-landing .landing-hero-video .landing-video-card {
+      min-height: 24rem;
+      border: 1px solid rgba(255,255,255,.82);
+      border-radius: 1.5rem;
+      background:
+        radial-gradient(circle at 75% 20%, rgba(255,255,255,.82), transparent 21%),
+        radial-gradient(circle at 18% 83%, rgba(196,181,253,.7), transparent 30%),
+        linear-gradient(145deg, #e9e4ff, #d9d2f8 55%, #c9c1ef);
+      box-shadow: 0 18px 42px rgba(67, 53, 130, .15), inset 0 1px 0 rgba(255,255,255,.8);
+    }
+    body.public-landing .landing-video-card::before,
+    body.public-landing .landing-video-card::after {
+      position: absolute;
+      border: 1px solid rgba(81, 64, 157, .13);
+      border-radius: 50%;
+      content: "";
+      pointer-events: none;
+    }
+    body.public-landing .landing-video-card::before {
+      top: 10%;
+      right: -7rem;
+      width: 19rem;
+      height: 19rem;
+    }
+    body.public-landing .landing-video-card::after {
+      bottom: -9rem;
+      left: -5rem;
+      width: 17rem;
+      height: 17rem;
+      box-shadow: 0 0 0 1.6rem rgba(81, 64, 157, .035);
+    }
+    body.public-landing .landing-video-card .landing-video-play {
+      width: 5.5rem;
+      height: 5.5rem;
+      border-color: rgba(255,255,255,.9);
+      box-shadow: 0 12px 30px rgba(67, 53, 130, .18);
+    }
+    body.public-landing .landing-video-card .landing-video-soon {
+      box-shadow: 0 3px 10px rgba(67, 53, 130, .08);
+    }
+    body.public-landing .landing-advisor-card {
+      position: relative;
+      min-height: 15rem;
+      border-color: #e4def5 !important;
+      border-radius: 1rem;
+      box-shadow: 0 5px 18px rgba(67, 53, 130, .06);
+      text-decoration: none;
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+    }
+    body.public-landing .landing-advisor-card:hover,
+    body.public-landing .landing-advisor-card:focus-visible {
+      transform: translateY(-4px);
+      border-color: #a99be1 !important;
+      box-shadow: 0 14px 30px rgba(67, 53, 130, .12);
+    }
+    body.public-landing .landing-advisor-action {
+      margin-top: 1rem;
+      color: #433582;
+      font-size: .875rem;
+      font-weight: 700;
+    }
+    body.public-landing .landing-service-card {
+      border: 1px solid #e4def5;
+      border-radius: 1.25rem;
+      background: linear-gradient(120deg, #fff, #f8f6ff);
+      box-shadow: 0 12px 30px rgba(67, 53, 130, .07);
+    }
+    body.public-landing {
+      --landing-warm-accent: #f59e0b;
+    }
+    body.public-landing .landing-hero-actions > a:first-child:hover {
+      border-color: var(--landing-warm-accent);
+      background: var(--landing-warm-accent) !important;
+      color: #1f2937;
+    }
+    body.public-landing .landing-story-preview {
+      display: flex;
+      min-height: 24rem;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: flex-start;
+      gap: .9rem;
+      padding: 1.4rem;
+      text-align: left;
+    }
+    body.public-landing .landing-story-topline,
+    body.public-landing .landing-story-line {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: .6rem;
+    }
+    body.public-landing .landing-story-label {
+      color: #433582;
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    body.public-landing :is(.landing-story-example, .landing-story-source, .landing-advisor-availability) {
+      display: inline-flex;
+      flex: none;
+      align-items: center;
+      border: 1px solid #d97706;
+      border-radius: 999px;
+      background: var(--landing-warm-accent);
+      padding: .2rem .55rem;
+      color: #422006;
+      font-size: .7rem;
+      font-weight: 700;
+      line-height: 1.25;
+      white-space: nowrap;
+    }
+    body.public-landing .landing-story-title {
+      margin: .1rem 0 0;
+      color: #211a50;
+      font-size: 1.45rem;
+      font-weight: 700;
+      letter-spacing: -.025em;
+      line-height: 1.2;
+    }
+    body.public-landing .landing-story-intro {
+      margin: 0;
+      color: #4b5563;
+      font-size: .875rem;
+      line-height: 1.45;
+    }
+    body.public-landing .landing-story-lines {
+      display: grid;
+      gap: .65rem;
+    }
+    body.public-landing .landing-story-line {
+      align-items: flex-start;
+      border: 1px solid rgba(81, 64, 157, .14);
+      border-radius: .75rem;
+      background: rgba(255,255,255,.72);
+      padding: .7rem;
+    }
+    body.public-landing .landing-story-line p {
+      margin: 0;
+      color: #374151;
+      font-size: .79rem;
+      line-height: 1.45;
+    }
+    body.public-landing .landing-story-footnote {
+      margin-top: auto;
+      color: #4b5563;
+      font-size: .7rem;
+      line-height: 1.35;
+    }
+    body.public-landing .landing-proof-strip {
+      display: grid;
+      width: min(100% - 3rem, 80rem);
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      margin: 0 auto;
+      border: 1px solid #e4def5;
+      border-radius: 1rem;
+      background: #fff;
+      box-shadow: 0 10px 28px rgba(67, 53, 130, .07);
+      transform: translateY(-.1rem);
+    }
+    body.public-landing .landing-proof-item {
+      display: grid;
+      justify-items: center;
+      gap: .25rem;
+      padding: 1.35rem 1rem;
+      text-align: center;
+    }
+    body.public-landing .landing-proof-item + .landing-proof-item {
+      border-left: 1px solid #e9e4f5;
+    }
+    body.public-landing .landing-proof-item strong {
+      color: #35266d;
+      font-size: clamp(1.7rem, 3vw, 2.25rem);
+      font-weight: 700;
+      letter-spacing: -.04em;
+      line-height: 1;
+    }
+    body.public-landing .landing-proof-item span {
+      color: #4b5563;
+      font-size: .8rem;
+      font-weight: 500;
+    }
+    body.public-landing .landing-advisor-card::before {
+      position: absolute;
+      top: 0;
+      right: 1.25rem;
+      left: 1.25rem;
+      height: 3px;
+      border-radius: 0 0 999px 999px;
+      background: linear-gradient(90deg, #51409d, #9b87e8);
+      content: "";
+    }
+    body.public-landing .landing-advisor-facts {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: .45rem;
+      margin-top: .15rem;
+    }
+    body.public-landing .landing-advisor-rating {
+      display: inline-flex;
+      align-items: center;
+      gap: .25rem;
+      color: #1f2937;
+      font-size: .8rem;
+      font-weight: 700;
+    }
+    body.public-landing .landing-advisor-rating > span:first-child {
+      color: var(--landing-warm-accent);
+      font-size: 1rem;
+    }
+    body.public-landing .landing-advisor-availability {
+      font-size: .65rem;
+    }
+    body.public-landing #guvenilir-ve-seffaf {
+      background-color: #35266d !important;
+      background-image: linear-gradient(130deg, #211848 0%, #433582 54%, #51409d 100%);
+    }
+    body.public-landing #guvenilir-ve-seffaf .landing-section-heading h2,
+    body.public-landing #guvenilir-ve-seffaf .landing-section-eyebrow,
+    body.public-landing #guvenilir-ve-seffaf .landing-section-heading > p {
+      color: #fff !important;
+    }
+    body.public-landing #guvenilir-ve-seffaf .landing-section-rule {
+      background: #c4b5fd !important;
+    }
+    body.public-landing #guvenilir-ve-seffaf .landing-trust-card {
+      border-color: rgba(255,255,255,.26) !important;
+      background: rgba(255,255,255,.1) !important;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.12), 0 12px 28px rgba(18,12,48,.12);
+      backdrop-filter: blur(12px);
+    }
+    body.public-landing #guvenilir-ve-seffaf .landing-trust-card h3,
+    body.public-landing #guvenilir-ve-seffaf .landing-trust-card p {
+      color: #fff !important;
+    }
+    body.public-landing #guvenilir-ve-seffaf .landing-trust-icon {
+      width: 3.75rem;
+      height: 3.75rem;
+      border-color: rgba(255,255,255,.28);
+      background: rgba(255,255,255,.13);
+      color: #fff;
+    }
+    body.public-landing #guvenilir-ve-seffaf .landing-trust-icon svg {
+      width: 2.5rem;
+      height: 2.5rem;
+      stroke-width: 1.6;
+    }
+    body.public-landing #guvenilir-ve-seffaf .theme-status-badge--warning {
+      border-color: #d97706;
+      background: var(--landing-warm-accent);
+      color: #422006;
+    }
+    body.public-landing #nasil-calisir .landing-section-heading,
+    body.public-landing #guvenilir-ve-seffaf .landing-section-heading,
+    body.public-landing #sana-kalan-ciktilar .landing-section-heading {
+      text-align: center;
+    }
+    body.public-landing :is(#nasil-calisir, #guvenilir-ve-seffaf, #sana-kalan-ciktilar) .landing-section-eyebrow {
+      justify-content: center;
+    }
+    body.public-landing #sana-kalan-ciktilar {
+      background: #fff !important;
+    }
+    body.public-landing #danismanlar {
+      background: #f5f2ff !important;
+    }
+    body.public-landing .landing-reveal {
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 300ms ease, transform 300ms ease;
+    }
+    body.public-landing .landing-reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    @media (max-width: 767px) {
+      body.public-landing .landing-hero-section {
+        width: calc(100% - 2rem);
+        margin-top: .65rem;
+        padding-inline: 1rem !important;
+        border-radius: 1.25rem;
+      }
+      body.public-landing .landing-hero-video .landing-video-card { min-height: 19rem; }
+      body.public-landing .landing-story-preview { min-height: 0; }
+      body.public-landing .landing-proof-strip {
+        width: calc(100% - 1.25rem);
+        grid-template-columns: minmax(0, 1fr);
+        transform: none;
+      }
+      body.public-landing .landing-proof-item + .landing-proof-item {
+        border-top: 1px solid #e9e4f5;
+        border-left: 0;
+      }
+      body.public-landing .landing-advisor-grid,
+      body.public-landing .landing-output-grid {
+        grid-template-columns: minmax(0, 1fr) !important;
+      }
+      body.public-landing .landing-advisor-card { min-height: 0; }
+      body.public-landing #guvenilir-ve-seffaf .landing-trust-card { padding: 1.5rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      body.public-landing .landing-reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+    }
+    body.public-landing .landing-lower-section {
+      padding-top: 6rem !important;
+      padding-bottom: 6rem !important;
+    }
+    body.public-landing .landing-section-container {
+      box-sizing: border-box;
+      width: calc(100% - 3rem);
+      max-width: 80rem !important;
+      margin-inline: auto;
+      padding-inline: 2rem !important;
+    }
+    body.public-landing .landing-section-heading {
+      margin-bottom: 3rem !important;
+    }
+    body.public-landing .landing-section-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      margin-bottom: .75rem;
+      color: #51409D;
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      line-height: 1.25;
+      text-transform: uppercase;
+    }
+    body.public-landing .landing-section-rule {
+      display: inline-block;
+      width: 2rem;
+      height: 3px;
+      flex: none;
+      border-radius: 999px;
+      background: #51409D !important;
+    }
+    body.public-landing .landing-section-heading h2 {
+      margin-bottom: 0 !important;
+      color: #1E1B4B !important;
+      font-size: clamp(1.75rem, 3vw, 2.25rem) !important;
+      font-weight: 700 !important;
+      line-height: 1.15;
+    }
+    body.public-landing .landing-section-heading > p {
+      margin-top: .75rem !important;
+      color: #4B5563 !important;
+      font-size: 1rem !important;
+      line-height: 1.5;
+    }
+    body.public-landing .landing-trust-card p { color: #4B5563 !important; }
+    body.public-landing .landing-trust-icon {
+      display: grid;
+      width: 3.5rem;
+      height: 3.5rem;
+      place-items: center;
+      margin-bottom: 1.5rem;
+      border: 1px solid #DEDaf4;
+      border-radius: .75rem;
+      background: #EEECFF;
+      color: #51409D;
+    }
+    body.public-landing .landing-trust-icon svg {
+      width: 1.5rem;
+      height: 1.5rem;
+      fill: none;
+      stroke: currentColor;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 1.75;
+    }
+    body.public-landing .landing-trust-card .theme-status-badge {
+      margin-inline: .1rem;
+      padding: .05rem .45rem;
+      font-size: .75rem;
+      line-height: 1.25;
+      vertical-align: baseline;
+    }
+    body.public-landing .landing-output-grid {
+      display: grid;
+      grid-auto-rows: 1fr;
+      grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+      align-items: stretch;
+    }
+    body.public-landing .landing-output-card { height: 100%; }
+    body.public-landing .micro-document-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: .5rem;
+    }
+    body.public-landing .micro-document-label {
+      display: inline-flex;
+      min-width: 0;
+      flex: 1 1 8rem;
+      align-items: center;
+      gap: .375rem;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    body.public-landing .micro-document-meta {
+      display: inline-flex;
+      flex: 0 1 auto;
+      flex-wrap: wrap;
+      gap: .35rem;
+    }
+    body.public-landing :is(.micro-document-status, .micro-document-example) {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid #DEDaf4;
+      border-radius: 999px;
+      background: #fff;
+      padding: .15rem .45rem;
+      color: #4B5563;
+      font-size: .625rem;
+      font-weight: 600;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+    body.public-landing .micro-document-example {
+      border-color: #DDD6FE;
+      background: #F5F2FF;
+      color: #51409D;
+    }
+    body.public-landing .landing-footer {
+      border-top: 1px solid rgba(255,255,255,.2);
+      background: #35266D;
+      padding-block: 2rem;
+      color: #fff;
+    }
+    body.public-landing .landing-footer-content {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 1.5rem 2rem;
+    }
+    body.public-landing .landing-footer-brand {
+      margin: 0;
+      color: #fff !important;
+      font-size: 1.125rem;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+    body.public-landing .landing-footer nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: .75rem 1.5rem;
+    }
+    body.public-landing .landing-footer a {
+      border-radius: .25rem;
+      color: #fff !important;
+      font-size: .875rem;
+      text-decoration: none;
+    }
+    body.public-landing .landing-footer a:hover,
+    body.public-landing .landing-footer a:focus-visible { text-decoration: underline; }
+    body.public-landing .landing-footer a:focus-visible {
+      outline: 3px solid #fff;
+      outline-offset: 3px;
+    }
+    body.public-landing .landing-footer-copyright {
+      grid-column: 1 / -1;
+      margin: 0;
+      color: #fff;
+      font-size: .8125rem;
+    }
+    body.public-landing .landing-advisors-heading {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 1rem 2rem;
+    }
+    body.public-landing .landing-advisors-heading .landing-section-heading {
+      margin-bottom: 0 !important;
+    }
+    body.public-landing .landing-advisors-all {
+      justify-self: end;
+      color: #4338CA;
+      font-weight: 600;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    body.public-landing .landing-advisors-all:hover,
+    body.public-landing .landing-advisors-all:focus-visible { text-decoration: underline; }
+    body.public-landing .landing-advisors-all:focus-visible {
+      outline: 3px solid #51409D;
+      outline-offset: 3px;
+    }
+    body.public-landing .landing-advisor-grid {
+      grid-auto-rows: 1fr;
+    }
+    body.public-landing .landing-advisor-card {
+      display: flex !important;
+      height: 100%;
+      flex-direction: column;
+      border: 1px solid #DEDaf4 !important;
+      background: #fff !important;
+      color: #1E1B4B !important;
+      text-align: left;
+      text-decoration: none;
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    }
+    body.public-landing button.landing-advisor-card {
+      width: 100%;
+      font: inherit;
+      cursor: pointer;
+    }
+    body.public-landing .landing-advisor-card:hover {
+      transform: translateY(-3px);
+      border-color: #9B87E8 !important;
+      box-shadow: 0 12px 28px rgba(30,27,75,.12);
+    }
+    body.public-landing .landing-advisor-card:focus-visible {
+      outline: 3px solid #51409D;
+      outline-offset: 3px;
+    }
+    body.public-landing .landing-advisor-card > div:first-child {
+      width: 100%;
+    }
+    body.public-landing .landing-advisor-tags {
+      margin-top: auto;
+      padding-top: 1rem !important;
+      gap: .375rem !important;
+    }
+    body.public-landing .landing-advisor-tags span {
+      border: 1px solid #9B87E8 !important;
+      background: #F5F2FF !important;
+      color: #4338CA !important;
+      font-weight: 600;
+    }
+    body.public-landing .landing-advisor-action {
+      display: block;
+      margin-top: .9rem;
+      color: #4338CA;
+      font-size: .875rem;
+      font-weight: 600;
+    }
+    body.public-landing .landing-service-card {
+      align-items: center !important;
+      gap: 2rem;
+    }
+    body.public-landing .landing-service-copy { flex: 1 1 auto; }
+    body.public-landing .landing-service-action {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      align-self: center;
+      margin-top: 0 !important;
+    }
+    body.public-landing .landing-service-action a {
+      text-align: center;
+      text-decoration: none;
+    }
+    body.public-landing .landing-coming-soon {
+      display: flex !important;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-start;
+      gap: .65rem .75rem !important;
+    }
+    body.public-landing .landing-coming-soon-label { margin-right: 0 !important; }
+    body.public-landing .landing-coming-soon-chip {
+      border: 1px solid #B8A9E9 !important;
+      background: #F5F2FF !important;
+      color: #51409D !important;
+      cursor: default !important;
+      opacity: .75;
+      pointer-events: none;
+    }
+    body.public-landing .landing-demo-toast {
+      position: fixed;
+      bottom: max(1.25rem, env(safe-area-inset-bottom));
+      left: 50%;
+      z-index: 80;
+      max-width: calc(100% - 2rem);
+      transform: translateX(-50%);
+      border-radius: .75rem;
+      background: #1E1B4B;
+      padding: .8rem 1rem;
+      color: #fff;
+      font-size: .875rem;
+      box-shadow: 0 8px 24px rgba(30,27,75,.22);
+    }
+    @media (min-width: 600px) and (max-width: 1023px) {
+      body.public-landing .landing-output-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      }
+    }
+    @media (max-width: 599px) {
+      body.public-landing .landing-output-grid {
+        grid-template-columns: minmax(0, 1fr) !important;
+      }
+    }
+    @media (max-width: 767px) {
+      body.public-landing .landing-section-container {
+        width: calc(100% - 2rem);
+        padding-inline: 1rem !important;
+      }
+      body.public-landing .landing-lower-section {
+        padding-top: 4rem !important;
+        padding-bottom: 4rem !important;
+      }
+      body.public-landing .landing-advisors-heading {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 1rem;
+      }
+      body.public-landing .landing-advisors-all { justify-self: start; }
+      body.public-landing .landing-service-card {
+        align-items: stretch !important;
+        flex-direction: column !important;
+        gap: 1.5rem;
+      }
+      body.public-landing .landing-service-action,
+      body.public-landing .landing-service-action a {
+        width: 100%;
+      }
+      body.public-landing .landing-service-action {
+        align-items: stretch;
+      }
+      body.public-landing .landing-footer-content {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      body.public-landing .landing-footer nav {
+        justify-content: flex-start;
+      }
+      body.public-landing .landing-footer-copyright { grid-column: auto; }
+      body.public-landing .landing-hero-grid { grid-template-columns: minmax(0, 1fr) !important; }
+      body.public-landing .landing-hero-copy,
+      body.public-landing .landing-hero-video { grid-column: 1 / -1; }
+      body.public-landing .landing-hero-actions { flex-direction: column; align-items: stretch; }
+      body.public-landing .landing-hero-actions > a { width: 100%; }
+      body.public-landing .landing-hero-video { order: 2; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+  </style>
+<link rel="stylesheet" href="avatar.css"></head>
+<body class="public-landing min-h-screen text-[#1E1E1C] flex flex-col justify-start">
+
+  <div id="site-header"></div>
+
+  <!-- Hero Section -->
+  <main class="w-full flex-1">
+    <section class="landing-hero-section max-w-[1280px] mx-auto px-8 py-16 md:py-20">
+      <div class="landing-hero-grid grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        
+        <!-- Left Column: Content -->
+        <div class="landing-hero-copy lg:col-span-7 flex flex-col items-start space-y-6">
+          
+          <!-- Rust-Orange Chip -->
+          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EEECFF] border border-[#DDD6FE]/50 text-[#BCB7F5] text-xs font-semibold tracking-wide">
+            <span class="landing-badge-dot w-1.5 h-1.5 rounded-full"></span>
+            Satış hikâyesi
+          </div>
+
+          <!-- Headline -->
+          <h1 class="text-4xl sm:text-5xl font-bold tracking-tight text-[#1E1E1C] leading-[1.18]">
+            Kariyer hikâyeni bul, <br class="hidden sm:inline">mülakatta anlat.
+          </h1>
+
+          <!-- Description Paragraph -->
+          <p class="text-base sm:text-lg text-[#4B5563] leading-relaxed max-w-2xl font-normal">
+            Yapay zeka sana doğru soruları sorar ve ilk taslağı yazar. Danışmanın hikâyeni okur ve geri bildirim verir. Sonunda elinde CV'ne, mülakat cevaplarına ve networking tanıtımına dönüşen bir satış hikâyen olur.
+          </p>
+
+          <!-- CTAs & Subtitle -->
+          <div class="landing-hero-actions pt-2 flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full">
+            <a href="danismanlar.html?akis=hikaye" class="inline-flex items-center justify-center px-6 py-3.5 text-base font-medium text-white bg-[#51409D] hover:bg-[#51409D] rounded-lg transition-colors shadow-none">
+              Satış hikâyeni oluştur →
+            </a>
+            <a href="#nasil-calisir" class="landing-secondary-cta inline-flex items-center justify-center px-5 py-3.5 text-base font-medium text-[#51409D] bg-transparent border-[1.5px] border-[#51409D] hover:bg-white/40 rounded-lg transition-colors">
+              Nasıl çalışır?
+            </a>
+          </div>
+
+          <!-- Helper Meta Text -->
+          <div class="flex items-center gap-2 pt-1 text-sm text-[#5B5F6B]">
+            <span class="material-symbols-outlined text-[18px] text-[#5B5F6B]">schedule</span>
+            <span class="">2 seans · her seans 50 dk</span>
+          </div>
+
+        </div>
+
+        <!-- Right Column: Video Placeholder Card -->
+        <div class="landing-hero-video lg:col-span-5 w-full">
+          <div class="landing-video-card w-full aspect-[4/3] rounded-2xl bg-[#EDE9FE] border border-[#DDD6FE] flex flex-col items-center justify-center p-8 text-center relative overflow-hidden transition-all group">
+            
+            <!-- Subtle background decorative motif -->
+            <div class="absolute inset-0 bg-gradient-to-b from-transparent to-[#1E1E1C]/10 pointer-events-none"></div>
+
+            <!-- Play Button Container -->
+            <button class="landing-video-play relative z-10 w-20 h-20 rounded-full bg-white border border-[#DDD6FE] flex items-center justify-center shadow-none mb-3 cursor-default" type="button" disabled aria-disabled="true" aria-label="Tanıtım videosu yakında">
+              <span class="material-symbols-outlined text-[36px] text-[#51409D] ml-1 fill" aria-hidden="true">play_arrow</span>
+            </button>
+            <span class="landing-video-soon relative z-10 mb-3">Yakında</span>
+
+            <!-- Caption -->
+            <div class="relative z-10 space-y-1">
+              <p class="text-base font-semibold text-[#1E1E1C]">Tanıtım videosu yakında</p>
+              <p class="text-xs text-[#5B5F6B]">Süreci ve seans adımlarını 1 dakikada keşfet</p>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+  <section id="nasil-calisir" class="w-full border-t border-[#DDD6FE] bg-white py-16 md:py-20"><div class="max-w-[1280px] mx-auto px-8"><div class="mb-12 md:mb-16"><div class="inline-flex items-center gap-2 mb-3"><div class="landing-section-rule w-5 h-1 rounded-full"></div><span class="text-xs font-semibold uppercase tracking-wider text-[#BCB7F5]">Adım Adım Süreç</span></div><h2 class="text-3xl md:text-4xl font-bold tracking-tight text-[#1E1E1C]">Nasıl çalışır?</h2></div><div class="relative"><div class="hidden lg:block absolute top-5 left-6 right-6 h-[2px] bg-[#EDE9FE] z-0"></div><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 relative z-10"><div class="flex flex-col items-start"><div class="w-10 h-10 rounded-full bg-[#51409D] text-white flex items-center justify-center font-bold text-sm mb-4 ring-4 ring-white">1</div><h3 class="text-base font-bold text-[#1E1E1C] mb-2">Hizmet ve danışman seç</h3><p class="text-sm text-[#5B5F6B] leading-relaxed">Satış hikâyesi hizmetini ve sana uygun danışmanı seç.</p></div><div class="flex flex-col items-start"><div class="w-10 h-10 rounded-full bg-[#51409D] text-white flex items-center justify-center font-bold text-sm mb-4 ring-4 ring-white">2</div><h3 class="text-base font-bold text-[#1E1E1C] mb-2">İlk seans</h3><p class="text-sm text-[#5B5F6B] leading-relaxed">Danışmanınla CV'n üzerinden kariyer hedefini ve geçiş noktalarını konuş.</p></div><div class="flex flex-col items-start"><div class="w-10 h-10 rounded-full bg-[#51409D] text-white flex items-center justify-center font-bold text-sm mb-4 ring-4 ring-white">3</div><h3 class="text-base font-bold text-[#1E1E1C] mb-2">YZ ile hikâyeni yaz</h3><p class="text-sm text-[#5B5F6B] leading-relaxed">5 soruya cevap ver, YZ ilk taslağı yazsın. İstersen hazır hikâyeni yükle.</p></div><div class="flex flex-col items-start"><div class="w-10 h-10 rounded-full bg-[#51409D] text-white flex items-center justify-center font-bold text-sm mb-4 ring-4 ring-white">4</div><h3 class="text-base font-bold text-[#1E1E1C] mb-2">İkinci seans</h3><p class="text-sm text-[#5B5F6B] leading-relaxed">Hikâyeni birlikte kurgula, canlı anlat, geri bildirim al.</p></div><div class="flex flex-col items-start"><div class="w-10 h-10 rounded-full bg-[#51409D] text-white flex items-center justify-center font-bold text-sm mb-4 ring-4 ring-white">5</div><h3 class="text-base font-bold text-[#1E1E1C] mb-2">Çıktıların hazır</h3><p class="text-sm text-[#5B5F6B] leading-relaxed">Satış hikâyen, kısa özetin, mülakat cevapların ve CV özetin PDF olarak seninle.</p></div></div></div></div></section><section class="w-full border-t border-b border-[#DDD6FE] bg-[#EDE9FE] py-16 md:py-20"><div class="max-w-[1280px] mx-auto px-8"><div class="mb-12 md:mb-16"><div class="inline-flex items-center gap-2 mb-3"><div class="w-5 h-1 bg-[#EDE9FE] rounded-full"></div><span class="text-xs font-semibold uppercase tracking-wider text-[#BCB7F5]">Güvenilir ve Şeffaf</span></div><h2 class="text-3xl md:text-4xl font-bold tracking-tight text-[#1E1E1C]">Yapay zeka senin yerine hikâye uydurmaz</h2></div><div class="grid grid-cols-1 md:grid-cols-3 gap-8"><div class="bg-white border border-[#DDD6FE] rounded-2xl p-8 flex flex-col items-start"><div class="w-10 h-10 rounded-lg bg-[#EEECFF] border border-[#DDD6FE]/50 text-[#BCB7F5] flex items-center justify-center mb-6"><span class="material-symbols-outlined text-[20px]">format_quote</span></div><h3 class="text-lg font-bold text-[#1E1E1C] mb-2">Sadece senin sözlerin</h3><p class="text-sm text-[#5B5F6B] leading-relaxed font-normal">Hikâye yalnızca senin verdiğin bilgilerden kurulur.</p></div><div class="bg-white border border-[#DDD6FE] rounded-2xl p-8 flex flex-col items-start"><div class="w-10 h-10 rounded-lg bg-[#EEECFF] border border-[#DDD6FE]/50 text-[#BCB7F5] flex items-center justify-center mb-6"><span class="material-symbols-outlined text-[20px]">verified</span></div><h3 class="text-lg font-bold text-[#1E1E1C] mb-2">Her cümlenin kaynağı var</h3><p class="text-sm text-[#5B5F6B] leading-relaxed font-normal">Her cümle senin bir cevabına bağlanır. Eksik bilgi [bilgi gerekli] diye işaretlenir, uydurulmaz.</p></div><div class="bg-white border border-[#DDD6FE] rounded-2xl p-8 flex flex-col items-start"><div class="w-10 h-10 rounded-lg bg-[#EEECFF] border border-[#DDD6FE]/50 text-[#BCB7F5] flex items-center justify-center mb-6"><span class="material-symbols-outlined text-[20px]">mic</span></div><h3 class="text-lg font-bold text-[#1E1E1C] mb-2">Kendi sözlerinle anlatırsın</h3><p class="text-sm text-[#5B5F6B] leading-relaxed font-normal">Mülakatta ezberlemek yerine kendi deneyimini rahatça anlatmayı öğrenirsin.</p></div></div></div></section><section class="w-full border-b border-[#DDD6FE] bg-white py-16 md:py-20"><div class="max-w-[1280px] mx-auto px-8"><div class="mb-10"><div class="inline-flex items-center gap-2 mb-3"><div class="w-6 h-1 bg-[#EDE9FE] rounded-full"></div><span class="text-xs font-semibold uppercase tracking-wider text-[#BCB7F5]">Süreç Çıktıları</span></div><h2 class="text-3xl md:text-4xl font-bold tracking-tight text-[#1E1E1C] mb-2">Sana kalan çıktılar</h2><p class="text-base text-[#5B5F6B] font-normal">Hepsi senin hikâyenden türetilir.</p></div><div class="grid grid-cols-1 md:grid-cols-4 gap-6 mt-8"><div class="bg-white border border-[#DDD6FE] rounded-lg p-6 flex flex-col justify-between"><div class="w-full h-24 mb-4 rounded bg-[#EDE9FE] border border-[#DDD6FE] p-3 flex flex-col justify-center space-y-2"><div class="w-3/4 h-2 bg-[#EDE9FE] rounded-full"></div><div class="w-full h-2 bg-[#EDE9FE] rounded-full"></div><div class="w-1/2 h-2 bg-[#EDE9FE] rounded-full"></div></div><div><h3 class="text-[18px] font-semibold text-[#1E1E1C] mb-1">Satış hikâyen</h3><p class="text-sm text-[#5B5F6B]">150-250 kelime, senin sesinle</p></div></div><div class="bg-white border border-[#DDD6FE] rounded-lg p-6 flex flex-col justify-between"><div class="w-full h-24 mb-4 rounded bg-[#EDE9FE] border border-[#DDD6FE] p-3 flex flex-col justify-center space-y-2"><div class="w-2/3 h-2 bg-[#EDE9FE] rounded-full"></div><div class="w-5/6 h-2 bg-[#EDE9FE] rounded-full"></div><div class="w-3/5 h-2 bg-[#EDE9FE] rounded-full"></div></div><div><h3 class="text-[18px] font-semibold text-[#1E1E1C] mb-1">Kısa özet</h3><p class="text-sm text-[#5B5F6B]">Networking için 3-4 cümle</p></div></div><div class="bg-white border border-[#DDD6FE] rounded-lg p-6 flex flex-col justify-between"><div class="w-full h-24 mb-4 rounded bg-[#EDE9FE] border border-[#DDD6FE] p-3 flex flex-col justify-center space-y-2"><div class="w-1/2 h-2 bg-[#EDE9FE] rounded-full"></div><div class="w-full h-2 bg-[#EDE9FE] rounded-full"></div><div class="w-4/5 h-2 bg-[#EDE9FE] rounded-full"></div></div><div><h3 class="text-[18px] font-semibold text-[#1E1E1C] mb-1">Mülakat cevapları</h3><p class="text-sm text-[#5B5F6B]">2-3 soru için taslak</p></div></div><div class="bg-white border border-[#DDD6FE] rounded-lg p-6 flex flex-col justify-between"><div class="w-full h-24 mb-4 rounded bg-[#EDE9FE] border border-[#DDD6FE] p-3 flex flex-col justify-center space-y-2"><div class="w-3/5 h-2 bg-[#EDE9FE] rounded-full"></div><div class="w-full h-2 bg-[#EDE9FE] rounded-full"></div><div class="w-2/3 h-2 bg-[#EDE9FE] rounded-full"></div></div><div><h3 class="text-[18px] font-semibold text-[#1E1E1C] mb-1">CV özet paragrafı</h3><p class="text-sm text-[#5B5F6B]">3-4 satır</p></div></div></div></div></section><section id="danismanlar" class="w-full border-b border-[#DDD6FE] bg-[#EDE9FE] py-16 md:py-20"><div class="max-w-[1280px] mx-auto px-8"><div class="mb-8"><div class="w-6 h-1 bg-[#EDE9FE] rounded-full mb-3"></div><h2 class="text-2xl md:text-3xl font-semibold tracking-tight text-[#1E1E1C]">Danışmanlarınla tanış</h2><p class="text-base text-[#5B5F6B] font-normal mt-2">Sektörüne göre danışmanları giriş yapmadan inceleyebilirsin.</p></div><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"><div class="bg-white border border-[#DDD6FE] rounded-lg p-6 flex flex-col justify-between shadow-none"><div class="flex flex-col items-start"><div class="w-12 h-12 rounded-full bg-[#51409D] text-white font-semibold flex items-center justify-center mb-4 text-base">SA</div><h3 class="text-lg font-semibold text-[#1E1E1C]">Selin Arslan</h3><p class="text-sm text-[#5B5F6B] mt-1 mb-4">Kıdemli Satış Direktörü &amp; Mentor</p></div><div class="flex flex-wrap gap-1.5 pt-2"><span class="bg-[#EDE9FE] text-[#5B5F6B] text-xs px-2.5 py-1 rounded border border-[#DDD6FE]">Teknoloji</span><span class="bg-[#EDE9FE] text-[#5B5F6B] text-xs px-2.5 py-1 rounded border border-[#DDD6FE]">SaaS</span><span class="bg-[#EDE9FE] text-[#5B5F6B] text-xs px-2.5 py-1 rounded border border-[#DDD6FE]">Liderlik</span></div></div><div class="bg-white border border-[#DDD6FE] rounded-lg p-6 flex flex-col justify-between shadow-none"><div class="flex flex-col items-start"><div class="w-12 h-12 rounded-full bg-[#51409D] text-white font-semibold flex items-center justify-center mb-4 text-base">EK</div><h3 class="text-lg font-semibold text-[#1E1E1C]">Emre Kaya</h3><p class="text-sm text-[#5B5F6B] mt-1 mb-4">Yönetici Ortağı &amp; Yetenek Koçu</p></div><div class="flex flex-wrap gap-1.5 pt-2"><span class="bg-[#EDE9FE] text-[#5B5F6B] text-xs px-2.5 py-1 rounded border border-[#DDD6FE]">Finans</span><span class="bg-[#EDE9FE] text-[#5B5F6B] text-xs px-2.5 py-1 rounded border border-[#DDD6FE]">Bankacılık</span><span class="bg-[#EDE9FE] text-[#5B5F6B] text-xs px-2.5 py-1 rounded border border-[#DDD6FE]">Yatırım</span></div></div><div class="bg-white border border-[#DDD6FE] rounded-lg p-6 flex flex-col justify-between shadow-none"><div class="flex flex-col items-start"><div class="w-12 h-12 rounded-full bg-[#51409D] text-white font-semibold flex items-center justify-center mb-4 text-base">MÇ</div><h3 class="text-lg font-semibold text-[#1E1E1C]">Merve Çelik</h3><p class="text-sm text-[#5B5F6B] mt-1 mb-4">Pazarlama ve Marka Direktörü</p></div><div class="flex flex-wrap gap-1.5 pt-2"><span class="bg-[#EDE9FE] text-[#5B5F6B] text-xs px-2.5 py-1 rounded border border-[#DDD6FE]">Perakende</span><span class="bg-[#EDE9FE] text-[#5B5F6B] text-xs px-2.5 py-1 rounded border border-[#DDD6FE]">Tüketici</span><span class="bg-[#EDE9FE] text-[#5B5F6B] text-xs px-2.5 py-1 rounded border border-[#DDD6FE]">Pazarlama</span></div></div><div class="bg-white border border-[#DDD6FE] rounded-lg p-6 flex flex-col justify-between shadow-none"><div class="flex flex-col items-start"><div class="w-12 h-12 rounded-full bg-[#51409D] text-white font-semibold flex items-center justify-center mb-4 text-base">BT</div><h3 class="text-lg font-semibold text-[#1E1E1C]">Burak Tan</h3><p class="text-sm text-[#5B5F6B] mt-1 mb-4">Sağlık &amp; Medikal İK Danışmanı</p></div><div class="flex flex-wrap gap-1.5 pt-2"><span class="bg-[#EDE9FE] text-[#5B5F6B] text-xs px-2.5 py-1 rounded border border-[#DDD6FE]">Sağlık</span><span class="bg-[#EDE9FE] text-[#5B5F6B] text-xs px-2.5 py-1 rounded border border-[#DDD6FE]">Ar-Ge</span><span class="bg-[#EDE9FE] text-[#5B5F6B] text-xs px-2.5 py-1 rounded border border-[#DDD6FE]">Biyoteknoloji</span></div></div></div><div class="mt-8"><a href="danismanlar.html" class="text-[#51409D] font-medium hover:underline inline-flex items-center gap-1.5 text-base">Tüm danışmanları gör →</a></div></div></section><section id="hizmetler" class="w-full border-b border-[#DDD6FE] bg-white py-16 md:py-20"><div class="max-w-[1280px] mx-auto px-8"><div class="mb-8"><div class="w-8 h-1 bg-[#EDE9FE] rounded-full mb-3"></div><h2 class="text-3xl md:text-4xl font-bold tracking-tight text-[#1E1E1C]">Hizmetler</h2></div><div class="bg-white border border-[#DDD6FE] border-l-[6px] border-l-[#51409D] rounded-lg overflow-hidden flex flex-col md:flex-row items-start md:items-center justify-between p-8 relative mt-8"><div class="flex flex-col items-start"><h3 class="text-xl md:text-2xl font-bold text-[#1E1E1C] mb-2">Satış hikâyesi oluşturma</h3><p class="text-base text-[#5B5F6B] mb-3">Mülakatta fark yaratan, deneyimlerini yapılandıran hikâye çalışması.</p><div class="text-sm text-[#5B5F6B] font-medium flex items-center gap-2"><span class="material-symbols-outlined text-[18px] text-[#5B5F6B]">schedule</span><span class="">2 seans · her seans 50 dk</span></div></div><div class="mt-6 md:mt-0 flex-shrink-0"><a href="hizmet.html" class="inline-flex items-center justify-center bg-[#51409D] hover:bg-[#51409D] text-white px-6 py-3.5 rounded-lg font-medium text-base transition-colors">Satış hikâyeni oluştur →</a></div></div><div class="mt-6 flex flex-wrap items-center gap-3"><span class="text-[#5B5F6B] text-sm font-medium mr-1">Yakında:</span><span class="bg-[#EDE9FE] text-[#5B5F6B] px-3.5 py-1.5 rounded-md text-xs font-medium border border-[#DDD6FE]">CV / ön yazı</span><span class="bg-[#EDE9FE] text-[#5B5F6B] px-3.5 py-1.5 rounded-md text-xs font-medium border border-[#DDD6FE]">Demo iş görüşmesi</span><span class="bg-[#EDE9FE] text-[#5B5F6B] px-3.5 py-1.5 rounded-md text-xs font-medium border border-[#DDD6FE]">Networking</span><span class="bg-[#EDE9FE] text-[#5B5F6B] px-3.5 py-1.5 rounded-md text-xs font-medium border border-[#DDD6FE]">Koçluk</span><span class="bg-[#EDE9FE] text-[#5B5F6B] px-3.5 py-1.5 rounded-md text-xs font-medium border border-[#DDD6FE]">Test geri bildirimi</span></div></div></section></main>
+
+
+
+
+
+
+
+
+  <script src="nav.js"></script>
+  <script src="js/advisors.js"></script>
+  <script src="gate.js"></script>
+  <script src="landing-outputs.js"></script>
+  <script src="js/site-header.js"></script>
+<script src="avatar.js"></script></body></html>

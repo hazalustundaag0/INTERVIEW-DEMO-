@@ -1,0 +1,14 @@
+body[class] .demo-avatar.demo-avatar {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border: 1px solid #E9E4F5 !important;
+  border-radius: 50% !important;
+  background: #EEF2FF !important;
+  color: #4338CA !important;
+  font-family: "IBM Plex Sans", sans-serif !important;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+  overflow: hidden;
+}

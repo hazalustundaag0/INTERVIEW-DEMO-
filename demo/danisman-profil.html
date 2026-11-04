@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="refresh" content="0;url=danisman.html?id=selin-arslan">
+  <title>Danışman profili · Interview Demo</title>
+  <script>
+    const target = new URL('danisman.html?id=selin-arslan', location.href);
+    const legacy = new URLSearchParams(location.search);
+    if (legacy.has('id')) target.searchParams.set('id', legacy.get('id'));
+    location.replace(target.href);
+  </script>
+<link rel="stylesheet" href="avatar.css"></head>
+<body>
+  <p>Danışman profiline yönlendiriliyorsun. <a href="danisman.html?id=selin-arslan">Profil sayfasını aç</a>.</p>
+<script src="avatar.js"></script></body>
+</html>

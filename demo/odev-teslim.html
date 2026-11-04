@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ödev Teslimi · Interview Demo</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL@24,400,0,0" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link rel="stylesheet" href="../theme.css">
+  <script src="gate.js"></script>
+<link rel="stylesheet" href="avatar.css"></head>
+<body class="min-h-screen bg-background font-['IBM_Plex_Sans'] text-[#1E1E1C] antialiased">
+  <main class="mx-auto w-full px-4 py-8 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 items-start gap-6">
+      <aside class="w-full">
+        <div class="flex min-h-[580px] flex-col justify-between rounded-[10px] border border-outline-variant bg-white p-4 shadow-sm">
+          <div>
+            <div class="mb-2 flex items-center gap-2 border-b border-outline-variant px-4 py-2">
+              
+              <span class="text-[14px] font-semibold text-[#51409D]">Interview Demo</span>
+            </div>
+            <nav class="flex flex-col gap-1">
+              <a class="rounded-lg px-4 py-2 text-[14px] text-[#51409D] hover:bg-surface-container-low" href="ana.html">Ana Ekran</a>
+              <a class="rounded-lg px-4 py-2 text-[14px] text-[#51409D] hover:bg-surface-container-low" href="profil.html">Profilim</a>
+              <a class="rounded-lg px-4 py-2 text-[14px] text-[#51409D] hover:bg-surface-container-low" href="cv.html">CV'm</a>
+              <a class="rounded-lg px-4 py-2 text-[14px] text-[#51409D] hover:bg-surface-container-low" href="seanslar.html">Seanslarım</a>
+              <a class="rounded-lg px-4 py-2 text-[14px] text-[#51409D] hover:bg-surface-container-low" href="hikaye-giris.html">Hikâyem</a>
+              <a aria-current="page" class="rounded-[8px] bg-[#51409D] px-4 py-2 text-[14px] font-semibold text-white" href="odevler.html">Ödevlerim</a>
+            </nav>
+          </div>
+          <div class="mt-8 flex items-center gap-3 border-t border-outline-variant px-1 pt-4">
+            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#DEDaf4] bg-[#EEECFF] text-[14px] font-semibold text-[#51409D] demo-avatar" data-demo-avatar></div>
+            <div><div class="text-[14px] font-semibold text-[#51409D]">Elif Yılmaz</div><div class="text-[11px] text-[#51409D]">Aday</div></div>
+          </div>
+        </div>
+      </aside>
+
+      <section class="w-full">
+        <div class="rounded-[10px] border border-outline-variant bg-white p-5 shadow-sm sm:p-8">
+          <a class="mb-4 inline-flex items-center gap-1 text-[14px] font-semibold text-muted hover:text-[#1E1E1C]" href="odevler.html"><span aria-hidden="true">←</span> Geri</a>
+          <h1 id="task-title" class="text-[24px] font-semibold leading-tight text-[#1E1E1C]">Ödev teslimi</h1>
+          <p id="task-description" class="mb-4 mt-1 text-[14px] text-muted"></p>
+          <div class="mb-6 rounded-[8px] border border-outline-variant bg-surface-container-low p-4">
+            <p class="text-[14px] italic text-[#1E1E1C]">“Seansta hikâyendeki sonucu örnekle güçlendirelim.”</p>
+          </div>
+
+          <div class="mb-5 flex items-center gap-6 border-b border-outline-variant" role="tablist" aria-label="Teslim türü">
+            <button id="file-tab" class="border-b-2 border-[#51409D] pb-3 text-[14px] font-semibold text-[#51409D]" type="button" role="tab" aria-selected="true">Dosya yükle</button>
+            <button id="text-tab" class="border-b-2 border-transparent pb-3 text-[14px] font-semibold text-muted hover:text-[#1E1E1C]" type="button" role="tab" aria-selected="false">Metin yaz</button>
+          </div>
+
+          <form id="submission-form" novalidate>
+            <section id="file-panel" role="tabpanel" aria-labelledby="file-tab">
+              <label id="drop-area" class="flex min-h-[190px] cursor-pointer flex-col items-center justify-center rounded-[8px] border-2 border-dashed border-[#DEDaf4] bg-surface-container-low px-5 py-8 text-center hover:border-[#51409D]">
+                <span class="material-symbols-outlined mb-2 text-[28px] text-[#51409D]">upload_file</span>
+                <span class="text-[14px] font-semibold text-[#1E1E1C]">Dosyanı buraya sürükle ya da seç</span>
+                <span class="mt-1 text-[12px] text-[#51409D]">PDF veya DOCX, en fazla 10 MB</span>
+                <input id="file-input" class="sr-only" type="file" accept=".pdf,.docx">
+              </label>
+              <div id="selected-file" class="mt-3 hidden items-center justify-between rounded-[8px] border border-outline-variant bg-white px-4 py-3 text-[14px]">
+                <span id="file-summary" class="min-w-0 break-all text-[#1E1E1C]"></span>
+                <a id="remove-file" class="ml-4 shrink-0 font-semibold text-[#51409D] underline underline-offset-2" href="#">Kaldır</a>
+              </div>
+            </section>
+            <section id="text-panel" class="hidden" role="tabpanel" aria-labelledby="text-tab" hidden>
+              <textarea id="answer-text" class="w-full rounded-[8px] border border-outline-variant p-4 text-[14px] text-[#1E1E1C] focus:border-[#51409D] focus:outline-none focus:ring-0" rows="8" placeholder="Cevabını buraya yaz..."></textarea>
+            </section>
+
+            <p id="form-error" class="mt-4 hidden text-[14px] text-[#B42318]" role="alert" aria-live="polite"></p>
+            <div class="mt-7 flex items-center justify-between gap-4 border-t border-outline-variant pt-5">
+              <a class="inline-flex items-center gap-1 text-[14px] font-semibold text-muted hover:text-[#1E1E1C]" href="odevler.html"><span aria-hidden="true">←</span> Geri</a>
+              <button class="inline-flex items-center justify-center rounded-[8px] bg-[#51409D] px-6 py-2.5 text-[14px] font-semibold text-white shadow-sm hover:opacity-90" type="submit">Teslim Et</button>
+            </div>
+          </form>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      const storageKey = 'demoOdevler';
+      const defaults = [
+        { id: 'sunum', baslik: 'Daha önce hazırlanmış bir sunum veya rapor', tur: 'Belge', sonTarih: '15 Ocak', durum: 'bekliyor' },
+        { id: 'ilan', baslik: 'Hedef rolün iş ilanı', tur: 'Belge', sonTarih: '10 Ocak', durum: 'teslim', teslimTarihi: '12 Ocak', tip: 'link', icerik: 'https://www.linkedin.com/jobs/view/ornek-ilan', aciklama: '' }
+      ];
+      const params = new URLSearchParams(location.search);
+      const taskId = params.get('id') || 'sunum';
+      const title = document.getElementById('task-title');
+      const description = document.getElementById('task-description');
+      const form = document.getElementById('submission-form');
+      const fileInput = document.getElementById('file-input');
+      const dropArea = document.getElementById('drop-area');
+      const fileSummary = document.getElementById('file-summary');
+      const selectedFile = document.getElementById('selected-file');
+      const textArea = document.getElementById('answer-text');
+      const error = document.getElementById('form-error');
+      let currentTab = 'file';
+      let file = null;
+      let tasks;
+
+      function getTasks() {
+        const saved = localStorage.getItem(storageKey);
+        if (saved === null) {
+          localStorage.setItem(storageKey, JSON.stringify(defaults));
+          return defaults;
+        }
+        try {
+          const parsed = JSON.parse(saved);
+          if (!Array.isArray(parsed)) throw new TypeError('demoOdevler bir JSON dizisi olmalı.');
+          return parsed;
+        } catch (readError) {
+          console.error('demoOdevler verisi okunamadı.', readError);
+          return [];
+        }
+      }
+
+      function formatSize(bytes) {
+        if (bytes < 1024) return bytes + ' B';
+        if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+        return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+      }
+
+      function showError(message) {
+        error.textContent = message;
+        error.classList.remove('hidden');
+      }
+
+      function clearError() {
+        error.textContent = '';
+        error.classList.add('hidden');
+      }
+
+      function setFile(candidate) {
+        clearError();
+        const extension = candidate.name.split('.').pop().toLowerCase();
+        if (!['pdf', 'docx'].includes(extension) || candidate.size > 10 * 1024 * 1024) {
+          file = null;
+          fileInput.value = '';
+          selectedFile.classList.add('hidden');
+          selectedFile.classList.remove('flex');
+          showError('PDF veya DOCX yükle (en fazla 10 MB).');
+          return;
+        }
+        file = candidate;
+        fileSummary.textContent = candidate.name + ' · ' + formatSize(candidate.size);
+        selectedFile.classList.remove('hidden');
+        selectedFile.classList.add('flex');
+      }
+
+      function selectTab(tab) {
+        currentTab = tab;
+        const fileActive = tab === 'file';
+        document.getElementById('file-tab').className = fileActive
+          ? 'border-b-2 border-[#51409D] pb-3 text-[14px] font-semibold text-[#51409D]'
+          : 'border-b-2 border-transparent pb-3 text-[14px] font-semibold text-muted hover:text-[#1E1E1C]';
+        document.getElementById('text-tab').className = fileActive
+          ? 'border-b-2 border-transparent pb-3 text-[14px] font-semibold text-muted hover:text-[#1E1E1C]'
+          : 'border-b-2 border-[#51409D] pb-3 text-[14px] font-semibold text-[#51409D]';
+        document.getElementById('file-tab').setAttribute('aria-selected', String(fileActive));
+        document.getElementById('text-tab').setAttribute('aria-selected', String(!fileActive));
+        document.getElementById('file-panel').classList.toggle('hidden', !fileActive);
+        document.getElementById('text-panel').classList.toggle('hidden', fileActive);
+        document.getElementById('text-panel').hidden = fileActive;
+        clearError();
+      }
+
+      tasks = getTasks();
+      const task = tasks.find(function (item) { return item.id === taskId; });
+      if (!task) {
+        title.textContent = 'Ödev bulunamadı';
+        description.textContent = 'Bu ödev listede bulunamadı.';
+        form.querySelector('button[type="submit"]').disabled = true;
+      } else {
+        title.textContent = task.baslik;
+        description.textContent = 'Selin Arslan senden bu belgeyi istedi. Son tarih: ' + task.sonTarih + '.';
+      }
+
+      document.getElementById('file-tab').addEventListener('click', function () { selectTab('file'); });
+      document.getElementById('text-tab').addEventListener('click', function () { selectTab('text'); });
+      fileInput.addEventListener('change', function () {
+        if (fileInput.files.length) setFile(fileInput.files[0]);
+      });
+      document.getElementById('remove-file').addEventListener('click', function (event) {
+        event.preventDefault();
+        file = null;
+        fileInput.value = '';
+        selectedFile.classList.add('hidden');
+        selectedFile.classList.remove('flex');
+        clearError();
+      });
+      ['dragenter', 'dragover'].forEach(function (name) {
+        dropArea.addEventListener(name, function (event) {
+          event.preventDefault();
+          dropArea.classList.add('border-[#51409D]', 'bg-[#F8F7FF]');
+        });
+      });
+      ['dragleave', 'drop'].forEach(function (name) {
+        dropArea.addEventListener(name, function (event) {
+          event.preventDefault();
+          dropArea.classList.remove('border-[#51409D]', 'bg-[#F8F7FF]');
+        });
+      });
+      dropArea.addEventListener('drop', function (event) {
+        if (event.dataTransfer.files.length) setFile(event.dataTransfer.files[0]);
+      });
+      textArea.addEventListener('input', clearError);
+
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        clearError();
+        if (!task) {
+          showError('Bu ödev listede bulunamadı.');
+          return;
+        }
+        if (currentTab === 'file' && !file || currentTab === 'text' && !textArea.value.trim()) {
+          showError('Teslim etmek için bir dosya seç ya da metin yaz.');
+          return;
+        }
+        task.durum = 'teslim';
+        task.teslimTarihi = '13 Ocak';
+        task.tip = currentTab === 'file' ? 'dosya' : 'metin';
+        task.icerik = currentTab === 'file'
+          ? { ad: file.name, boyut: formatSize(file.size) }
+          : textArea.value.trim();
+        localStorage.setItem(storageKey, JSON.stringify(tasks));
+        location.href = 'odevler.html?teslim=1';
+      });
+    })();
+  </script>
+  <script src="nav.js"></script>
+  <script src="ortak.js"></script>
+  <script src="secim.js"></script>
+<script src="avatar.js"></script></body>
+</html>

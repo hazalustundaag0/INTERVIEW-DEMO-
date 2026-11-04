@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Danışmanlarımız · Interview Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../theme.css">
+  <script src="js/advisors.js"></script>
+  <script src="gate.js"></script>
+<link rel="stylesheet" href="avatar.css"></head>
+<body class="advisor-directory-page">
+  <div id="site-header" data-back-label="← Geri" data-back-href="index.html"></div>
+  <main class="advisor-directory-main">
+    <section aria-labelledby="advisor-directory-title">
+      <div class="advisor-directory-heading">
+        <span class="advisor-directory-eyebrow"><span aria-hidden="true"></span> DANIŞMANLAR</span>
+        <h1 id="advisor-directory-title">Danışmanlarımız</h1>
+        <p>Sektörüne göre danışmanları incele.</p>
+      </div>
+      <div class="advisor-directory-tools">
+        <label class="advisor-directory-search">
+          <span class="material-symbols-outlined" aria-hidden="true">search</span>
+          <input id="advisor-search" type="search" aria-label="İsim, unvan veya uzmanlık ara" placeholder="İsim veya uzmanlık ara" autocomplete="off">
+        </label>
+        <div id="advisor-filters" class="advisor-directory-filters" role="group" aria-label="Danışmanları sektöre göre filtrele"></div>
+        <label class="advisor-directory-sort">
+          <span>Sırala</span>
+          <select id="advisor-sort">
+            <option value="recommended">Önerilen</option>
+            <option value="name">A-Z</option>
+            <option value="experience">Deneyim</option>
+          </select>
+        </label>
+      </div>
+      <p class="advisor-directory-count" id="advisor-count" aria-live="polite"></p>
+      <div class="advisor-directory-grid" id="advisor-grid"></div>
+      <div class="advisor-directory-empty" id="advisor-empty" role="status" hidden>
+        <p>Aramana uygun danışman bulunamadı.</p>
+        <button id="advisor-reset-filters" type="button">Filtreleri temizle</button>
+      </div>
+    </section>
+  </main>
+  <script src="danismanlar.js"></script>
+  <script src="nav.js"></script>
+  <script src="js/site-header.js"></script>
+<script src="avatar.js"></script></body>
+</html>

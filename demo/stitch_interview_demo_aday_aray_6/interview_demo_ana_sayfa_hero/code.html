@@ -1,0 +1,164 @@
+<!DOCTYPE html><html lang="tr" style=""><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interview Demo - Ana Sayfa</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"IBM Plex Sans"', 'sans-serif'],
+          },
+          colors: {
+            cream: {
+              50: '#7564C7',
+              100: '#7564C7',
+              200: '#7564C7',
+            },
+            petrol: {
+              800: '#51409D',
+              700: '#51409D',
+              600: '#7564C7',
+              100: '#EEECFF',
+              50: '#F8F7FF',
+            },
+            rust: {
+              500: '#7564C7',
+              600: '#BCB7F5',
+              50: '#EEECFF',
+            },
+            neutral: {
+              charcoal: '#1E1E1C',
+              body: '#7564C7',
+              secondary: '#7564C7',
+              muted: '#7564C7',
+              border: '#7564C7',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'IBM Plex Sans', sans-serif;
+      background-color: #7564C7;
+      color: #1E1E1C;
+      -webkit-font-smoothing: antialiased;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .material-symbols-outlined.fill {
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+  </style>
+</head>
+<body class="bg-[#7564C7] min-h-screen text-[#1E1E1C] flex flex-col justify-start">
+
+  <!-- Header -->
+  <header class="w-full bg-white border-b border-[#7564C7] sticky top-0 z-50">
+    <div class="max-w-[1280px] mx-auto px-8 h-16 flex items-center justify-between">
+      
+      <!-- Left: Logo -->
+      <a href="#" class="flex items-center group">
+        <span class="text-base font-semibold text-[#1E1E1C] tracking-tight">Interview Demo</span>
+      </a>
+
+      <!-- Center: Navigation Links -->
+      <nav class="hidden md:flex items-center gap-8">
+        <a href="#nasil-calisir" class="text-sm font-medium text-[#7564C7] hover:text-[#51409D] transition-colors">Nasıl çalışır</a>
+        <a href="#danismanlar" class="text-sm font-medium text-[#7564C7] hover:text-[#51409D] transition-colors">Danışmanlar</a>
+        <a href="#hizmetler" class="text-sm font-medium text-[#7564C7] hover:text-[#51409D] transition-colors">Hizmetler</a>
+      </nav>
+
+      <!-- Right: Action Buttons -->
+      <div class="flex items-center gap-5">
+        <a href="#giris-yap" class="text-sm font-medium text-[#1E1E1C] hover:text-[#51409D] transition-colors">Giriş yap</a>
+        <a href="#hesap-olustur" class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-[#51409D] hover:bg-[#51409D] rounded-lg transition-colors">
+          Hesap oluştur
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <main class="w-full flex-1">
+    <section class="max-w-[1280px] mx-auto px-8 py-16 md:py-20">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        
+        <!-- Left Column: Content -->
+        <div class="lg:col-span-7 flex flex-col items-start space-y-6">
+          
+          <!-- Rust-Orange Chip -->
+          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EEECFF] border border-[#7564C7]/30 text-[#BCB7F5] text-xs font-semibold tracking-wide">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#7564C7]"></span>
+            Satış hikâyesi
+          </div>
+
+          <!-- Headline -->
+          <h1 class="text-4xl sm:text-5xl font-bold tracking-tight text-[#1E1E1C] leading-[1.18]">
+            Kariyer hikâyeni bul, <br class="hidden sm:inline">mülakatta anlat.
+          </h1>
+
+          <!-- Description Paragraph -->
+          <p class="text-base sm:text-lg text-[#7564C7] leading-relaxed max-w-2xl font-normal">
+            Yapay zeka sana doğru soruları sorar ve ilk taslağı yazar. Danışmanın hikâyeni okur ve geri bildirim verir. Sonunda elinde CV'ne, mülakat cevaplarına ve networking tanıtımına dönüşen bir satış hikâyen olur.
+          </p>
+
+          <!-- CTAs & Subtitle -->
+          <div class="pt-2 flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full">
+            <a href="#olustur" class="inline-flex items-center justify-center px-6 py-3.5 text-base font-medium text-white bg-[#51409D] hover:bg-[#51409D] rounded-lg transition-colors shadow-none">
+              Satış hikâyeni oluştur →
+            </a>
+            <a href="#nasil-calisir" class="inline-flex items-center justify-center px-5 py-3.5 text-base font-medium text-[#1E1E1C] bg-white border border-[#7564C7] hover:bg-[#7564C7] rounded-lg transition-colors">
+              Nasıl çalışır?
+            </a>
+          </div>
+
+          <!-- Helper Meta Text -->
+          <div class="flex items-center gap-2 pt-1 text-sm text-[#7564C7]">
+            <span class="material-symbols-outlined text-[18px] text-[#7564C7]">schedule</span>
+            <span class="">2 seans · her seans 50 dk</span>
+          </div>
+
+        </div>
+
+        <!-- Right Column: Video Placeholder Card -->
+        <div class="lg:col-span-5 w-full">
+          <div class="w-full aspect-[4/3] rounded-2xl bg-[#7564C7]/50 border border-[#7564C7] flex flex-col items-center justify-center p-8 text-center relative overflow-hidden transition-all group">
+            
+            <!-- Subtle background decorative motif -->
+            <div class="absolute inset-0 bg-gradient-to-b from-transparent to-[#7564C7]/20 pointer-events-none"></div>
+
+            <!-- Play Button Container -->
+            <div class="relative z-10 w-20 h-20 rounded-full bg-white border border-[#7564C7] flex items-center justify-center shadow-none mb-4 group-hover:scale-105 transition-transform duration-200">
+              <span class="material-symbols-outlined text-[36px] text-[#51409D] ml-1 fill">play_arrow</span>
+            </div>
+
+            <!-- Caption -->
+            <div class="relative z-10 space-y-1">
+              <p class="text-base font-semibold text-[#1E1E1C]">Tanıtım videosu yakında</p>
+              <p class="text-xs text-[#7564C7]">Süreci ve seans adımlarını 1 dakikada keşfet</p>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+  <section id="nasil-calisir" class="w-full border-t border-[#7564C7] bg-white py-16 md:py-20"><div class="max-w-[1280px] mx-auto px-8"><div class="mb-12 md:mb-16"><div class="inline-flex items-center gap-2 mb-3"><div class="w-5 h-1 bg-[#7564C7] rounded-full"></div><span class="text-xs font-semibold uppercase tracking-wider text-[#BCB7F5]">Adım Adım Süreç</span></div><h2 class="text-3xl md:text-4xl font-bold tracking-tight text-[#1E1E1C]">Nasıl çalışır?</h2></div><div class="relative"><div class="hidden lg:block absolute top-5 left-6 right-6 h-[2px] bg-[#7564C7] z-0"></div><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 relative z-10"><div class="flex flex-col items-start"><div class="w-10 h-10 rounded-full bg-[#51409D] text-white flex items-center justify-center font-bold text-sm mb-4 ring-4 ring-white">1</div><h3 class="text-base font-bold text-[#1E1E1C] mb-2">Hizmet ve danışman seç</h3><p class="text-sm text-[#7564C7] leading-relaxed">Satış hikâyesi hizmetini ve sana uygun danışmanı seç.</p></div><div class="flex flex-col items-start"><div class="w-10 h-10 rounded-full bg-[#51409D] text-white flex items-center justify-center font-bold text-sm mb-4 ring-4 ring-white">2</div><h3 class="text-base font-bold text-[#1E1E1C] mb-2">İlk seans</h3><p class="text-sm text-[#7564C7] leading-relaxed">Danışmanınla CV'n üzerinden kariyer hedefini ve geçiş noktalarını konuş.</p></div><div class="flex flex-col items-start"><div class="w-10 h-10 rounded-full bg-[#51409D] text-white flex items-center justify-center font-bold text-sm mb-4 ring-4 ring-white">3</div><h3 class="text-base font-bold text-[#1E1E1C] mb-2">YZ ile hikâyeni yaz</h3><p class="text-sm text-[#7564C7] leading-relaxed">5 soruya cevap ver, YZ ilk taslağı yazsın. İstersen hazır hikâyeni yükle.</p></div><div class="flex flex-col items-start"><div class="w-10 h-10 rounded-full bg-[#51409D] text-white flex items-center justify-center font-bold text-sm mb-4 ring-4 ring-white">4</div><h3 class="text-base font-bold text-[#1E1E1C] mb-2">İkinci seans</h3><p class="text-sm text-[#7564C7] leading-relaxed">Hikâyeni birlikte kurgula, canlı anlat, geri bildirim al.</p></div><div class="flex flex-col items-start"><div class="w-10 h-10 rounded-full bg-[#51409D] text-white flex items-center justify-center font-bold text-sm mb-4 ring-4 ring-white">5</div><h3 class="text-base font-bold text-[#1E1E1C] mb-2">Çıktıların hazır</h3><p class="text-sm text-[#7564C7] leading-relaxed">Satış hikâyen, kısa özetin, mülakat cevapların ve CV özetin PDF olarak seninle.</p></div></div></div></div></section><section class="w-full border-t border-b border-[#7564C7] bg-[#7564C7] py-16 md:py-20"><div class="max-w-[1280px] mx-auto px-8"><div class="mb-12 md:mb-16"><div class="inline-flex items-center gap-2 mb-3"><div class="w-5 h-1 bg-[#7564C7] rounded-full"></div><span class="text-xs font-semibold uppercase tracking-wider text-[#BCB7F5]">Güvenilir ve Şeffaf</span></div><h2 class="text-3xl md:text-4xl font-bold tracking-tight text-[#1E1E1C]">Yapay zeka senin yerine hikâye uydurmaz</h2></div><div class="grid grid-cols-1 md:grid-cols-3 gap-8"><div class="bg-white border border-[#7564C7] rounded-2xl p-8 flex flex-col items-start"><div class="w-10 h-10 rounded-lg bg-[#EEECFF] border border-[#7564C7]/30 text-[#BCB7F5] flex items-center justify-center mb-6"><span class="material-symbols-outlined text-[20px]">format_quote</span></div><h3 class="text-lg font-bold text-[#1E1E1C] mb-2">Sadece senin sözlerin</h3><p class="text-sm text-[#7564C7] leading-relaxed font-normal">Hikâye yalnızca senin verdiğin bilgilerden kurulur.</p></div><div class="bg-white border border-[#7564C7] rounded-2xl p-8 flex flex-col items-start"><div class="w-10 h-10 rounded-lg bg-[#EEECFF] border border-[#7564C7]/30 text-[#BCB7F5] flex items-center justify-center mb-6"><span class="material-symbols-outlined text-[20px]">verified</span></div><h3 class="text-lg font-bold text-[#1E1E1C] mb-2">Her cümlenin kaynağı var</h3><p class="text-sm text-[#7564C7] leading-relaxed font-normal">Her cümle senin bir cevabına bağlanır. Eksik bilgi [bilgi gerekli] diye işaretlenir, uydurulmaz.</p></div><div class="bg-white border border-[#7564C7] rounded-2xl p-8 flex flex-col items-start"><div class="w-10 h-10 rounded-lg bg-[#EEECFF] border border-[#7564C7]/30 text-[#BCB7F5] flex items-center justify-center mb-6"><span class="material-symbols-outlined text-[20px]">mic</span></div><h3 class="text-lg font-bold text-[#1E1E1C] mb-2">Kendi sözlerinle anlatırsın</h3><p class="text-sm text-[#7564C7] leading-relaxed font-normal">Mülakatta ezberlemek yerine kendi deneyimini rahatça anlatmayı öğrenirsin.</p></div></div></div></section><section class="w-full border-b border-[#7564C7] bg-white py-16 md:py-20"><div class="max-w-[1280px] mx-auto px-8"><div class="mb-10"><div class="inline-flex items-center gap-2 mb-3"><div class="w-6 h-1 bg-[#7564C7] rounded-full"></div><span class="text-xs font-semibold uppercase tracking-wider text-[#BCB7F5]">Süreç Çıktıları</span></div><h2 class="text-3xl md:text-4xl font-bold tracking-tight text-[#1E1E1C] mb-2">Sana kalan çıktılar</h2><p class="text-base text-[#7564C7] font-normal">Hepsi senin hikâyenden türetilir.</p></div><div class="grid grid-cols-1 md:grid-cols-4 gap-6 mt-8"><div class="bg-white border border-[#7564C7] rounded-lg p-6 flex flex-col justify-between"><div class="w-full h-24 mb-4 rounded bg-[#7564C7] border border-[#7564C7] p-3 flex flex-col justify-center space-y-2"><div class="w-3/4 h-2 bg-[#7564C7] rounded-full"></div><div class="w-full h-2 bg-[#7564C7] rounded-full"></div><div class="w-1/2 h-2 bg-[#7564C7] rounded-full"></div></div><div><h3 class="text-[18px] font-semibold text-[#1E1E1C] mb-1">Satış hikâyen</h3><p class="text-sm text-[#7564C7]">150-250 kelime, senin sesinle</p></div></div><div class="bg-white border border-[#7564C7] rounded-lg p-6 flex flex-col justify-between"><div class="w-full h-24 mb-4 rounded bg-[#7564C7] border border-[#7564C7] p-3 flex flex-col justify-center space-y-2"><div class="w-2/3 h-2 bg-[#7564C7] rounded-full"></div><div class="w-5/6 h-2 bg-[#7564C7] rounded-full"></div><div class="w-3/5 h-2 bg-[#7564C7] rounded-full"></div></div><div><h3 class="text-[18px] font-semibold text-[#1E1E1C] mb-1">Kısa özet</h3><p class="text-sm text-[#7564C7]">Networking için 3-4 cümle</p></div></div><div class="bg-white border border-[#7564C7] rounded-lg p-6 flex flex-col justify-between"><div class="w-full h-24 mb-4 rounded bg-[#7564C7] border border-[#7564C7] p-3 flex flex-col justify-center space-y-2"><div class="w-1/2 h-2 bg-[#7564C7] rounded-full"></div><div class="w-full h-2 bg-[#7564C7] rounded-full"></div><div class="w-4/5 h-2 bg-[#7564C7] rounded-full"></div></div><div><h3 class="text-[18px] font-semibold text-[#1E1E1C] mb-1">Mülakat cevapları</h3><p class="text-sm text-[#7564C7]">2-3 soru için taslak</p></div></div><div class="bg-white border border-[#7564C7] rounded-lg p-6 flex flex-col justify-between"><div class="w-full h-24 mb-4 rounded bg-[#7564C7] border border-[#7564C7] p-3 flex flex-col justify-center space-y-2"><div class="w-3/5 h-2 bg-[#7564C7] rounded-full"></div><div class="w-full h-2 bg-[#7564C7] rounded-full"></div><div class="w-2/3 h-2 bg-[#7564C7] rounded-full"></div></div><div><h3 class="text-[18px] font-semibold text-[#1E1E1C] mb-1">CV özet paragrafı</h3><p class="text-sm text-[#7564C7]">3-4 satır</p></div></div></div></div></section><section id="danismanlar" class="w-full border-b border-[#7564C7] bg-[#7564C7] py-16 md:py-20"><div class="max-w-[1280px] mx-auto px-8"><div class="mb-8"><div class="w-6 h-1 bg-[#7564C7] rounded-full mb-3"></div><h2 class="text-2xl md:text-3xl font-semibold tracking-tight text-[#1E1E1C]">Danışmanlarınla tanış</h2><p class="text-base text-[#7564C7] font-normal mt-2">Sektörüne göre danışmanları giriş yapmadan inceleyebilirsin.</p></div><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"><div class="bg-white border border-[#7564C7] rounded-lg p-6 flex flex-col justify-between shadow-none"><div class="flex flex-col items-start"><div class="w-12 h-12 rounded-full bg-[#51409D] text-white font-semibold flex items-center justify-center mb-4 text-base">SA</div><h3 class="text-lg font-semibold text-[#1E1E1C]">Selin Arslan</h3><p class="text-sm text-[#7564C7] mt-1 mb-4">Kıdemli Satış Direktörü &amp; Mentor</p></div><div class="flex flex-wrap gap-1.5 pt-2"><span class="bg-[#7564C7] text-[#7564C7] text-xs px-2.5 py-1 rounded border border-[#7564C7]">Teknoloji</span><span class="bg-[#7564C7] text-[#7564C7] text-xs px-2.5 py-1 rounded border border-[#7564C7]">SaaS</span><span class="bg-[#7564C7] text-[#7564C7] text-xs px-2.5 py-1 rounded border border-[#7564C7]">Liderlik</span></div></div><div class="bg-white border border-[#7564C7] rounded-lg p-6 flex flex-col justify-between shadow-none"><div class="flex flex-col items-start"><div class="w-12 h-12 rounded-full bg-[#51409D] text-white font-semibold flex items-center justify-center mb-4 text-base">EK</div><h3 class="text-lg font-semibold text-[#1E1E1C]">Emre Kaya</h3><p class="text-sm text-[#7564C7] mt-1 mb-4">Yönetici Ortağı &amp; Yetenek Koçu</p></div><div class="flex flex-wrap gap-1.5 pt-2"><span class="bg-[#7564C7] text-[#7564C7] text-xs px-2.5 py-1 rounded border border-[#7564C7]">Finans</span><span class="bg-[#7564C7] text-[#7564C7] text-xs px-2.5 py-1 rounded border border-[#7564C7]">Bankacılık</span><span class="bg-[#7564C7] text-[#7564C7] text-xs px-2.5 py-1 rounded border border-[#7564C7]">Yatırım</span></div></div><div class="bg-white border border-[#7564C7] rounded-lg p-6 flex flex-col justify-between shadow-none"><div class="flex flex-col items-start"><div class="w-12 h-12 rounded-full bg-[#51409D] text-white font-semibold flex items-center justify-center mb-4 text-base">MÇ</div><h3 class="text-lg font-semibold text-[#1E1E1C]">Merve Çelik</h3><p class="text-sm text-[#7564C7] mt-1 mb-4">Pazarlama ve Marka Direktörü</p></div><div class="flex flex-wrap gap-1.5 pt-2"><span class="bg-[#7564C7] text-[#7564C7] text-xs px-2.5 py-1 rounded border border-[#7564C7]">Perakende</span><span class="bg-[#7564C7] text-[#7564C7] text-xs px-2.5 py-1 rounded border border-[#7564C7]">Tüketici</span><span class="bg-[#7564C7] text-[#7564C7] text-xs px-2.5 py-1 rounded border border-[#7564C7]">Pazarlama</span></div></div><div class="bg-white border border-[#7564C7] rounded-lg p-6 flex flex-col justify-between shadow-none"><div class="flex flex-col items-start"><div class="w-12 h-12 rounded-full bg-[#51409D] text-white font-semibold flex items-center justify-center mb-4 text-base">BT</div><h3 class="text-lg font-semibold text-[#1E1E1C]">Burak Tan</h3><p class="text-sm text-[#7564C7] mt-1 mb-4">Sağlık &amp; Medikal İK Danışmanı</p></div><div class="flex flex-wrap gap-1.5 pt-2"><span class="bg-[#7564C7] text-[#7564C7] text-xs px-2.5 py-1 rounded border border-[#7564C7]">Sağlık</span><span class="bg-[#7564C7] text-[#7564C7] text-xs px-2.5 py-1 rounded border border-[#7564C7]">Ar-Ge</span><span class="bg-[#7564C7] text-[#7564C7] text-xs px-2.5 py-1 rounded border border-[#7564C7]">Biyoteknoloji</span></div></div></div><div class="mt-8"><a href="#tum-danismanlar" class="text-[#51409D] font-medium hover:underline inline-flex items-center gap-1.5 text-base">Tüm danışmanları gör →</a></div></div></section><section id="hizmetler" class="w-full border-b border-[#7564C7] bg-white py-16 md:py-20"><div class="max-w-[1280px] mx-auto px-8"><div class="mb-8"><div class="w-8 h-1 bg-[#7564C7] rounded-full mb-3"></div><h2 class="text-3xl md:text-4xl font-bold tracking-tight text-[#1E1E1C]">Hizmetler</h2></div><div class="bg-white border border-[#7564C7] border-l-[6px] border-l-[#51409D] rounded-lg overflow-hidden flex flex-col md:flex-row items-start md:items-center justify-between p-8 relative mt-8"><div class="flex flex-col items-start"><h3 class="text-xl md:text-2xl font-bold text-[#1E1E1C] mb-2">Satış hikâyesi oluşturma</h3><p class="text-base text-[#7564C7] mb-3">Mülakatta fark yaratan, deneyimlerini yapılandıran hikâye çalışması.</p><div class="text-sm text-[#7564C7] font-medium flex items-center gap-2"><span class="material-symbols-outlined text-[18px] text-[#7564C7]">schedule</span><span class="">2 seans · her seans 50 dk</span></div></div><div class="mt-6 md:mt-0 flex-shrink-0"><a href="#olustur" class="inline-flex items-center justify-center bg-[#51409D] hover:bg-[#51409D] text-white px-6 py-3.5 rounded-lg font-medium text-base transition-colors">Satış hikâyeni oluştur →</a></div></div><div class="mt-6 flex flex-wrap items-center gap-3"><span class="text-[#7564C7] text-sm font-medium mr-1">Yakında:</span><span class="bg-[#7564C7] text-[#7564C7] px-3.5 py-1.5 rounded-md text-xs font-medium border border-[#7564C7]">CV / ön yazı</span><span class="bg-[#7564C7] text-[#7564C7] px-3.5 py-1.5 rounded-md text-xs font-medium border border-[#7564C7]">Demo iş görüşmesi</span><span class="bg-[#7564C7] text-[#7564C7] px-3.5 py-1.5 rounded-md text-xs font-medium border border-[#7564C7]">Networking</span><span class="bg-[#7564C7] text-[#7564C7] px-3.5 py-1.5 rounded-md text-xs font-medium border border-[#7564C7]">Koçluk</span><span class="bg-[#7564C7] text-[#7564C7] px-3.5 py-1.5 rounded-md text-xs font-medium border border-[#7564C7]">Test geri bildirimi</span></div></div></section></main>
+
+
+
+
+
+
+
+</body></html>

@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Müsaitlik ekle · Interview Demo</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link rel="stylesheet" href="../theme.css">
+  <script src="gate.js"></script>
+<link rel="stylesheet" href="avatar.css"></head>
+<body class="min-h-screen bg-background font-['IBM_Plex_Sans'] text-[#1E1E1C] antialiased">
+  <main class="mx-auto w-full px-4 py-8 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 items-start gap-6">
+      <aside class="advisor-sidebar availability-form-sidebar w-full">
+        <div class="flex min-h-[580px] flex-col justify-between rounded-[10px] border border-outline-variant bg-white p-4 shadow-sm">
+          <div>
+            <div class="mb-2 flex items-center gap-2 border-b border-outline-variant px-4 py-2">
+              
+              <span class="text-[14px] font-semibold text-[#51409D]">Interview Demo</span>
+            </div>
+            <nav class="flex flex-col gap-1">
+              <a class="flex items-center justify-between rounded-lg px-4 py-2 text-[14px] text-[#51409D] hover:bg-surface-container-low" href="guru-danisanlar.html"><span class="flex items-center gap-2"><svg class="availability-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19v-1.2a5.5 5.5 0 0 1 11 0V19zM16 5.2a3.2 3.2 0 0 1 0 6.2M17 14a5 5 0 0 1 3.5 4.8V19"/></svg><span>Danışanlarım</span></span></a>
+              <a aria-current="page" class="flex items-center justify-between rounded-[8px] bg-[#51409D] px-4 py-2 text-[14px] font-semibold text-white" href="guru-musaitlik.html"><span class="flex items-center gap-2"><svg class="availability-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M7.5 3v4M16.5 3v4M3.5 9.5h17M8 14l2.5 2.5L16 11"/></svg><span>Müsaitlik</span></span><svg class="availability-icon availability-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></a>
+              <a class="flex items-center justify-between rounded-lg px-4 py-2 text-[14px] text-[#51409D] hover:bg-surface-container-low" href="guru-seanslar.html"><span class="flex items-center gap-2"><svg class="availability-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M7.5 3v4M16.5 3v4M3.5 9.5h17M8 13h2m4 0h2m-8 4h2m4 0h2"/></svg><span>Seanslarım</span></span></a>
+            </nav>
+          </div>
+          <div class="mt-8 flex items-center gap-3 border-t border-outline-variant px-1 pt-4">
+            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#51409D] text-[14px] font-semibold text-white">SA</div>
+            <div><div class="text-[14px] font-semibold text-[#51409D]">Selin Arslan</div><div class="text-[11px] text-[#51409D]">Danışman</div></div>
+          </div>
+        </div>
+      </aside>
+
+      <section class="w-full">
+        <div class="mb-5">
+          <h1 class="text-[24px] font-semibold leading-tight text-[#1E1E1C]">Müsaitlik ekle</h1>
+          <p class="mt-1 text-[14px] text-muted">Her seans 50 dakikadır. Adaylar yalnızca açtığın saatlerden randevu alabilir.</p>
+        </div>
+        <div class="rounded-[10px] border border-outline-variant bg-white p-5 shadow-sm sm:p-8">
+          <form id="availability-form" novalidate>
+            <div class="availability-date-field mb-5 text-[14px] font-semibold text-[#1E1E1C]">
+              <label for="availability-date">Tarih</label>
+              <span class="availability-date-control mt-2">
+                <input id="availability-date" class="w-full rounded-[8px] border border-[#DEDaf4] px-3 py-2.5 pr-12 text-[14px] font-normal text-[#1E1E1C] focus:border-[#51409D] focus:outline-none focus:ring-0" type="date" value="2027-01-15">
+                <button class="availability-date-picker" type="button" aria-label="Takvimi aç" aria-controls="availability-date">
+                  <svg class="availability-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M7.5 3v4M16.5 3v4M3.5 9.5h17M8 13h2m4 0h2m-8 4h2m4 0h2"/></svg>
+                </button>
+              </span>
+            </div>
+
+            <div class="mb-5">
+              <div id="time-rows" class="flex flex-col gap-3"></div>
+              <span id="availability-end-help" class="sr-only">Bitiş saati, başlangıç saatine 50 dakika eklenerek otomatik hesaplanır.</span>
+            </div>
+
+            <a id="add-time" class="availability-add-time inline-flex" href="#">+ Başka saat ekle</a>
+
+            <div class="mt-6 border-t border-outline-variant pt-5">
+              <label class="inline-flex cursor-pointer items-center gap-2 text-[14px] font-semibold text-[#1E1E1C]">
+                <input id="repeat-weekly" class="h-4 w-4 rounded border-[#51409D] text-[#51409D] focus:ring-[#51409D]" type="checkbox">
+                Her hafta tekrarla
+              </label>
+              <label id="repeat-count-wrap" class="mt-4 hidden max-w-[220px] text-[14px] font-medium text-[#1E1E1C]" for="repeat-count">
+                Kaç hafta?
+                <select id="repeat-count" class="mt-2 block w-full rounded-[8px] border border-[#DEDaf4] bg-white px-3 py-2.5 text-[14px] focus:border-[#51409D] focus:outline-none focus:ring-0">
+                  <option value="4" selected>4</option><option value="8">8</option><option value="12">12</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="mt-6 rounded-[8px] border border-outline-variant bg-surface-container-low p-4">
+              <h2 id="preview-heading" class="text-[14px] font-semibold text-[#1E1E1C]">Eklenecek saatler (0)</h2>
+              <ul id="preview-list" aria-live="polite" class="mt-3 flex flex-col gap-2 text-[13px] text-muted"></ul>
+            </div>
+
+            <p id="form-error" class="mt-4 hidden text-[14px] text-[#B42318]" role="alert" aria-live="polite"></p>
+            <div class="mt-7 flex items-center justify-between gap-4 border-t border-outline-variant pt-5">
+              <a class="text-[14px] font-semibold text-muted hover:text-[#1E1E1C]" href="guru-musaitlik.html">← Vazgeç</a>
+              <button id="save-availability" class="availability-save-button rounded-[8px] bg-[#51409D] px-6 py-2.5 text-[14px] font-semibold text-white shadow-sm hover:opacity-90" type="submit" disabled>0 saat ekle</button>
+            </div>
+          </form>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      const STORAGE_KEY = 'demoMusaitlik';
+      const DEFAULT_SLOTS = [
+        { id: 'm1', tarih: '2027-01-11', bas: '10:00', bit: '10:50', durum: 'musait' },
+        { id: 'm2', tarih: '2027-01-11', bas: '14:00', bit: '14:50', durum: 'rezerve', aday: 'Elif Yılmaz' },
+        { id: 'm3', tarih: '2027-01-11', bas: '16:30', bit: '17:20', durum: 'musait' },
+        { id: 'm4', tarih: '2027-01-13', bas: '11:00', bit: '11:50', durum: 'musait' }
+      ];
+      const dateInput = document.getElementById('availability-date');
+      const timeRows = document.getElementById('time-rows');
+      const addTime = document.getElementById('add-time');
+      const repeat = document.getElementById('repeat-weekly');
+      const repeatWrap = document.getElementById('repeat-count-wrap');
+      const repeatCount = document.getElementById('repeat-count');
+      const preview = document.getElementById('preview-list');
+      const previewHeading = document.getElementById('preview-heading');
+      const error = document.getElementById('form-error');
+      const form = document.getElementById('availability-form');
+      const saveButton = document.getElementById('save-availability');
+      const datePickerButton = document.querySelector('.availability-date-picker');
+      const times = [];
+      let nextRowId = 0;
+
+      function readSlots() {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved === null) {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_SLOTS));
+          return DEFAULT_SLOTS.slice();
+        }
+        try {
+          const parsed = JSON.parse(saved);
+          if (!Array.isArray(parsed)) throw new TypeError('demoMusaitlik bir JSON dizisi olmalı.');
+          return parsed;
+        } catch (readError) {
+          console.error('demoMusaitlik verisi okunamadı.', readError);
+          return [];
+        }
+      }
+
+      function createTimeSelect(value) {
+        const select = document.createElement('select');
+        select.className = 'availability-start-input rounded-[8px] border border-[#DEDaf4] bg-white px-2 py-2.5 text-[14px] text-[#1E1E1C] focus:border-[#51409D] focus:outline-none focus:ring-0 sm:px-3';
+        select.id = 'availability-start-' + (++nextRowId);
+        for (let minutes = 9 * 60; minutes <= 18 * 60; minutes += 30) {
+          const option = document.createElement('option');
+          option.value = String(Math.floor(minutes / 60)).padStart(2, '0') + ':' + String(minutes % 60).padStart(2, '0');
+          option.textContent = option.value;
+          option.selected = option.value === value;
+          select.appendChild(option);
+        }
+        return select;
+      }
+
+      function addTimeRow(value) {
+        if (times.length >= 5) return;
+        const row = document.createElement('div');
+        row.className = 'availability-time-row';
+        const start = createTimeSelect(value);
+        const startLabel = document.createElement('label');
+        startLabel.className = 'availability-time-field';
+        startLabel.htmlFor = start.id;
+        const startCaption = document.createElement('span');
+        startCaption.textContent = 'Başlangıç';
+        startLabel.append(startCaption, start);
+        const end = document.createElement('input');
+        end.className = 'availability-end-input rounded-[8px] border border-[#DEDaf4] px-2 py-2.5 text-[14px] sm:px-3';
+        end.type = 'text';
+        end.disabled = true;
+        end.setAttribute('aria-label', 'Bitiş, seans süresine göre otomatik hesaplanır');
+        end.setAttribute('aria-describedby', 'availability-end-help');
+        const endLabel = document.createElement('label');
+        endLabel.className = 'availability-time-field';
+        const endCaption = document.createElement('span');
+        endCaption.textContent = 'Bitiş';
+        endLabel.append(endCaption, end);
+        const arrow = document.createElement('span');
+        arrow.className = 'availability-time-separator';
+        arrow.setAttribute('aria-hidden', 'true');
+        arrow.textContent = '–';
+        const remove = document.createElement('button');
+        remove.className = 'availability-remove-time';
+        remove.type = 'button';
+        remove.setAttribute('aria-label', 'Bu saati kaldır');
+        remove.textContent = '×';
+        row.append(startLabel, arrow, endLabel, remove);
+        timeRows.appendChild(row);
+        const entry = { row: row, start: start, end: end, remove: remove, startLabel: startLabel };
+        times.push(entry);
+        start.addEventListener('change', update);
+        remove.addEventListener('click', function () {
+          times.splice(times.indexOf(entry), 1);
+          row.remove();
+          update();
+        });
+        const feedback = document.createElement('p');
+        feedback.className = 'availability-time-feedback';
+        feedback.id = start.id + '-error';
+        feedback.hidden = true;
+        feedback.setAttribute('role', 'status');
+        row.appendChild(feedback);
+        entry.feedback = feedback;
+        update();
+      }
+
+      function dateLabel(dateValue) {
+        const parts = dateValue.split('-').map(Number);
+        const date = new Date(parts[0], parts[1] - 1, parts[2], 12);
+        const weekdays = ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'];
+        const months = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'];
+        return date.getDate() + ' ' + months[date.getMonth()] + ' ' + weekdays[date.getDay()];
+      }
+
+      function datesToPreview() {
+        if (!dateInput.value) return [];
+        const [year, month, day] = dateInput.value.split('-').map(Number);
+        const count = repeat.checked ? Number(repeatCount.value) : 1;
+        return Array.from({ length: count }, function (_, index) {
+          const date = new Date(year, month - 1, day + index * 7, 12);
+          return date.getFullYear() + '-' + String(date.getMonth() + 1).padStart(2, '0') + '-' +
+            String(date.getDate()).padStart(2, '0');
+        });
+      }
+
+      function intervalsOverlap(startA, endA, startB, endB) {
+        return startA < endB && endA > startB;
+      }
+
+      function update() {
+        times.forEach(function (entry) {
+          const [hour, minute] = entry.start.value.split(':').map(Number);
+          const finish = hour * 60 + minute + 50;
+          entry.end.value = String(Math.floor(finish / 60)).padStart(2, '0') + ':' + String(finish % 60).padStart(2, '0');
+          entry.remove.hidden = false;
+        });
+
+        repeatWrap.classList.toggle('hidden', !repeat.checked);
+        addTime.classList.toggle('hidden', times.length >= 5);
+        preview.replaceChildren();
+        times.forEach(function (entry) {
+          const item = document.createElement('li');
+          item.className = 'availability-preview-item';
+          const summary = document.createElement('span');
+          const dateSummary = dateInput.value ? dateLabel(dateInput.value) : 'Tarih seçilmedi';
+          const weekday = dateInput.value ? dateSummary.split(' ').slice(-1)[0] : 'gün';
+          summary.textContent = repeat.checked
+            ? repeatCount.value + ' hafta boyunca her ' + weekday + ' ' + entry.start.value + ' - ' + entry.end.value
+            : dateSummary + ' · ' + entry.start.value + ' - ' + entry.end.value;
+          const remove = document.createElement('button');
+          remove.className = 'availability-preview-remove';
+          remove.type = 'button';
+          remove.setAttribute('aria-label', entry.start.value + ' saatini özet listesinden kaldır');
+          remove.textContent = '×';
+          remove.addEventListener('click', function () {
+            entry.remove.click();
+          });
+          item.append(summary, remove);
+          preview.appendChild(item);
+        });
+        previewHeading.textContent = 'Eklenecek saatler (' + times.length + ')';
+        saveButton.textContent = times.length + ' saat ekle';
+        const validationMessage = validate();
+        error.textContent = validationMessage;
+        error.classList.toggle('hidden', !validationMessage);
+        saveButton.disabled = times.length === 0 || !dateInput.value || Boolean(validationMessage);
+      }
+
+      function validate() {
+        times.forEach(function (entry) {
+          entry.feedback.textContent = '';
+          entry.feedback.hidden = true;
+          entry.start.removeAttribute('aria-invalid');
+          entry.start.setAttribute('aria-describedby', 'availability-end-help');
+        });
+        if (times.length === 0) return '';
+        if (!dateInput.value) return 'Tarih seç.';
+        if (dateInput.value < '2027-01-11') return 'Geçmiş bir tarih seçemezsin.';
+        const slots = readSlots();
+        const dates = datesToPreview();
+        const pending = [];
+        for (const date of dates) {
+          for (const entry of times) {
+            const [hour, minute] = entry.start.value.split(':').map(Number);
+            const startMinute = hour * 60 + minute;
+            const endMinute = startMinute + 50;
+            const collision = slots.find(function (slot) {
+              if (slot.tarih !== date) return false;
+              const [otherHour, otherMinute] = slot.bas.split(':').map(Number);
+              const [otherEndHour, otherEndMinute] = slot.bit.split(':').map(Number);
+              return intervalsOverlap(startMinute, endMinute, otherHour * 60 + otherMinute, otherEndHour * 60 + otherEndMinute);
+            }) || pending.find(function (slot) {
+              if (slot.tarih !== date) return false;
+              const [otherHour, otherMinute] = slot.bas.split(':').map(Number);
+              return intervalsOverlap(startMinute, endMinute, otherHour * 60 + otherMinute, otherHour * 60 + otherMinute + 50);
+            });
+            if (collision) {
+              const message = 'Bu saat mevcut bir müsaitlikle çakışıyor (' + date + ' ' + entry.start.value + ').';
+              entry.feedback.textContent = message;
+              entry.feedback.hidden = false;
+              entry.start.setAttribute('aria-invalid', 'true');
+              entry.start.setAttribute('aria-describedby', 'availability-end-help ' + entry.feedback.id);
+              return message;
+            }
+            pending.push({ tarih: date, bas: entry.start.value });
+          }
+        }
+        return '';
+      }
+
+      addTime.addEventListener('click', function (event) {
+        event.preventDefault();
+        if (times.length < 5) addTimeRow('14:00');
+        addTime.classList.toggle('hidden', times.length >= 5);
+        update();
+      });
+      dateInput.addEventListener('change', update);
+      repeat.addEventListener('change', update);
+      repeatCount.addEventListener('change', update);
+      datePickerButton.addEventListener('click', function () {
+        if (typeof dateInput.showPicker === 'function') dateInput.showPicker();
+        else {
+          dateInput.focus();
+          dateInput.click();
+        }
+      });
+      dateInput.addEventListener('input', update);
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        const validationMessage = validate();
+        if (validationMessage) {
+          error.textContent = validationMessage;
+          error.classList.remove('hidden');
+          return;
+        }
+
+        const slots = readSlots();
+        const entries = [];
+        datesToPreview().forEach(function (date) {
+          times.forEach(function (entry) {
+            const [hour, minute] = entry.start.value.split(':').map(Number);
+            const finish = hour * 60 + minute + 50;
+            entries.push({
+              id: window.crypto && crypto.randomUUID ? crypto.randomUUID() : 'm' + Date.now() + Math.random().toString(16).slice(2),
+              tarih: date,
+              bas: entry.start.value,
+              bit: String(Math.floor(finish / 60)).padStart(2, '0') + ':' + String(finish % 60).padStart(2, '0'),
+              durum: 'musait'
+            });
+          });
+        });
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(slots.concat(entries)));
+          localStorage.setItem('demoMusaitlikHafta', entries[0].tarih);
+          location.href = 'guru-musaitlik.html?eklendi=' + entries.length;
+        } catch (saveError) {
+          console.error('Müsaitlik kaydedilemedi.', saveError);
+          error.textContent = 'Müsaitlik kaydedilemedi. Tarayıcı depolama alanını kontrol et.';
+          error.classList.remove('hidden');
+        }
+      });
+
+      const params = new URLSearchParams(location.search);
+      const requestedDate = params.get('date');
+      const requestedStart = params.get('start');
+      if (requestedDate && /^\d{4}-\d{2}-\d{2}$/.test(requestedDate)) dateInput.value = requestedDate;
+      const validStarts = Array.from({ length: 19 }, function (_, index) {
+        const minutes = 9 * 60 + index * 30;
+        return String(Math.floor(minutes / 60)).padStart(2, '0') + ':' + String(minutes % 60).padStart(2, '0');
+      });
+      addTimeRow(validStarts.includes(requestedStart) ? requestedStart : '14:00');
+      addTime.classList.toggle('hidden', times.length >= 5);
+    })();
+  </script>
+  <script src="nav.js"></script>
+  <script src="ortak.js"></script>
+  <script src="secim.js"></script>
+<script src="avatar.js"></script></body>
+</html>

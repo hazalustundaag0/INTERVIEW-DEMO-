@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="shell-type" content="web_standard">
+  <title>Ödeme onayı · Interview Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "dark-petrol": "#51409D",
+            "primary-petrol": "#51409D",
+            "light-petrol": "#EEECFF",
+            "copper": "#7564C7",
+            "page-bg": "#7564C7",
+            "card-border": "#7564C7",
+            "muted-text": "#7564C7",
+            "charcoal": "#1C1C1A",
+          },
+          fontFamily: { sans: ["IBM Plex Sans", "sans-serif"] },
+          boxShadow: {
+            card: "0 1px 2px rgba(81, 64, 157, 0.06), 0 8px 24px rgba(81, 64, 157, 0.07)",
+            btn: "0 2px 6px rgba(81, 64, 157, 0.18)"
+          },
+          borderRadius: { custom: "10px" }
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="../theme.css">
+  <script src="js/advisors.js"></script>
+  <script src="gate.js"></script>
+<link rel="stylesheet" href="avatar.css"></head>
+<body class="payment-success-page font-sans min-h-screen flex flex-col antialiased">
+  <div id="site-header" data-variant="compact" data-menu="false"></div>
+  <main class="payment-success-main flex-1 w-full">
+    <div class="payment-success-content mx-auto flex w-full max-w-[760px] flex-col items-center px-4 py-10 sm:px-6 sm:py-14">
+      <section class="payment-success-next w-full" aria-labelledby="next-steps-title">
+        <div class="payment-success-next-heading">
+          <span class="payment-success-section-label">Sıradaki adımlar</span>
+          <h2 id="next-steps-title">Ödeme sonrası yol haritan</h2>
+        </div>
+        <ol class="payment-success-next-grid">
+          <li class="payment-success-next-step is-complete">
+            <span class="payment-success-next-icon material-symbols-outlined" aria-hidden="true">check</span>
+            <strong>Ödeme</strong>
+            <small class="payment-success-next-tag">Tamamlandı</small>
+            <p>Ödemen başarıyla alındı.</p>
+          </li>
+          <li class="payment-success-next-step is-current" aria-current="step">
+            <span class="payment-success-next-icon material-symbols-outlined" aria-hidden="true">person</span>
+            <strong>Profil</strong>
+            <small class="payment-success-next-tag">2 dakika</small>
+            <p>Profilini tamamla.</p>
+          </li>
+          <li class="payment-success-next-step">
+            <span class="payment-success-next-icon material-symbols-outlined" aria-hidden="true">description</span>
+            <strong>CV ve onay</strong>
+            <small class="payment-success-next-tag">PDF veya DOCX</small>
+            <p>CV'ni yükle ve onayla.</p>
+          </li>
+          <li class="payment-success-next-step">
+            <span class="payment-success-next-icon material-symbols-outlined" aria-hidden="true">event</span>
+            <strong>Randevu</strong>
+            <small class="payment-success-next-tag">Son adım</small>
+            <p>Seans randevunu al.</p>
+          </li>
+        </ol>
+      </section>
+      <section class="payment-success-card w-full rounded-2xl border bg-white p-6 shadow-card sm:p-10" aria-labelledby="payment-success-title">
+        <div class="payment-success-confetti" aria-hidden="true"></div>
+        <div class="flex flex-col items-center text-center">
+          <div class="payment-success-icon mb-5" role="img" aria-label="Ödeme başarılı">
+            <svg viewBox="0 0 96 96" aria-hidden="true">
+              <defs>
+                <linearGradient id="success-gradient" x1="0" x2="1" y1="0" y2="1">
+                  <stop offset="0" stop-color="#35a66b"/>
+                  <stop offset="1" stop-color="#51409d"/>
+                </linearGradient>
+              </defs>
+              <circle cx="48" cy="48" r="46" fill="url(#success-gradient)"/>
+              <path class="payment-success-check" d="m27 49 14 14 29-31"/>
+            </svg>
+          </div>
+          <p class="payment-success-thanks" id="payment-success-thanks" role="status" aria-live="polite">Teşekkürler</p>
+          <h1 class="payment-success-title" id="payment-success-title">Ödemen alındı</h1>
+          <p class="payment-success-intro">
+            Satış hikâyesi çalışman <strong data-receipt-advisor-name>Selin Arslan</strong> ile başlıyor. Randevu alabilmen için kısa bir profil formunu doldurman gerekiyor, 2 dakika sürer.
+          </p>
+        </div>
+
+        <div class="payment-success-advisor" aria-label="Danışman bilgisi">
+          <span class="payment-success-advisor-avatar" data-advisor-avatar aria-hidden="true">SA</span>
+          <div class="payment-success-advisor-copy">
+            <a class="payment-success-advisor-link" data-receipt-advisor-link href="danisman.html?id=selin-arslan"><strong data-receipt-advisor-name>Selin Arslan</strong></a>
+            <span data-receipt-advisor-title>Kıdemli Satış Direktörü &amp; Mentor</span>
+          </div>
+          <span class="payment-success-duration" data-receipt-duration>50 dk</span>
+          <span class="payment-success-session-count" data-receipt-sessions>2 seans</span>
+        </div>
+
+        <div class="payment-success-actions">
+          <p class="payment-success-note">
+            <span class="material-symbols-outlined" aria-hidden="true">info</span>
+            <span>Profil, KVKK onayı ve CV'n tamamlanmadan seans randevusu alamazsın.</span>
+          </p>
+          <a class="payment-success-primary" href="profil.html">Profilimi doldur <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span></a>
+          <a class="payment-success-secondary" href="ana.html">Daha sonra, ana ekrana dön</a>
+        </div>
+      </section>
+
+      <section class="payment-success-receipt w-full" aria-labelledby="receipt-title">
+        <div class="payment-success-receipt-heading">
+          <div>
+            <span class="payment-success-section-label">Ödeme özeti</span>
+            <h2 id="receipt-title">Makbuz özeti</h2>
+          </div>
+          <button class="payment-success-print" type="button" data-print-receipt>
+            <span class="material-symbols-outlined" aria-hidden="true">download</span>
+            Makbuzu indir
+          </button>
+        </div>
+        <dl class="payment-success-receipt-grid">
+          <div>
+            <dt>Sipariş no</dt>
+            <dd data-receipt-order-number>#IV-2027-0001</dd>
+          </div>
+          <div>
+            <dt>Tarih</dt>
+            <dd data-receipt-date></dd>
+          </div>
+          <div>
+            <dt>Hizmet</dt>
+            <dd data-receipt-service>Satış hikâyesi oluşturma</dd>
+          </div>
+          <div>
+            <dt>Danışman</dt>
+            <dd data-receipt-advisor>Selin Arslan</dd>
+          </div>
+          <div class="payment-success-receipt-total">
+            <dt>Toplam tutar</dt>
+            <dd data-receipt-total>1.500 ₺ <span>KDV dahil</span></dd>
+          </div>
+        </dl>
+        <p class="payment-success-email-note">
+          <span class="material-symbols-outlined" aria-hidden="true">mark_email_read</span>
+          E-postana gönderildi
+        </p>
+      </section>
+
+      <p class="payment-success-reference">Ödeme referansı: IY-48213907</p>
+    </div>
+  </main>
+  <script src="nav.js"></script>
+  <script src="ortak.js"></script>
+  <script src="js/site-header.js"></script>
+  <script src="odeme-ok-demo.js"></script>
+<script src="avatar.js"></script></body>
+</html>
