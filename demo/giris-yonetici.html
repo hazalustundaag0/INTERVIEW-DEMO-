@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yönetici girişi · Interview Demo</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../theme.css">
+<link rel="stylesheet" href="yonetici.css">
+</head>
+<body class="adm">
+<main class="adm-login">
+  <div class="adm-card adm-login-card">
+    <h1>Yönetici girişi</h1>
+    <p>Platform yönetimi için yönetici hesabınla giriş yap.</p>
+    <form id="giris-formu" novalidate>
+      <div class="adm-field">
+        <label for="eposta">E-posta</label>
+        <input class="adm-input" id="eposta" name="eposta" type="email" autocomplete="username" placeholder="ornek@alanadi.com" required>
+      </div>
+      <div class="adm-field">
+        <label for="sifre">Parola</label>
+        <input class="adm-input" id="sifre" name="sifre" type="password" autocomplete="current-password" required>
+      </div>
+      <p class="adm-error" id="giris-hata" role="alert" hidden></p>
+      <button type="submit" class="adm-btn adm-btn--primary" style="width:100%;margin-top:1.25rem;min-height:44px">Giriş yap</button>
+    </form>
+    <div class="adm-note" id="demo-ipucu" style="margin:1.25rem 0 0">
+      <span class="material-symbols-outlined" aria-hidden="true">info</span>
+      <span>Demo hesabı: <b>yonetici@interviewdemo.com</b>, parola: en az 6 karakterli herhangi bir parola (demo modu).</span>
+    </div>
+  </div>
+</main>
+<script src="yonetici-ayar.js"></script>
+<script src="yonetici-veri.js"></script>
+<script src="yonetici-api.js"></script>
+<script>
+(function () {
+  var api = window.YoneticiAPI;
+  var params = new URLSearchParams(location.search);
+  var hedef = params.get('return');
+  if (!hedef || !/^yonetici-[a-z0-9-]+\.html$/.test(hedef)) hedef = 'yonetici-panel.html';
+  if (api.oturumGetir()) { location.replace(hedef); return; }
+
+  var form = document.getElementById('giris-formu');
+  var hata = document.getElementById('giris-hata');
+  form.addEventListener('submit', function (olay) {
+    olay.preventDefault();
+    var dugme = form.querySelector('button[type=submit]');
+    hata.hidden = true;
+    if (!form.eposta.value.trim() || !form.sifre.value) {
+      hata.textContent = 'E-posta ve parola gerekli.';
+      hata.hidden = false;
+      return;
+    }
+    dugme.disabled = true;
+    api.girisYap(form.eposta.value.trim(), form.sifre.value)
+      .then(function () { location.replace(hedef); })
+      .catch(function (h) {
+        hata.textContent = h.message || 'Giriş yapılamadı.';
+        hata.hidden = false;
+        dugme.disabled = false;
+      });
+  });
+  if (api.AYAR.MOD !== 'mock') document.getElementById('demo-ipucu').hidden = true;
+})();
+</script>
+</body>
+</html>
