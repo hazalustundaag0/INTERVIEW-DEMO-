@@ -1,5 +1,18 @@
 /* yonetici.css: Yönetici paneli. Renk ve gölge token'ları ../theme.css'ten gelir. */
 
+:root {
+  /* Ana sayfa (demo/index.html) ile aynı değerler */
+  --adm-ink: #211a50;
+  --adm-cta: linear-gradient(135deg, #51409d, #6b58bd);
+  --adm-cta-hover: linear-gradient(135deg, #43358a, #5f4cb0);
+  --adm-header: linear-gradient(155deg, #352b78 0%, #433582 55%, #51409d 100%);
+  --adm-line: #e6e2f7;
+  --adm-line-strong: #dedaf4;
+  --adm-link: #4338ca;
+  --adm-accent: #f59e0b;
+  --adm-accent-ink: #422006;
+}
+
 body.adm {
   margin: 0;
   min-height: 100vh;
@@ -22,7 +35,7 @@ body.adm *:focus-visible {
 
 /* ---------- Yan menü ---------- */
 .adm-sidebar {
-  background: var(--sidebar-bg);
+  background: var(--adm-header);
   color: #fff;
   position: sticky;
   top: 0;
@@ -152,9 +165,11 @@ body.adm .adm-user button.adm-logout:hover { background: var(--panel-item-hover-
 
 body.adm .adm-page-head h1 {
   margin: 0;
-  font-size: 24px;
+  font-size: 26px;
   font-weight: 700;
   line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: var(--adm-ink);
 }
 
 .adm-page-head p { margin: .25rem 0 0; color: var(--text-secondary); max-width: 720px; }
@@ -162,9 +177,9 @@ body.adm .adm-page-head h1 {
 
 .adm-card {
   background: var(--theme-surface);
-  border: 1px solid var(--theme-border);
-  border-radius: 14px;
-  box-shadow: var(--theme-shadow-elevation-sm);
+  border: 1px solid var(--adm-line);
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(67, 53, 130, .05);
 }
 
 [data-icerik] > * + * { margin-top: 1.25rem; }
@@ -179,7 +194,7 @@ body.adm .adm-page-head h1 {
   border-bottom: 1px solid var(--theme-border);
 }
 
-body.adm .adm-card-head h2 { margin: 0; font-size: 16px; font-weight: 600; }
+body.adm .adm-card-head h2 { margin: 0; font-size: 16px; font-weight: 700; color: var(--adm-ink); }
 .adm-card-head p { margin: 2px 0 0; color: var(--text-secondary); font-size: 13px; }
 .adm-card-body { padding: 1.25rem; }
 
@@ -197,7 +212,7 @@ body.adm .adm-card-head h2 { margin: 0; font-size: 16px; font-weight: 600; }
 .adm-stat { padding: 1rem 1.15rem; }
 .adm-stat-label { font-size: 13px; color: var(--text-secondary); display: flex; align-items: center; gap: .4rem; }
 .adm-stat-label .material-symbols-outlined { font-size: 18px; color: var(--primary); }
-.adm-stat-value { font-size: 26px; font-weight: 700; margin-top: .35rem; letter-spacing: -0.02em; }
+.adm-stat-value { font-size: 28px; font-weight: 700; margin-top: .35rem; letter-spacing: -0.02em; color: var(--adm-ink); }
 .adm-stat-sub { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
 
 /* Araç çubuğu / filtreler */
@@ -281,7 +296,9 @@ table.adm-table {
   margin: 2px 4px 2px 0;
   border-radius: 999px;
   font-size: 12px;
-  background: var(--surface-low);
+  font-weight: 600;
+  background: #eef2ff;
+  border: 1px solid #d7cff5;
   color: var(--primary);
   white-space: nowrap;
 }
@@ -295,30 +312,32 @@ body.adm .adm-btn {
   min-height: 38px;
   padding: 0 1rem;
   border-radius: 999px;
-  border: 1px solid var(--button-secondary-border);
-  background: var(--button-secondary-bg);
-  color: var(--button-secondary-color);
-  font: 600 14px/1 "IBM Plex Sans", sans-serif;
+  border: 1px solid var(--adm-line-strong);
+  background: rgba(255, 255, 255, .8);
+  color: var(--adm-link);
+  font: 500 14px/1 "IBM Plex Sans", sans-serif;
+  box-shadow: 0 4px 12px rgba(67, 53, 130, .05);
   cursor: pointer;
   text-decoration: none;
   white-space: nowrap;
   transition: background-color 150ms ease, box-shadow 150ms ease;
 }
 
-body.adm .adm-btn:hover { background: var(--button-secondary-hover-bg); }
+body.adm .adm-btn:hover { background: #f5f3ff; border-color: #c9c1ef; }
 body.adm .adm-btn .material-symbols-outlined { font-size: 18px; }
 
 body.adm .adm-btn--primary {
-  background: linear-gradient(110deg, var(--theme-violet), var(--theme-orange));
+  background: var(--adm-cta);
   border-color: transparent;
   color: #fff;
-  box-shadow: var(--theme-shadow-elevation-sm);
+  font-weight: 500;
+  box-shadow: 0 9px 22px rgba(81, 64, 157, .22);
 }
 
-body.adm .adm-btn--primary:hover { box-shadow: var(--theme-shadow-elevation-hover); background: linear-gradient(110deg, var(--theme-violet-deep), var(--theme-orange)); }
+body.adm .adm-btn--primary:hover { background: var(--adm-cta-hover); box-shadow: 0 12px 26px rgba(81, 64, 157, .3); }
 body.adm .adm-btn--danger { border-color: #fca5a5; color: #b91c1c; }
 body.adm .adm-btn--danger:hover { background: #fef2f2; }
-body.adm .adm-btn--ghost { border-color: transparent; background: transparent; min-height: 32px; padding: 0 .6rem; }
+body.adm .adm-btn--ghost { border-color: transparent; background: transparent; box-shadow: none; min-height: 32px; padding: 0 .6rem; }
 body.adm .adm-btn--ghost:hover { background: var(--surface-low); }
 body.adm .adm-btn--sm { min-height: 30px; padding: 0 .7rem; font-size: 13px; }
 body.adm .adm-btn:disabled { opacity: .5; cursor: not-allowed; }
@@ -435,7 +454,7 @@ body.adm .adm-tabs button[aria-selected="true"] { color: var(--primary); border-
 }
 .adm-list-body { flex: 1; min-width: 0; }
 .adm-list-title { font-weight: 600; }
-body.adm a.adm-list-title, body.adm .adm-table a.adm-link { color: var(--primary); text-decoration: none; }
+body.adm a.adm-list-title, body.adm .adm-table a.adm-link { color: var(--adm-link); text-decoration: none; }
 body.adm a.adm-list-title:hover, body.adm .adm-table a.adm-link:hover { text-decoration: underline; }
 .adm-list-text { color: var(--text-secondary); margin-top: 2px; white-space: pre-wrap; overflow-wrap: anywhere; }
 .adm-list-meta { margin-top: .35rem; display: flex; gap: .4rem; flex-wrap: wrap; align-items: center; }
@@ -531,16 +550,31 @@ body.adm .adm-modal-head h2 { margin: 0; font-size: 17px; font-weight: 600; }
 .adm-toast--error { background: #b91c1c; }
 
 /* Giriş sayfası */
+.adm-login-header {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  padding: 0 max(1rem, calc((100% - 1216px) / 2));
+  background: var(--adm-header);
+  color: #fff;
+}
+body.adm .adm-login-header a { color: #fff; font-weight: 700; font-size: 16px; text-decoration: none; }
 .adm-login {
-  min-height: 100vh;
+  min-height: calc(100vh - 64px);
   display: grid;
   place-items: center;
-  padding: 1rem;
-  background: var(--panel-bg);
+  padding: 2rem 1rem;
   box-sizing: border-box;
 }
-.adm-login-card { width: min(420px, 100%); padding: 2rem; box-sizing: border-box; }
-body.adm .adm-login-card h1 { margin: 0 0 .35rem; font-size: 22px; color: var(--primary); border-left: 3px solid var(--primary); padding-left: .75rem; }
+.adm-login-card { border-radius: 24px !important; }
+.adm-login-tag {
+  display: inline-flex; align-items: center; gap: .4rem; padding: 4px 12px; margin-bottom: 1rem;
+  border-radius: 999px; background: #eef2ff; border: 1px solid #d7cff5; color: var(--primary);
+  font-size: 12px; font-weight: 600; box-shadow: 0 4px 14px rgba(81, 64, 157, .08);
+}
+.adm-login-tag::before { content: ""; width: 6px; height: 6px; border-radius: 999px; background: currentColor; }
+.adm-login-card { width: min(440px, 100%); padding: 2.25rem; box-sizing: border-box; }
+body.adm .adm-login-card h1 { margin: 0 0 .5rem; font-size: 30px; line-height: 1.15; letter-spacing: -0.03em; color: var(--adm-ink); }
 .adm-login-card > p { margin: 0 0 1.5rem; color: var(--text-secondary); }
 
 .adm-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
@@ -561,7 +595,7 @@ body.adm .adm-login-card h1 { margin: 0 0 .35rem; font-size: 22px; color: var(--
     top: 0;
     z-index: 50;
     padding: .65rem 1rem;
-    background: var(--sidebar-bg);
+    background: var(--adm-header);
     color: #fff;
   }
   .adm-topbar strong { font-size: 15px; }
