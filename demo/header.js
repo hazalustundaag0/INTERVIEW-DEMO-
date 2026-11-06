@@ -1,4 +1,21 @@
 (function () {
+  const iconPaths = {
+    menu: '<path d="M4 6h16M4 12h16M4 18h16"/>',
+    close: '<path d="m6 6 12 12M18 6 6 18"/>',
+    expand_more: '<path d="m6 9 6 6 6-6"/>'
+  };
+
+  function svgIcon(name, className) {
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('viewBox', '0 0 24 24');
+    svg.setAttribute('aria-hidden', 'true');
+    svg.setAttribute('focusable', 'false');
+    svg.classList.add('site-header-icon');
+    if (className) svg.classList.add(className);
+    svg.innerHTML = iconPaths[name];
+    return svg;
+  }
+
   function getCurrentSession() {
     if (typeof window.getSession === 'function') return window.getSession();
     console.error('Ortak üst bar için getSession() oturum yardımcısı yüklenemedi.');
@@ -45,10 +62,7 @@
     toggle.setAttribute('aria-label', 'Menüyü aç');
     toggle.setAttribute('aria-expanded', 'false');
     toggle.setAttribute('aria-controls', 'site-header-panel');
-    const toggleIcon = document.createElement('span');
-    toggleIcon.className = 'material-symbols-outlined';
-    toggleIcon.setAttribute('aria-hidden', 'true');
-    toggleIcon.textContent = 'menu';
+    const toggleIcon = svgIcon('menu', 'site-header-toggle-icon');
     toggle.appendChild(toggleIcon);
     inner.appendChild(toggle);
 
@@ -139,10 +153,7 @@
       const userName = document.createElement('span');
       userName.className = 'site-header-user-name';
       userName.textContent = name;
-      const chevron = document.createElement('span');
-      chevron.className = 'material-symbols-outlined';
-      chevron.setAttribute('aria-hidden', 'true');
-      chevron.textContent = 'expand_more';
+      const chevron = svgIcon('expand_more', 'site-header-chevron');
       trigger.append(avatar, userName, chevron);
 
       const menu = document.createElement('div');
@@ -237,7 +248,7 @@
       panel.hidden = mobile.matches && !shouldOpen;
       toggle.setAttribute('aria-expanded', String(shouldOpen));
       toggle.setAttribute('aria-label', shouldOpen ? 'Menüyü kapat' : 'Menüyü aç');
-      toggleIcon.textContent = shouldOpen ? 'close' : 'menu';
+      toggleIcon.innerHTML = iconPaths[shouldOpen ? 'close' : 'menu'];
       toggle.hidden = !mobile.matches;
       if (restoreFocus) toggle.focus();
     }
@@ -259,7 +270,9 @@
       });
     });
     document.addEventListener('click', event => {
-      if (mobile.matches && !panel.hidden && !header.contains(event.target)) setMenuOpen(false, false);
+      if (mobile.matches && !panel.hidden && !event.composedPath().includes(header)) {
+        setMenuOpen(false, false);
+      }
     });
     mobile.addEventListener('change', () => setMenuOpen(false, false));
 

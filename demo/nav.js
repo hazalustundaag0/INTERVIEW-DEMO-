@@ -510,38 +510,6 @@ const ROUTES = {
     if (!['guru-danisan-detay.html', 'guru-hikaye.html', 'guru-notlar.html', 'guru-odevler.html'].includes(PAGE)) return;
     document.body.classList.add('guru-client-profile');
     if (PAGE === 'guru-hikaye.html') document.body.classList.add('guru-story-page');
-    const section = Array.from(document.querySelectorAll('section')).find(element =>
-      element.classList.contains('lg:col-span-8') && element.querySelector('h1')
-    );
-    const title = section?.querySelector('h1');
-    const profileCard = title?.parentElement?.parentElement;
-    if (!profileCard || profileCard.querySelector('.client-profile-actions')) return;
-    profileCard.classList.add('client-profile-card');
-    const actions = document.createElement('div');
-    actions.className = 'client-profile-actions';
-    [
-      ['Not Yaz', 'guru-notlar.html'],
-      ['Ödev Ver', 'guru-odevler.html']
-    ].forEach(([label, href]) => {
-      const link = document.createElement('a');
-      link.className = 'client-profile-action' + (label === 'Ödev Ver' ? ' client-profile-action--primary' : '');
-      link.href = href;
-      link.textContent = label;
-      actions.append(link);
-    });
-    profileCard.append(actions);
-    if (PAGE === 'guru-hikaye.html') {
-      const statuses = document.createElement('div');
-      statuses.className = 'client-profile-statuses';
-      const sessionStatus = document.createElement('span');
-      sessionStatus.className = 'client-profile-status';
-      sessionStatus.textContent = 'Seans 2/2';
-      const storyStatus = document.createElement('span');
-      storyStatus.className = 'client-profile-status client-profile-status--ready';
-      storyStatus.innerHTML = '<span class="client-profile-status-dot" aria-hidden="true"></span>Hikâye hazır';
-      profileCard.insertBefore(statuses, actions);
-      statuses.append(sessionStatus, storyStatus);
-    }
   }
 
   function applyDemoUiFlag() {
@@ -617,6 +585,8 @@ const ROUTES = {
   }
 
   function setupPanelLayout() {
+    if (document.getElementById('sidebar')?.dataset.shared === 'true') return;
+
     const main = document.querySelector('main');
     let sidebar = main?.querySelector('.advisor-sidebar');
     if (document.body.classList.contains('guru-panel-page') && main) {

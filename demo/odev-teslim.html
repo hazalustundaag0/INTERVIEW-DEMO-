@@ -9,32 +9,11 @@
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <link rel="stylesheet" href="../theme.css">
   <script src="gate.js"></script>
-<link rel="stylesheet" href="avatar.css"></head>
+<link rel="stylesheet" href="avatar.css"><link rel="stylesheet" href="sidebar.css"></head>
 <body class="min-h-screen bg-background font-['IBM_Plex_Sans'] text-[#1E1E1C] antialiased">
   <main class="mx-auto w-full px-4 py-8 sm:px-6 lg:px-8">
     <div class="grid grid-cols-1 items-start gap-6">
-      <aside class="w-full">
-        <div class="flex min-h-[580px] flex-col justify-between rounded-[10px] border border-outline-variant bg-white p-4 shadow-sm">
-          <div>
-            <div class="mb-2 flex items-center gap-2 border-b border-outline-variant px-4 py-2">
-              
-              <span class="text-[14px] font-semibold text-[#51409D]">Interview Demo</span>
-            </div>
-            <nav class="flex flex-col gap-1">
-              <a class="rounded-lg px-4 py-2 text-[14px] text-[#51409D] hover:bg-surface-container-low" href="ana.html">Ana Ekran</a>
-              <a class="rounded-lg px-4 py-2 text-[14px] text-[#51409D] hover:bg-surface-container-low" href="profil.html">Profilim</a>
-              <a class="rounded-lg px-4 py-2 text-[14px] text-[#51409D] hover:bg-surface-container-low" href="cv.html">CV'm</a>
-              <a class="rounded-lg px-4 py-2 text-[14px] text-[#51409D] hover:bg-surface-container-low" href="seanslar.html">Seanslarım</a>
-              <a class="rounded-lg px-4 py-2 text-[14px] text-[#51409D] hover:bg-surface-container-low" href="hikaye-giris.html">Hikâyem</a>
-              <a aria-current="page" class="rounded-[8px] bg-[#51409D] px-4 py-2 text-[14px] font-semibold text-white" href="odevler.html">Ödevlerim</a>
-            </nav>
-          </div>
-          <div class="mt-8 flex items-center gap-3 border-t border-outline-variant px-1 pt-4">
-            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#DEDaf4] bg-[#EEECFF] text-[14px] font-semibold text-[#51409D] demo-avatar" data-demo-avatar></div>
-            <div><div class="text-[14px] font-semibold text-[#51409D]">Elif Yılmaz</div><div class="text-[11px] text-[#51409D]">Aday</div></div>
-          </div>
-        </div>
-      </aside>
+      <aside id="sidebar" data-role="aday" aria-label="Aday menüsü"></aside>
 
       <section class="w-full">
         <div class="rounded-[10px] border border-outline-variant bg-white p-5 shadow-sm sm:p-8">
@@ -232,5 +211,5 @@
   <script src="nav.js"></script>
   <script src="ortak.js"></script>
   <script src="secim.js"></script>
-<script src="avatar.js"></script></body>
+<script src="avatar.js"></script><script src="sidebar.js"></script></body>
 </html>

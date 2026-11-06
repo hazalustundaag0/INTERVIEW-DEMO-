@@ -7,47 +7,6 @@
   document.body.classList.add('guru-client-overview');
   document.body.style.paddingBottom = '5rem';
 
-  const name = section.querySelector('h1');
-  const profileCard = name?.parentElement;
-  const avatar = profileCard?.previousElementSibling;
-  if (name && profileCard && avatar) {
-    const initials = name.textContent.trim().split(/\s+/).filter(Boolean)
-      .map(part => Array.from(part)[0]).join('').toLocaleUpperCase('tr-TR');
-    avatar.className = 'client-profile-avatar';
-    avatar.textContent = initials;
-    avatar.setAttribute('aria-label', `${name.textContent.trim()} baş harfleri`);
-
-    const profileHeader = profileCard.parentElement;
-    profileHeader.classList.add('client-profile-card');
-    profileCard.classList.add('client-profile-copy');
-
-    const summary = document.createElement('div');
-    summary.className = 'client-profile-summary';
-    summary.setAttribute('aria-label', 'Danışan özeti');
-    const progressLabel = document.createElement('span');
-    progressLabel.className = 'client-session-progress-label';
-    progressLabel.textContent = 'Seans ilerlemesi';
-    const progress = document.createElement('div');
-    progress.className = 'client-session-progress';
-    progress.setAttribute('role', 'img');
-    progress.setAttribute('aria-label', '2 seanstan 1’i tamamlandı');
-    const completed = document.createElement('span');
-    completed.className = 'is-complete';
-    const remaining = document.createElement('span');
-    progress.append(completed, remaining);
-    const progressCount = document.createElement('span');
-    progressCount.className = 'client-session-progress-count';
-    progressCount.textContent = '1 / 2';
-    summary.append(progressLabel, progress, progressCount);
-
-    const registration = document.createElement('span');
-    registration.className = 'client-registration-date';
-    registration.textContent = 'Kayıt tarihi · 11 Ocak 2026';
-    summary.append(registration);
-
-    profileHeader.append(summary);
-  }
-
   const tabs = Array.from(section.querySelectorAll('button')).filter(button =>
     ['Genel', 'Hikâye', 'Notlar', 'Ödevler'].includes(button.textContent.trim())
   );
