@@ -1,5 +1,3 @@
-@import url("demo/pattern.css");
-
 *,
 *::before,
 *::after {
@@ -3078,12 +3076,12 @@ body.login-page .login-heading-row {
   align-items: center;
 }
 
-body.login-page .login-heading-accent {
-  margin-top: 0;
+body .login-heading-row {
+  gap: 0;
 }
 
 body.login-page .login-intro-copy {
-  margin-left: 15px;
+  margin-left: 0;
   color: #4b5563;
 }
 
@@ -12299,16 +12297,8 @@ body :is(.site-header-brand, .sidebar-brand, .panel-sidebar-brand, .site-brand-l
   text-transform: none !important;
 }
 
-body .login-heading-accent {
-  display: none !important;
-}
-
 body.order-confirmation-page [class~="w-[3px]"] {
   display: none !important;
-}
-
-body.login-page .login-heading-row {
-  gap: 0 !important;
 }
 
 body.login-page .login-contact-link {
@@ -12333,6 +12323,17 @@ body.login-page .login-contact-link:focus-visible {
   border-radius: 2px !important;
   outline: 2px solid var(--color-focus) !important;
   outline-offset: 3px;
+}
+
+@media (max-width: 640px) {
+  body:has(> button.demo-only) {
+    padding-bottom: 88px;
+  }
+
+  body > button.demo-only {
+    transform: scale(0.85);
+    transform-origin: bottom right;
+  }
 }
 
 body #toggle-password {
