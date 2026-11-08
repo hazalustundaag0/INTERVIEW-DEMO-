@@ -4,15 +4,7 @@
     sidebar.classList.add('advisor-sidebar');
     sidebar.firstElementChild?.classList.add('candidate-sidebar-card');
     const nav = sidebar.querySelector('nav');
-    const storyLink = Array.from(nav?.querySelectorAll('a') || []).find(link =>
-      link.textContent.includes('Hikâyem')
-    );
-    if (storyLink) {
-      const badge = document.createElement('span');
-      badge.className = 'candidate-next-badge';
-      badge.textContent = 'Sıradaki';
-      storyLink.append(badge);
-    }
+    // "Sıradaki" rozeti gerçek sıradaki adıma göre ana-page.js'te eklenir (GAP-U15).
 
     const lockedItem = Array.from(nav?.children || []).find(item =>
       item.textContent.includes('Ödevlerim')
@@ -64,13 +56,8 @@
     const labelText = label?.textContent.trim() || `Adım ${index + 1}`;
     step.querySelector('.material-symbols-outlined')?.setAttribute('aria-hidden', 'true');
     step.classList.add('candidate-progress-step');
-    step.dataset.stepState = index < 2 ? 'complete' : index === 2 ? 'current' : 'upcoming';
-    if (index === 2) {
-      step.setAttribute('aria-current', 'step');
-      step.setAttribute('aria-label', `${labelText}, mevcut adım`);
-    } else {
-      step.setAttribute('aria-label', `${labelText}, ${index < 2 ? 'tamamlandı' : 'sırada'}`);
-    }
+    step.dataset.stepLabel = labelText;
+    // Adım durumu (complete/current/upcoming) API'den türetilir: ana-page.js (K36).
   });
 
   const sessionHeading = Array.from(document.querySelectorAll('h3')).find(item =>
@@ -96,14 +83,6 @@
   const advisorHeading = Array.from(document.querySelectorAll('h3')).find(item =>
     item.textContent.trim() === 'Danışmanın'
   );
-  const advisorCard = advisorHeading?.parentElement;
-  const advisorCopy = advisorCard?.querySelector('p');
-  if (advisorCopy && !advisorCard.querySelector('.candidate-advisor-link')) {
-    advisorCopy.classList.add('candidate-advisor-copy');
-    const advisorLink = document.createElement('a');
-    advisorLink.href = 'danisman.html?id=selin-arslan';
-    advisorLink.className = 'candidate-advisor-link';
-    advisorLink.textContent = 'Danışmanı gör';
-    advisorCopy.insertAdjacentElement('afterend', advisorLink);
-  }
+  advisorHeading?.parentElement?.querySelector('p')?.classList.add('candidate-advisor-copy');
+  // "Danışmanı gör" bağlantısı gerçek guru kimliğiyle ana-page.js'te eklenir (eski nav.js wireClientAdvisorProfile).
 })();

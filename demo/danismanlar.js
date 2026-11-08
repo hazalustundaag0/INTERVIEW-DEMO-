@@ -1,185 +1,177 @@
+// danismanlar.js — Danışman kataloğu (danismanlar.html). Sahibi: 82 Aday Onboarding UI Agent.
+// Veri: GET /public/gurus (Advisors.list, tüm sayfalar) + GET /public/sectors (Advisors.sectors).
+// Sektör filtresi backend koduyla: ?sektor=<code> (ör. finance_banking); eski UI kodları
+// (finance/retail/health/production) Advisors.sectorCode ile çevrilir. ?q= arama metni.
+// Kaldırılan demo davranışı: listAdvisors()/DEMO_ADVISORS senkron sahte veri, sahte "seans ücreti",
+// "deneyim yılı" sayısı ve "bu hafta müsait" metni (K52/K53, GAP-D07); kartta yalnız backend alanları.
 (function () {
-  var advisors = window.listAdvisors ? window.listAdvisors({ yayindaOlanlar: true }) : window.DEMO_ADVISORS;
-  var grid = document.getElementById('advisor-grid');
-  var filters = document.getElementById('advisor-filters');
-  var search = document.getElementById('advisor-search');
-  var sort = document.getElementById('advisor-sort');
-  var count = document.getElementById('advisor-count');
-  var empty = document.getElementById('advisor-empty');
-  var resetButton = document.getElementById('advisor-reset-filters');
-  if (!Array.isArray(advisors) || !grid || !filters || !search || !sort || !count || !empty || !resetButton) {
+  'use strict';
+  const Api = window.Api;
+  const grid = document.getElementById('advisor-grid');
+  const filters = document.getElementById('advisor-filters');
+  const search = document.getElementById('advisor-search');
+  const sort = document.getElementById('advisor-sort');
+  const count = document.getElementById('advisor-count');
+  const empty = document.getElementById('advisor-empty');
+  const resetButton = document.getElementById('advisor-reset-filters');
+  if (!Api || !window.Advisors || !grid || !filters || !search || !sort || !count || !empty || !resetButton) {
     console.error('Danışman dizini başlatılamadı.');
     return;
   }
 
+  const params = new URLSearchParams(location.search);
+  const storyFlow = params.get('akis') === 'hikaye';
+
   function make(tag, className, text) {
-    var element = document.createElement(tag);
+    const element = document.createElement(tag);
     if (className) element.className = className;
-    if (text !== undefined) element.textContent = text;
+    if (text !== undefined && text !== null) element.textContent = text;
     return element;
   }
-
   function normalize(value) {
-    return String(value)
-      .toLocaleLowerCase('tr-TR')
-      .replace(/ı/g, 'i')
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '');
+    return String(value || '').toLocaleLowerCase('tr-TR').replace(/ı/g, 'i').normalize('NFD').replace(/[̀-ͯ]/g, '');
+  }
+  // Kıdem serbest metindir ("12 yıl"); "Deneyim" sıralaması için baştaki sayı kullanılır.
+  function seniorityYears(value) {
+    const match = /(\d+)/.exec(String(value || ''));
+    return match ? Number(match[1]) : 0;
   }
 
-  var filtersBySector = {
-    all: [],
-    technology: ['teknoloji', 'saas', 'liderlik'],
-    finance: ['finans', 'bankacilik', 'yatirim'],
-    retail: ['perakende', 'tuketici', 'pazarlama'],
-    health: ['saglik', 'ar-ge', 'biyoteknoloji'],
-    production: ['uretim', 'sanayi', 'operasyon']
-  };
-  var filterLabels = [
-    ['all', 'Tümü'],
-    ['technology', 'Teknoloji & SaaS'],
-    ['finance', 'Finans'],
-    ['retail', 'Perakende'],
-    ['health', 'Sağlık'],
-    ['production', 'Üretim']
-  ];
-  var activeSector = 'all';
+  let activeSector = 'all';
 
-  function makeAdvisorCard(advisor, recommendedIndex) {
-    var card = make('article', 'advisor-directory-card');
-    var identity = make('div', 'advisor-directory-identity');
-    var initials = advisor.ad.split(/\s+/).slice(0, 2).map(function (part) {
-      return part.charAt(0).toLocaleUpperCase('tr-TR');
-    }).join('');
-    var avatar = make('span', 'advisor-directory-avatar', initials);
+  function makeAdvisorCard(advisor, index) {
+    const card = make('article', 'advisor-directory-card');
+    const identity = make('div', 'advisor-directory-identity');
+    const avatar = make('span', 'advisor-directory-avatar', Api.format.initials(advisor.ad));
     avatar.setAttribute('aria-hidden', 'true');
-    var nameAndTitle = make('div', 'advisor-directory-name');
+    const nameAndTitle = make('div', 'advisor-directory-name');
     nameAndTitle.append(make('h2', '', advisor.ad), make('p', '', advisor.unvan));
     identity.append(avatar, nameAndTitle);
+    card.appendChild(identity);
 
-    var introduction = make('p', 'advisor-directory-intro', advisor.kisaTanitim);
-    var facts = make('dl', 'advisor-directory-facts');
-    var experience = make('div');
-    experience.append(make('dt', '', 'Deneyim'), make('dd', '', advisor.deneyimYili + '+ yıl'));
-    var rate = make('div', 'advisor-directory-rate');
-    rate.append(make('dt', '', 'Seans ücreti'), make('dd', '', new Intl.NumberFormat('tr-TR').format(advisor.ucret) + ' ₺ · ' + advisor.sure + ' dk'));
-    facts.append(experience, rate);
+    if (advisor.kisaTanitim) card.appendChild(make('p', 'advisor-directory-intro', advisor.kisaTanitim));
 
-    var availability = make('span', 'advisor-directory-availability', advisor.musait);
-    var tags = make('ul', 'advisor-directory-tags');
-    tags.setAttribute('aria-label', 'Uzmanlık alanları');
-    advisor.sektorler.forEach(function (sector) { tags.appendChild(make('li', '', sector)); });
-
-    var actions = make('div', 'advisor-directory-actions');
-    var profileLink = make('a', 'advisor-directory-profile-link', 'Profili gör');
-    profileLink.href = 'danisman.html?id=' + encodeURIComponent(advisor.id);
-    if (new URLSearchParams(location.search).get('akis') === 'hikaye') {
-      profileLink.href += '&akis=hikaye';
+    const facts = make('dl', 'advisor-directory-facts');
+    if (advisor.uzmanlikAlani) {
+      const expertise = make('div');
+      expertise.append(make('dt', '', 'Uzmanlık'), make('dd', '', advisor.uzmanlikAlani));
+      facts.appendChild(expertise);
     }
-    actions.appendChild(profileLink);
+    if (advisor.kidem) {
+      const experience = make('div');
+      experience.append(make('dt', '', 'Deneyim'), make('dd', '', advisor.kidem));
+      facts.appendChild(experience);
+    }
+    if (facts.childElementCount) card.appendChild(facts);
 
-    card.append(identity, introduction, facts, availability, tags, actions);
-    card.dataset.searchText = normalize([
-      advisor.ad,
-      advisor.unvan,
-      advisor.kisaTanitim,
-      advisor.sektorler.join(' ')
-    ].join(' '));
-    card.dataset.sectors = advisor.sektorler.map(normalize).join('|');
-    card.dataset.recommendedIndex = String(recommendedIndex);
+    const tags = make('ul', 'advisor-directory-tags');
+    tags.setAttribute('aria-label', 'Sektörler');
+    advisor.sektorler.forEach(sector => tags.appendChild(make('li', '', sector)));
+    card.appendChild(tags);
+
+    const actions = make('div', 'advisor-directory-actions');
+    const profileLink = make('a', 'advisor-directory-profile-link', 'Profili gör');
+    profileLink.href = 'danisman.html?id=' + encodeURIComponent(advisor.id) + (storyFlow ? '&akis=hikaye' : '');
+    actions.appendChild(profileLink);
+    card.appendChild(actions);
+
+    card.dataset.searchText = normalize([advisor.ad, advisor.unvan, advisor.uzmanlikAlani, advisor.kisaTanitim, advisor.sektorler.join(' ')].join(' '));
+    card.dataset.sectors = advisor.sektorKodlari.join('|');
+    card.dataset.recommendedIndex = String(index);
     card.dataset.name = normalize(advisor.ad);
-    card.dataset.experience = String(advisor.deneyimYili);
+    card.dataset.experience = String(seniorityYears(advisor.kidem));
     card.dataset.advisorId = advisor.id;
     return card;
   }
 
-  function requestedSector() {
-    var value = new URLSearchParams(location.search).get('sektor');
-    if (!value) return 'all';
-    var normalized = normalize(value).replace(/\s*&\s*/g, ' ').trim();
-    var aliases = {
-      tumu: 'all',
-      technology: 'technology',
-      teknoloji: 'technology',
-      'teknoloji saas': 'technology',
-      'technology saas': 'technology',
-      finance: 'finance',
-      finans: 'finance',
-      retail: 'retail',
-      perakende: 'retail',
-      health: 'health',
-      saglik: 'health',
-      production: 'production',
-      uretim: 'production'
-    };
-    return aliases[normalized] || 'all';
-  }
-
   function updateResults() {
-    var query = normalize(search.value.trim());
-    var visibleCards = Array.from(grid.children).filter(function (card) {
-      var matchesQuery = card.dataset.searchText.includes(query);
-      var allowedSectors = filtersBySector[activeSector] || [];
-      var matchesSector = activeSector === 'all' || allowedSectors.some(function (sector) {
-        return card.dataset.sectors.split('|').includes(normalize(sector));
-      });
+    const query = normalize(search.value.trim());
+    const visibleCards = Array.from(grid.children).filter(card => {
+      const matchesQuery = !query || card.dataset.searchText.includes(query);
+      const matchesSector = activeSector === 'all' || card.dataset.sectors.split('|').includes(activeSector);
       card.hidden = !matchesQuery || !matchesSector;
       return !card.hidden;
     });
-
     if (sort.value === 'name') {
-      visibleCards.sort(function (a, b) { return a.dataset.name.localeCompare(b.dataset.name, 'tr'); });
+      visibleCards.sort((a, b) => a.dataset.name.localeCompare(b.dataset.name, 'tr'));
     } else if (sort.value === 'experience') {
-      visibleCards.sort(function (a, b) {
-        return Number(b.dataset.experience) - Number(a.dataset.experience) ||
-          Number(a.dataset.recommendedIndex) - Number(b.dataset.recommendedIndex);
-      });
+      visibleCards.sort((a, b) => Number(b.dataset.experience) - Number(a.dataset.experience) ||
+        Number(a.dataset.recommendedIndex) - Number(b.dataset.recommendedIndex));
     } else {
-      visibleCards.sort(function (a, b) {
-        return Number(a.dataset.recommendedIndex) - Number(b.dataset.recommendedIndex);
-      });
+      visibleCards.sort((a, b) => Number(a.dataset.recommendedIndex) - Number(b.dataset.recommendedIndex));
     }
-    visibleCards.forEach(function (card) { grid.appendChild(card); });
+    visibleCards.forEach(card => grid.appendChild(card));
     count.textContent = visibleCards.length + ' danışman';
     empty.hidden = visibleCards.length > 0;
   }
 
-  filterLabels.forEach(function (item) {
-    var button = make('button', 'advisor-directory-filter', item[1]);
-    button.type = 'button';
-    button.dataset.sector = item[0];
-    button.setAttribute('aria-pressed', String(item[0] === activeSector));
-    button.addEventListener('click', function () {
-      activeSector = item[0];
-      filters.querySelectorAll('button').forEach(function (filter) {
-        filter.setAttribute('aria-pressed', String(filter === button));
+  function renderFilters(sectorList) {
+    filters.replaceChildren();
+    [{ code: 'all', name: 'Tümü' }].concat(sectorList).forEach(sector => {
+      const button = make('button', 'advisor-directory-filter', sector.name);
+      button.type = 'button';
+      button.dataset.sector = sector.code;
+      button.setAttribute('aria-pressed', String(sector.code === activeSector));
+      button.addEventListener('click', () => {
+        activeSector = sector.code;
+        filters.querySelectorAll('button').forEach(filter => filter.setAttribute('aria-pressed', String(filter === button)));
+        const url = new URL(location.href);
+        if (activeSector === 'all') url.searchParams.delete('sektor');
+        else url.searchParams.set('sektor', activeSector);
+        try { history.replaceState(history.state, '', url.pathname + url.search); } catch (error) { /* yok say */ }
+        updateResults();
       });
-      updateResults();
+      filters.appendChild(button);
     });
-    filters.appendChild(button);
-  });
+  }
 
-  advisors.forEach(function (advisor, index) {
-    grid.appendChild(makeAdvisorCard(advisor, index));
-  });
+  async function init() {
+    count.textContent = 'Danışmanlar yükleniyor...';
+    let advisors = [];
+    let sectors = [];
+    try {
+      [advisors, sectors] = await Promise.all([
+        window.Advisors.list(),
+        window.Advisors.sectors().catch(() => [])
+      ]);
+    } catch (error) {
+      count.textContent = '';
+      Api.ui.showError(grid, error, { position: 'before', fallback: 'Danışmanlar yüklenemedi. Lütfen sayfayı yenile.' });
+      return;
+    }
+
+    // Filtre çipleri: danışmanı olan sektörler (sort_order sırasıyla).
+    const used = new Set(advisors.flatMap(advisor => advisor.sektorKodlari));
+    const byCode = new Map();
+    advisors.forEach(advisor => (advisor.card.sectors || []).forEach(sector => byCode.set(sector.code, sector)));
+    const sectorList = (sectors.length ? sectors : Array.from(byCode.values()))
+      .filter(sector => used.has(sector.code))
+      .sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
+
+    const requested = params.get('sektor');
+    const requestedCode = requested ? window.Advisors.sectorCode(requested) : 'all';
+    activeSector = requestedCode === 'all' || used.has(requestedCode) || sectors.some(sector => sector.code === requestedCode)
+      ? requestedCode : 'all';
+    renderFilters(sectorList.some(sector => sector.code === activeSector) || activeSector === 'all'
+      ? sectorList
+      : sectorList.concat(sectors.filter(sector => sector.code === activeSector)));
+
+    grid.replaceChildren(...advisors.map((advisor, index) => makeAdvisorCard(advisor, index)));
+    const queryParam = params.get('q');
+    if (queryParam) search.value = queryParam;
+    updateResults();
+  }
+
   search.addEventListener('input', updateResults);
   sort.addEventListener('change', updateResults);
-  resetButton.addEventListener('click', function () {
+  resetButton.addEventListener('click', () => {
     activeSector = 'all';
     search.value = '';
     sort.value = 'recommended';
-    history.replaceState(null, '', location.pathname);
-    filters.querySelectorAll('button').forEach(function (filter) {
-      filter.setAttribute('aria-pressed', String(filter.dataset.sector === 'all'));
-    });
+    try { history.replaceState(null, '', location.pathname + (storyFlow ? '?akis=hikaye' : '')); } catch (error) { /* yok say */ }
+    filters.querySelectorAll('button').forEach(filter => filter.setAttribute('aria-pressed', String(filter.dataset.sector === 'all')));
     updateResults();
   });
 
-  activeSector = requestedSector();
-  var queryParam = new URLSearchParams(location.search).get('q');
-  if (queryParam) search.value = queryParam;
-  filters.querySelectorAll('button').forEach(function (button) {
-    button.setAttribute('aria-pressed', String(button.dataset.sector === activeSector));
-  });
-  updateResults();
+  init().catch(error => console.error('Danışman dizini yüklenemedi:', error && error.message));
 })();

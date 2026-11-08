@@ -36,7 +36,9 @@
     };
   </script>
   <link rel="stylesheet" href="../theme.css">
-  <script src="js/advisors.js"></script>
+  <script src="config.js"></script>
+<script src="api-client.js"></script>
+<script src="js/advisors.js"></script><script src="secim.js"></script>
   <script src="gate.js"></script>
 <link rel="stylesheet" href="avatar.css"></head>
 <body class="payment-success-page font-sans min-h-screen flex flex-col antialiased">
@@ -93,18 +95,18 @@
           <p class="payment-success-thanks" id="payment-success-thanks" role="status" aria-live="polite">Teşekkürler</p>
           <h1 class="payment-success-title" id="payment-success-title">Ödemen alındı</h1>
           <p class="payment-success-intro">
-            Satış hikâyesi çalışman <strong data-receipt-advisor-name>Selin Arslan</strong> ile başlıyor. Randevu alabilmen için kısa bir profil formunu doldurman gerekiyor, 2 dakika sürer.
+            Satış hikâyesi çalışman <strong data-receipt-advisor-name></strong> ile başlıyor. Randevu alabilmen için kısa bir profil formunu doldurman gerekiyor, 2 dakika sürer.
           </p>
         </div>
 
         <div class="payment-success-advisor" aria-label="Danışman bilgisi">
-          <span class="payment-success-advisor-avatar" data-advisor-avatar aria-hidden="true">SA</span>
+          <span class="payment-success-advisor-avatar" data-advisor-avatar aria-hidden="true"></span>
           <div class="payment-success-advisor-copy">
-            <a class="payment-success-advisor-link" data-receipt-advisor-link href="danisman.html?id=selin-arslan"><strong data-receipt-advisor-name>Selin Arslan</strong></a>
-            <span data-receipt-advisor-title>Kıdemli Satış Direktörü &amp; Mentor</span>
+            <a class="payment-success-advisor-link" data-receipt-advisor-link data-nav-skip href="danismanlar.html"><strong data-receipt-advisor-name></strong></a>
+            <span data-receipt-advisor-title></span>
           </div>
-          <span class="payment-success-duration" data-receipt-duration>50 dk</span>
-          <span class="payment-success-session-count" data-receipt-sessions>2 seans</span>
+          <span class="payment-success-duration" data-receipt-duration></span>
+          <span class="payment-success-session-count" data-receipt-sessions></span>
         </div>
 
         <div class="payment-success-actions">
@@ -131,7 +133,7 @@
         <dl class="payment-success-receipt-grid">
           <div>
             <dt>Sipariş no</dt>
-            <dd data-receipt-order-number>#IV-2027-0001</dd>
+            <dd data-receipt-order-number>—</dd>
           </div>
           <div>
             <dt>Tarih</dt>
@@ -139,24 +141,24 @@
           </div>
           <div>
             <dt>Hizmet</dt>
-            <dd data-receipt-service>Satış hikâyesi oluşturma</dd>
+            <dd data-receipt-service>—</dd>
           </div>
           <div>
             <dt>Danışman</dt>
-            <dd data-receipt-advisor>Selin Arslan</dd>
+            <dd data-receipt-advisor>—</dd>
           </div>
           <div class="payment-success-receipt-total">
             <dt>Toplam tutar</dt>
-            <dd data-receipt-total>1.500 ₺ <span>KDV dahil</span></dd>
+            <dd data-receipt-total>— <span>KDV dahil</span></dd>
           </div>
         </dl>
-        <p class="payment-success-email-note">
+        <p class="payment-success-email-note" hidden>
           <span class="material-symbols-outlined" aria-hidden="true">mark_email_read</span>
           E-postana gönderildi
         </p>
       </section>
 
-      <p class="payment-success-reference">Ödeme referansı: IY-48213907</p>
+      <p class="payment-success-reference" data-receipt-reference hidden></p>
     </div>
   </main>
   <script src="nav.js"></script>

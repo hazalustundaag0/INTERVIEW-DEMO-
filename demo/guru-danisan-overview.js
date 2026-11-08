@@ -1,4 +1,14 @@
+// guru-danisan-overview.js — Danışan detayı · Genel sekmesi. Sahibi: 84 Guru Panel UI.
+// Veri: GET /guru/enrollments/{id} (CandidateBrief; rızadan bağımsız açık: etiketli profile_answers B05,
+// seanslar, hikâye durumu) · sekme sayaçları: GET /guru/stories/{id}/notes, GET /guru/enrollments/{id}/assignments
+// Seans tamamlama: POST /guru/enrollment-sessions/{id}/complete (FR-53). localStorage yok.
+// Hikâye metni/ham cevaplar burada gösterilmez (K45: yalnız Hikâye sekmesinde ve rızayla).
 (function () {
+  'use strict';
+  if (!window.Api || !window.GuruPanel) return;
+  const Api = window.Api;
+  const G = window.GuruPanel;
+
   const section = Array.from(document.querySelectorAll('section')).find(element =>
     element.classList.contains('lg:col-span-8') &&
     Array.from(element.querySelectorAll('h2')).some(heading => heading.textContent.trim() === 'Profil ön bilgisi')
@@ -8,18 +18,15 @@
   document.body.style.paddingBottom = '5rem';
 
   const name = section.querySelector('h1');
-  const profileCard = name?.parentElement;
-  const avatar = profileCard?.previousElementSibling;
-  if (name && profileCard && avatar) {
-    const initials = name.textContent.trim().split(/\s+/).filter(Boolean)
-      .map(part => Array.from(part)[0]).join('').toLocaleUpperCase('tr-TR');
+  const profileCopy = name?.parentElement;
+  const avatar = profileCopy?.previousElementSibling;
+  const profileHeader = profileCopy?.parentElement;
+  let progress, progressCount, registration;
+  if (name && profileCopy && avatar && profileHeader) {
     avatar.className = 'client-profile-avatar';
-    avatar.textContent = initials;
-    avatar.setAttribute('aria-label', `${name.textContent.trim()} baş harfleri`);
-
-    const profileHeader = profileCard.parentElement;
+    avatar.textContent = '';
     profileHeader.classList.add('client-profile-card');
-    profileCard.classList.add('client-profile-copy');
+    profileCopy.classList.add('client-profile-copy');
 
     const summary = document.createElement('div');
     summary.className = 'client-profile-summary';
@@ -27,27 +34,19 @@
     const progressLabel = document.createElement('span');
     progressLabel.className = 'client-session-progress-label';
     progressLabel.textContent = 'Seans ilerlemesi';
-    const progress = document.createElement('div');
+    progress = document.createElement('div');
     progress.className = 'client-session-progress';
     progress.setAttribute('role', 'img');
-    progress.setAttribute('aria-label', '2 seanstan 1’i tamamlandı');
-    const completed = document.createElement('span');
-    completed.className = 'is-complete';
-    const remaining = document.createElement('span');
-    progress.append(completed, remaining);
-    const progressCount = document.createElement('span');
+    progressCount = document.createElement('span');
     progressCount.className = 'client-session-progress-count';
-    progressCount.textContent = '1 / 2';
-    summary.append(progressLabel, progress, progressCount);
-
-    const registration = document.createElement('span');
+    registration = document.createElement('span');
     registration.className = 'client-registration-date';
-    registration.textContent = 'Kayıt tarihi · 11 Ocak 2026';
-    summary.append(registration);
-
+    summary.append(progressLabel, progress, progressCount, registration);
+    summary.hidden = true;
     profileHeader.append(summary);
   }
 
+  // ─── Sekmeler (nav.js ?enrollment=&story= taşır) ───────────────────────────
   const tabs = Array.from(section.querySelectorAll('button')).filter(button =>
     ['Genel', 'Hikâye', 'Notlar', 'Ödevler'].includes(button.textContent.trim())
   );
@@ -56,21 +55,15 @@
     tabList.className = 'client-overview-tabs';
     tabList.setAttribute('role', 'tablist');
     tabList.setAttribute('aria-label', 'Danışan detay sekmeleri');
-    const counts = { Genel: null, Hikâye: null, Notlar: 1, Ödevler: 2 };
     tabs.forEach(tab => {
       const label = tab.textContent.trim();
       const active = label === 'Genel';
+      tab.dataset.tabLabel = label;
       tab.className = 'client-overview-tab';
       tab.setAttribute('role', 'tab');
       tab.setAttribute('aria-selected', String(active));
       tab.tabIndex = active ? 0 : -1;
       tab.setAttribute('aria-controls', 'client-overview-content');
-      if (counts[label] !== null) {
-        const count = document.createElement('span');
-        count.className = 'client-overview-tab-count';
-        count.textContent = `(${counts[label]})`;
-        tab.append(count);
-      }
       tab.addEventListener('keydown', event => {
         let nextIndex = tabs.indexOf(tab);
         if (event.key === 'ArrowRight' || event.key === 'ArrowDown') nextIndex = (nextIndex + 1) % tabs.length;
@@ -84,58 +77,76 @@
       });
     });
   }
+  function setTabCount(label, count) {
+    const tab = tabs.find(item => item.dataset.tabLabel === label);
+    if (!tab || count === null || count === undefined) return;
+    tab.querySelector('.client-overview-tab-count')?.remove();
+    const badge = document.createElement('span');
+    badge.className = 'client-overview-tab-count';
+    badge.textContent = `(${count})`;
+    tab.append(badge);
+  }
 
   const pageContent = tabList?.nextElementSibling;
   if (pageContent) {
     pageContent.id = 'client-overview-content';
     pageContent.setAttribute('role', 'tabpanel');
-    pageContent.setAttribute('aria-labelledby', tabs[0]?.id || 'client-tab-overview');
     if (tabs[0]) tabs[0].id = 'client-tab-overview';
+    pageContent.setAttribute('aria-labelledby', 'client-tab-overview');
   }
 
-  const infoHeading = Array.from(section.querySelectorAll('h2')).find(heading =>
-    heading.textContent.trim() === 'Profil ön bilgisi'
-  );
-  const infoCard = infoHeading?.parentElement;
-  const rows = infoCard?.querySelector(':scope > div');
-  if (rows) {
-    rows.classList.add('client-profile-info-grid');
-    Array.from(rows.children).forEach(row => {
-      const [label, value] = row.children;
-      if (!label || !value) return;
-      row.className = 'client-profile-info-row';
-      label.className = 'client-profile-info-label';
-      label.textContent = label.textContent.trim().replace(/:\s*$/, '');
-      value.className = 'client-profile-info-value';
-    });
-  }
+  // ─── Profil ön bilgisi (etiketli cevaplar, GAP-B05) ────────────────────────
+  const infoHeading = Array.from(section.querySelectorAll('h2')).find(h => h.textContent.trim() === 'Profil ön bilgisi');
+  const infoRows = infoHeading?.parentElement?.querySelector(':scope > div');
+  infoRows?.classList.add('client-profile-info-grid');
 
-  const sessionHeading = Array.from(section.querySelectorAll('h2')).find(heading =>
-    heading.textContent.trim() === 'Seanslar'
-  );
-  const sessionCard = sessionHeading?.parentElement;
-  const sessionList = sessionCard?.querySelector(':scope > div');
-  const sessionRows = sessionList ? Array.from(sessionList.children) : [];
-  let toastTimer;
-  function showToast(message) {
-    let toast = document.querySelector('.client-overview-toast');
-    if (!toast) {
-      toast = document.createElement('div');
-      toast.className = 'client-overview-toast';
-      toast.setAttribute('role', 'status');
-      toast.setAttribute('aria-live', 'polite');
-      document.body.append(toast);
+  function renderProfile(brief) {
+    if (!infoRows) return;
+    const answers = (brief.profile_answers || []).filter(answer => G.answerValue(answer));
+    if (!answers.length) {
+      const empty = document.createElement('p');
+      empty.className = 'text-[14px] text-muted';
+      empty.textContent = 'Danışan profil formunu henüz doldurmadı.';
+      infoRows.replaceChildren(empty);
+      return;
     }
-    toast.textContent = message;
-    window.clearTimeout(toastTimer);
-    toastTimer = window.setTimeout(() => toast.remove(), 2600);
+    infoRows.replaceChildren(...answers.map(answer => {
+      const row = document.createElement('div');
+      row.className = 'client-profile-info-row';
+      const label = document.createElement('span');
+      label.className = 'client-profile-info-label';
+      label.textContent = answer.label;
+      const value = document.createElement('span');
+      value.className = 'client-profile-info-value';
+      value.textContent = G.answerValue(answer);
+      row.append(label, value);
+      return row;
+    }));
   }
 
-  const completionEnabled = window.DEMO_CLIENT_SESSION_CAN_COMPLETE === true ||
-    document.body.dataset.clientSessionCompletionEnabled === 'true';
+  function renderSummary(brief) {
+    if (!progress) return;
+    const total = brief.enrollment.session_count || brief.sessions.length || 0;
+    const done = brief.sessions.filter(s => s.status === 'completed').length;
+    progress.setAttribute('aria-label', `${total} seanstan ${done}’i tamamlandı`);
+    // Seans başına bir bölüt (tasarımdaki 2 bölütlü çubuk).
+    progress.replaceChildren(...Array.from({ length: total }, (_, index) => {
+      const segment = document.createElement('span');
+      if (index < done) segment.className = 'is-complete';
+      return segment;
+    }));
+    progressCount.textContent = `${done} / ${total}`;
+    registration.textContent = 'Kayıt tarihi · ' + Api.format.date(brief.enrollment.created_at, { day: 'numeric', month: 'long', year: 'numeric' });
+    progress.parentElement.hidden = false;
+    avatar.textContent = G.initials(Api.format.fullName(brief.candidate));
+  }
+
+  // ─── Seanslar ──────────────────────────────────────────────────────────────
+  const sessionHeading = Array.from(section.querySelectorAll('h2')).find(h => h.textContent.trim() === 'Seanslar');
+  const sessionList = sessionHeading?.parentElement?.querySelector(':scope > div');
+
   const dialog = document.createElement('dialog');
   dialog.className = 'client-session-dialog';
-  dialog.setAttribute('role', 'dialog');
   dialog.setAttribute('aria-modal', 'true');
   dialog.setAttribute('aria-labelledby', 'client-session-dialog-title');
   dialog.innerHTML = `
@@ -143,115 +154,148 @@
       <h2 id="client-session-dialog-title">Bu seansı tamamlandı olarak işaretlemek istiyor musun?</h2>
       <div class="client-session-dialog-actions">
         <button type="submit" value="cancel">İptal</button>
-        <button type="submit" value="confirm">Onayla</button>
+        <button type="submit" value="confirm" data-action="complete-session-confirm">Onayla</button>
       </div>
     </form>`;
   document.body.append(dialog);
-  let pendingCompletion = null;
+  let pendingSession = null;
+  let currentBrief = null;
 
-  sessionRows.forEach((row, index) => {
-    row.classList.add('client-session-row');
-    const content = row.querySelector('div');
-    const status = content?.querySelector('span span') || row.querySelector(':scope > span');
-    if (index === 0) {
-      const sessionText = Array.from(content?.querySelectorAll(':scope > span') || [])
-        .find(span => span.textContent.includes('Seans 1'));
-      if (sessionText) {
-        sessionText.classList.add('client-session-description');
-        const statusText = sessionText.querySelector('span');
-        if (statusText) {
-          statusText.className = 'client-session-status';
-          statusText.textContent = 'Planlandı';
-        }
-      }
-      const oldButton = row.querySelector('button');
-      if (oldButton) {
-        oldButton.className = 'client-session-complete';
-        oldButton.textContent = 'Tamamlandı işaretle';
-        oldButton.type = 'button';
-        oldButton.disabled = !completionEnabled;
-        oldButton.setAttribute('aria-disabled', String(!completionEnabled));
-        oldButton.title = 'Seans saatinden sonra işaretlenebilir';
-        oldButton.addEventListener('click', () => {
-          if (oldButton.disabled) return;
-          pendingCompletion = oldButton;
-          dialog.showModal();
-          dialog.querySelector('button[value="cancel"]').focus();
-        });
-      }
-      const linkButton = document.createElement('button');
-      linkButton.type = 'button';
-      linkButton.className = 'client-session-link';
-      linkButton.textContent = 'Link ekle';
-      linkButton.addEventListener('click', () => showToast('Demo: Bu seans için henüz görüşme bağlantısı yok.'));
-      row.append(linkButton);
-    } else {
-      if (status) {
-        status.className = 'client-session-status client-session-status--pending';
-        status.textContent = 'Beklemede';
-      }
+  function sessionRow(session) {
+    const row = document.createElement('div');
+    row.className = 'client-session-row py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3';
+    const content = document.createElement('div');
+    content.className = 'flex items-center gap-2';
+    const icon = document.createElement('span');
+    icon.className = 'material-symbols-outlined text-[20px] ' + (session.status === 'not_scheduled' ? 'text-outline' : 'text-[#51409D]');
+    icon.textContent = session.status === 'not_scheduled' ? 'event_busy' : 'event';
+    icon.setAttribute('aria-hidden', 'true');
+    const text = document.createElement('span');
+    text.className = 'client-session-description text-[14px] font-medium text-[#1E1E1C]';
+    const status = document.createElement('span');
+    status.className = 'client-session-status';
+    content.append(icon, text);
+    row.append(content);
+
+    if (session.status === 'not_scheduled') {
+      text.textContent = `Seans ${session.sequence_no} · Planlanmadı`;
+      status.classList.add('client-session-status--pending');
+      status.textContent = 'Beklemede';
       const planLink = document.createElement('a');
       planLink.className = 'client-session-plan';
       planLink.href = 'guru-musaitlik.html';
       planLink.textContent = 'Planla';
-      row.append(planLink);
+      planLink.title = 'Aday, müsaitlik takviminde açtığın saatlerden randevu alır.';
+      row.append(status, planLink);
+      return row;
     }
-  });
+
+    const when = session.scheduled_start_at
+      ? `${window.SlotTime ? window.SlotTime.dateLabel(session.scheduled_start_at) : Api.format.date(session.scheduled_start_at)} ${Api.format.time(session.scheduled_start_at)}`
+      : '';
+    text.append(document.createTextNode(`Seans ${session.sequence_no}${when ? ' · ' + when : ''} · `), status);
+    if (session.status === 'completed') {
+      status.classList.add('client-session-status--complete');
+      status.textContent = 'Tamamlandı';
+    } else if (session.status === 'scheduled') {
+      status.textContent = 'Planlandı';
+    } else {
+      status.textContent = session.status === 'cancelled' ? 'İptal edildi' : 'Katılım olmadı';
+    }
+
+    if (session.status === 'scheduled' || session.status === 'completed') {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'client-session-complete';
+      button.dataset.action = 'complete-session';
+      if (session.status === 'completed') {
+        button.textContent = 'Tamamlandı';
+        button.disabled = true;
+        button.setAttribute('aria-disabled', 'true');
+        button.title = 'Bu seans zaten tamamlandı';
+      } else {
+        button.textContent = 'Tamamlandı işaretle';
+        button.addEventListener('click', () => {
+          pendingSession = { session, button };
+          dialog.showModal();
+          dialog.querySelector('button[value="cancel"]').focus();
+        });
+      }
+      row.append(button);
+    }
+    return row;
+  }
+
+  function renderSessions(brief) {
+    if (!sessionList) return;
+    const sessions = brief.sessions.slice().sort((a, b) => a.sequence_no - b.sequence_no);
+    if (!sessions.length) {
+      const empty = document.createElement('p');
+      empty.className = 'text-[14px] text-muted';
+      empty.textContent = 'Bu kayıt için seans bulunmuyor.';
+      sessionList.replaceChildren(empty);
+      return;
+    }
+    sessionList.replaceChildren(...sessions.map(sessionRow));
+  }
 
   dialog.addEventListener('keydown', event => {
     if (event.key === 'Escape') {
       event.preventDefault();
       dialog.close('cancel');
+    }
+  });
+  dialog.addEventListener('close', async () => {
+    const pending = pendingSession;
+    pendingSession = null;
+    if (!pending) return;
+    if (dialog.returnValue !== 'confirm') { pending.button.focus(); return; }
+    try {
+      const result = await Api.ui.withLoading(pending.button, () =>
+        Api.post(`/guru/enrollment-sessions/${pending.session.id}/complete`), { text: 'İşaretleniyor…' });
+      const sessions = currentBrief.sessions.map(s => (s.id === result.session.id ? result.session : s));
+      currentBrief = Object.assign({}, currentBrief, { sessions, story: result.story || currentBrief.story });
+      renderSessions(currentBrief);
+      renderSummary(currentBrief);
+      G.toast(result.story_advanced
+        ? 'Seans tamamlandı. Danışan hikâye adımına geçebilir.'
+        : 'Seans tamamlandı olarak işaretlendi.');
+    } catch (error) {
+      G.toast(Api.ui.message(error));
+      Api.ui.showError(sessionList, error, { position: 'before' });
+    }
+  });
+
+  async function loadCounts(brief) {
+    const storyId = brief.story && brief.story.id;
+    const [notes, assignments] = await Promise.all([
+      storyId ? Api.listAll(`/guru/stories/${storyId}/notes`).catch(() => null) : Promise.resolve([]),
+      Api.listAll(`/guru/enrollments/${brief.enrollment.id}/assignments`).catch(() => null)
+    ]);
+    if (notes) setTabCount('Notlar', notes.length);
+    if (assignments) setTabCount('Ödevler', assignments.filter(a => a.status !== 'cancelled').length);
+  }
+
+  async function load() {
+    const p = G.params();
+    if (!p.enrollmentId) {
+      G.showState(pageContent || section, {
+        icon: 'person_search', title: 'Danışan seçilmedi',
+        text: 'Danışanlarım listesinden bir danışan aç.', replace: true
+      });
       return;
     }
-    if (event.key !== 'Tab') return;
-    const focusable = Array.from(dialog.querySelectorAll('button:not(:disabled)'));
-    const first = focusable[0];
-    const last = focusable[focusable.length - 1];
-    if (!first || !last) return;
-    if (event.shiftKey && document.activeElement === first) {
-      event.preventDefault();
-      last.focus();
-    } else if (!event.shiftKey && document.activeElement === last) {
-      event.preventDefault();
-      first.focus();
+    try {
+      currentBrief = await G.loadClient();
+      renderProfile(currentBrief);
+      renderSummary(currentBrief);
+      renderSessions(currentBrief);
+      loadCounts(currentBrief);
+    } catch (error) {
+      G.errorState(pageContent || section, error, error.status === 404
+        ? { title: 'Danışan bulunamadı', text: 'Bu kayıt sana atanmış değil ya da artık yok.' } : {});
     }
-  });
-  dialog.addEventListener('close', () => {
-    const trigger = pendingCompletion;
-    pendingCompletion = null;
-    if (dialog.returnValue === 'confirm' && trigger) {
-      const row = trigger.closest('.client-session-row');
-      const status = row?.querySelector('.client-session-status');
-      if (status) {
-        status.textContent = 'Tamamlandı';
-        status.classList.add('client-session-status--complete');
-      }
-      try {
-        localStorage.setItem('demoIlkSeansTamamlandi', 'true');
-      } catch (error) {
-        console.error('İlk seans tamamlanma durumu kaydedilemedi.', error);
-      }
-      trigger.textContent = 'Tamamlandı';
-      trigger.disabled = true;
-      trigger.setAttribute('aria-disabled', 'true');
-      trigger.title = 'Bu seans zaten tamamlandı';
-      trigger.focus();
-      showToast('Seans tamamlandı olarak işaretlendi.');
-    } else {
-      trigger?.focus();
-    }
-  });
+  }
 
-  document.addEventListener('click', event => {
-    const control = event.target.closest('button, a, [role="button"]');
-    if (control?.textContent.replace(/\s+/g, ' ').trim() !== 'Not Yaz' &&
-        control?.textContent.replace(/\s+/g, ' ').trim() !== 'Ödev Ver') return;
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    window.location.href = control.getAttribute('href');
-  }, true);
-
-  const flowNav = document.getElementById('demo-flow-nav');
-  flowNav?.classList.add('demo-only');
+  load();
 })();

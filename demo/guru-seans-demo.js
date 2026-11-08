@@ -1,15 +1,30 @@
+// guru-seans-demo.js — Guru · Seanslarım (guru-seanslar.html). Sahibi: 84 Guru Panel UI.
+// Veri: GET /guru/clients → her kayıt için GET /guru/enrollments/{id}/sessions (GAP-B20: tüm seanslar için tek uç
+//       yok → geçici N+1, eşzamanlılık 4). Tamamlama: POST /guru/enrollment-sessions/{id}/complete (FR-53, GAP-U06:
+//       artık bayrakla kapalı değil; kuralı backend uygular — planlı olmayan / önceki tamamlanmamış → 409).
+// Kaldırılanlar: sahte kartlar (Elif/Can), demoRandevu / demoIlkSeansTamamlandi, sahte görüşme bağlantısı editörü ve
+// "Bağlantı bekleyen" özeti (GAP-B16/D09: toplantı bağlantısı alanı yok). Ücret salt okunur (enrollment.amount_minor, K53).
 (function () {
-  if (window.__guruSessionDemoInitialized) return;
-  window.__guruSessionDemoInitialized = true;
+  'use strict';
+  if (window.__guruSessionPageInitialized) return;
+  window.__guruSessionPageInitialized = true;
+  if (!window.Api || !window.GuruPanel) return;
+  const Api = window.Api;
+  const G = window.GuruPanel;
+  const SV = window.SessionView;
+  const MONTHS = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'];
 
   const content = document.querySelector('section.lg\\:col-span-8');
   if (!content) return;
+  const tabs = Array.from(content.querySelectorAll('button')).filter(button => ['Yaklaşan', 'Tamamlanan'].includes(button.textContent.trim()));
+  const tabList = tabs[0]?.parentElement;
+  const list = tabList?.nextElementSibling;
+  const pageHeader = content.querySelector('h1')?.parentElement;
+  if (!tabList || !list || !pageHeader) return;
 
-  const completionEnabled = window.DEMO_SESSION_CAN_COMPLETE === true ||
-    document.body.dataset.sessionCompletionEnabled === 'true';
+  // ─── Onay penceresi ────────────────────────────────────────────────────────
   const dialog = document.createElement('dialog');
   dialog.className = 'session-dialog';
-  dialog.setAttribute('role', 'dialog');
   dialog.setAttribute('aria-modal', 'true');
   dialog.setAttribute('aria-labelledby', 'session-confirm-title');
   dialog.innerHTML = `
@@ -17,28 +32,13 @@
       <h2 id="session-confirm-title" class="text-[18px] font-semibold">Seansı tamamlandı olarak işaretlemek istiyor musun?</h2>
       <div class="session-dialog-actions">
         <button type="submit" value="cancel">İptal</button>
-        <button type="submit" value="confirm">Onayla</button>
+        <button type="submit" value="confirm" data-action="complete-session-confirm">Onayla</button>
       </div>
     </form>`;
   document.body.appendChild(dialog);
-
   let pendingCompletion = null;
-  let toastTimer;
-  let updateSessionTabs = () => {};
 
-  function showToast(message) {
-    let toast = document.querySelector('.session-toast');
-    if (!toast) {
-      toast = document.createElement('div');
-      toast.className = 'session-toast';
-      toast.setAttribute('role', 'status');
-      toast.setAttribute('aria-live', 'polite');
-      document.body.appendChild(toast);
-    }
-    toast.textContent = message;
-    window.clearTimeout(toastTimer);
-    toastTimer = window.setTimeout(() => toast.remove(), 2600);
-  }
+  function toast(message) { G.toast(message, 'session-toast'); }
 
   function setButtonContent(button, label, iconName) {
     const icon = document.createElement('span');
@@ -50,116 +50,112 @@
     button.replaceChildren(icon, text);
   }
 
-  function createButton(label, className, iconName) {
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.className = className;
-    setButtonContent(button, label, iconName);
-    return button;
-  }
+  // ─── Özet kartları (Yaklaşan / Tamamlanan) ─────────────────────────────────
+  const summaryCards = document.createElement('div');
+  summaryCards.className = 'session-summary-grid';
+  [['upcoming', 'event', 'Yaklaşan seans', 'session-summary-card--upcoming'],
+    ['completed', 'task_alt', 'Tamamlanan', 'session-summary-card--completed']].forEach(([key, iconName, label, tone]) => {
+    const card = document.createElement('article');
+    card.className = `session-summary-card ${tone}`;
+    card.dataset.summary = key;
+    const icon = document.createElement('span');
+    icon.className = 'material-symbols-outlined session-summary-icon';
+    icon.textContent = iconName;
+    icon.setAttribute('aria-hidden', 'true');
+    const count = document.createElement('strong');
+    count.className = 'session-summary-count';
+    count.textContent = '–';
+    const labelNode = document.createElement('span');
+    labelNode.className = 'session-summary-label';
+    labelNode.textContent = label;
+    card.append(icon, count, labelNode);
+    summaryCards.appendChild(card);
+  });
+  pageHeader.insertAdjacentElement('afterend', summaryCards);
 
-  function setComplete(card) {
-    const sessionNumber = card.querySelector('.session-card-index')?.textContent.trim();
-    const candidateName = card.querySelector('.session-card-title')?.textContent.trim();
-    if (card.dataset.bookedAppointment === 'true') {
-      try {
-        const rawAppointment = localStorage.getItem('demoRandevu');
-        const appointment = rawAppointment ? JSON.parse(rawAppointment) : null;
-        if (!appointment || typeof appointment !== 'object' || Array.isArray(appointment)) {
-          throw new TypeError('Kaydedilen randevu bilgisi geçersiz.');
-        }
-        appointment.tamamlandi = true;
-        localStorage.setItem('demoRandevu', JSON.stringify(appointment));
-      } catch (error) {
-        console.error('Randevu tamamlanma durumu kaydedilemedi.', error);
-        showToast('Tamamlanma durumu kaydedilemedi. Yeniden dene.');
-        return;
-      }
-    } else if (/^Seans 1\s*\//.test(sessionNumber || '') && candidateName === 'Elif Yılmaz') {
-      try {
-        localStorage.setItem('demoIlkSeansTamamlandi', 'true');
-      } catch (error) {
-        console.error('İlk seans tamamlanma durumu kaydedilemedi.', error);
-        showToast('Tamamlanma durumu kaydedilemedi. Yeniden dene.');
-        return;
-      }
-    }
+  // ─── Sekmeler ──────────────────────────────────────────────────────────────
+  let cards = [];
+  let activeStatus = 'Yaklaşan';
+  tabList.className = 'session-tabs';
+  tabList.setAttribute('role', 'tablist');
+  tabList.setAttribute('aria-label', 'Seans durumu');
+  list.classList.add('session-card-list');
+  list.id = 'session-card-list';
+  list.setAttribute('role', 'tabpanel');
+  const emptyState = document.createElement('div');
+  emptyState.className = 'session-empty-state';
+  emptyState.hidden = true;
+  emptyState.setAttribute('role', 'status');
+  emptyState.setAttribute('aria-live', 'polite');
+  const emptyIcon = document.createElement('span');
+  emptyIcon.className = 'material-symbols-outlined session-empty-icon';
+  emptyIcon.setAttribute('aria-hidden', 'true');
+  emptyIcon.textContent = 'event_available';
+  const emptyMessage = document.createElement('p');
+  emptyMessage.className = 'session-empty-message';
+  const emptyHint = document.createElement('p');
+  emptyHint.className = 'session-empty-hint';
+  emptyState.append(emptyIcon, emptyMessage, emptyHint);
 
-    const status = card.querySelector('.session-card-status');
-    if (status) {
-      status.textContent = 'Tamamlandı';
-      status.className = 'session-card-status inline-flex items-center rounded px-2.5 py-1 text-[12px] font-semibold bg-[#DCFCE7] text-[#166534] border border-[#BBF7D0]';
-      status.tabIndex = -1;
-      status.focus();
-    }
-    const countdown = card.querySelector('.session-card-countdown');
-    if (countdown) setCardProximity(card, countdown);
-    const completeButton = card.querySelector('.session-complete-button');
-    if (completeButton) {
-      completeButton.disabled = true;
-      completeButton.setAttribute('aria-disabled', 'true');
-      completeButton.title = 'Bu seans zaten tamamlandı';
-      setButtonContent(completeButton, 'Tamamlandı', 'check_circle');
-    }
-    updateSessionTabs();
-    showToast('Seans tamamlandı olarak işaretlendi.');
-  }
+  function statusKey(card) { return card.dataset.sessionKey; }
 
-  const rows = Array.from(content.querySelectorAll('div')).filter(element =>
-    element.classList.contains('bg-[#FFFFFF]') &&
-    element.classList.contains('p-5') &&
-    element.firstElementChild &&
-    /^Seans \d+\s*\//.test(element.firstElementChild.textContent.trim())
-  );
-  const tabs = Array.from(content.querySelectorAll('button')).filter(button =>
-    ['Yaklaşan', 'Tamamlanan'].includes(button.textContent.trim())
-  );
-  const tabList = tabs[0]?.parentElement;
-  const list = rows[0]?.parentElement;
-  const pageHeader = content.querySelector('h1')?.parentElement;
-  let summaryCards;
-
-  function renderSummary() {
-    if (!summaryCards) return;
+  function renderTabs() {
     const counts = {
-      upcoming: rows.filter(card => card.querySelector('.session-card-status')?.textContent.trim() === 'Yaklaşan').length,
-      pendingLinks: rows.filter(card =>
-        card.querySelector('.session-card-status')?.textContent.trim() === 'Yaklaşan' &&
-        card.dataset.meetingLinkReady !== 'true'
-      ).length,
-      completed: rows.filter(card => card.querySelector('.session-card-status')?.textContent.trim() === 'Tamamlandı').length
+      Yaklaşan: cards.filter(card => statusKey(card) === 'upcoming').length,
+      Tamamlanan: cards.filter(card => statusKey(card) === 'completed').length
     };
-    summaryCards.querySelector('[data-summary="upcoming"] .session-summary-count').textContent = String(counts.upcoming);
-    summaryCards.querySelector('[data-summary="pendingLinks"] .session-summary-count').textContent = String(counts.pendingLinks);
-    summaryCards.querySelector('[data-summary="completed"] .session-summary-count').textContent = String(counts.completed);
-  }
-
-  if (pageHeader && rows.length) {
-    summaryCards = document.createElement('div');
-    summaryCards.className = 'session-summary-grid';
-    [
-      ['upcoming', 'event', 'Yaklaşan seans', 'session-summary-card--upcoming'],
-      ['pendingLinks', 'link_off', 'Bağlantı bekleyen', 'session-summary-card--pending'],
-      ['completed', 'task_alt', 'Tamamlanan', 'session-summary-card--completed']
-    ].forEach(([key, iconName, label, toneClass]) => {
-      const card = document.createElement('article');
-      card.className = `session-summary-card ${toneClass}`;
-      card.dataset.summary = key;
-      const icon = document.createElement('span');
-      icon.className = 'material-symbols-outlined session-summary-icon';
-      icon.textContent = iconName;
-      icon.setAttribute('aria-hidden', 'true');
-      const count = document.createElement('strong');
-      count.className = 'session-summary-count';
-      const labelNode = document.createElement('span');
-      labelNode.className = 'session-summary-label';
-      labelNode.textContent = label;
-      card.append(icon, count, labelNode);
-      summaryCards.appendChild(card);
+    summaryCards.querySelector('[data-summary="upcoming"] .session-summary-count').textContent = String(counts.Yaklaşan);
+    summaryCards.querySelector('[data-summary="completed"] .session-summary-count').textContent = String(counts.Tamamlanan);
+    tabs.forEach(tab => {
+      const label = tab.dataset.sessionStatus;
+      const selected = label === activeStatus;
+      tab.setAttribute('aria-selected', String(selected));
+      tab.setAttribute('aria-controls', list.id);
+      tab.tabIndex = selected ? 0 : -1;
+      const count = document.createElement('span');
+      count.className = 'session-tab-count';
+      count.setAttribute('aria-label', `${counts[label]} seans`);
+      count.textContent = String(counts[label]);
+      tab.replaceChildren(document.createTextNode(label), count);
     });
-    pageHeader.insertAdjacentElement('afterend', summaryCards);
+    const activeTab = tabs.find(tab => tab.dataset.sessionStatus === activeStatus);
+    list.setAttribute('aria-labelledby', activeTab.id);
+    const target = activeStatus === 'Tamamlanan' ? 'completed' : 'upcoming';
+    let visible = 0;
+    cards.forEach(card => {
+      const show = statusKey(card) === target;
+      card.hidden = !show;
+      if (show) visible += 1;
+    });
+    emptyMessage.textContent = activeStatus === 'Tamamlanan' ? 'Henüz tamamlanan seans yok' : 'Yaklaşan seans yok';
+    emptyHint.textContent = activeStatus === 'Tamamlanan' ? 'Yeni seanslarını burada görebileceksin.' : 'Adaylar müsaitlik takviminden randevu aldığında burada görünür.';
+    emptyState.hidden = visible > 0;
+    if (!emptyState.isConnected) list.append(emptyState);
   }
 
+  tabs.forEach(tab => {
+    const label = tab.textContent.trim();
+    tab.dataset.sessionStatus = label;
+    tab.dataset.navSkip = '';
+    tab.className = 'session-tab';
+    tab.id = `session-tab-${label === 'Yaklaşan' ? 'upcoming' : 'completed'}`;
+    tab.setAttribute('role', 'tab');
+    tab.addEventListener('click', () => { activeStatus = label; renderTabs(); });
+    tab.addEventListener('keydown', event => {
+      const index = tabs.indexOf(tab);
+      let next = index;
+      if (event.key === 'ArrowRight' || event.key === 'ArrowDown') next = (index + 1) % tabs.length;
+      else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') next = (index - 1 + tabs.length) % tabs.length;
+      else if (event.key === 'Home') next = 0;
+      else if (event.key === 'End') next = tabs.length - 1;
+      else return;
+      event.preventDefault();
+      tabs[next].focus();
+      tabs[next].click();
+    });
+  });
+
+  // ─── Kartlar ───────────────────────────────────────────────────────────────
   function avatarTone(name) {
     const tones = ['indigo', 'teal', 'coral', 'purple'];
     let hash = 0;
@@ -167,283 +163,100 @@
     return tones[Math.abs(hash) % tones.length];
   }
 
-  function getCurrentIstanbulDate() {
-    const parts = new Intl.DateTimeFormat('en-CA', {
-      timeZone: 'Europe/Istanbul',
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit'
-    }).formatToParts(new Date()).reduce((result, part) => {
-      if (part.type !== 'literal') result[part.type] = part.value;
-      return result;
-    }, {});
-    const year = Number(parts.year);
-    const month = Number(parts.month);
-    const day = Number(parts.day);
-    return { year, timestamp: Date.UTC(year, month - 1, day) };
-  }
-
-  function daysUntilDate(dateString) {
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(dateString || '')) return null;
-    const [year, month, day] = dateString.split('-').map(Number);
-    const target = Date.UTC(year, month - 1, day);
-    const targetDate = new Date(target);
-    if (targetDate.getUTCFullYear() !== year || targetDate.getUTCMonth() !== month - 1 ||
-        targetDate.getUTCDate() !== day) return null;
-    return Math.round((target - getCurrentIstanbulDate().timestamp) / 86400000);
-  }
-
-  function daysUntilLabel(dateLabel) {
-    const monthNames = ['ocak', 'şubat', 'mart', 'nisan', 'mayıs', 'haziran', 'temmuz', 'ağustos', 'eylül', 'ekim', 'kasım', 'aralık'];
-    const weekdayNames = ['pazar', 'pazartesi', 'salı', 'çarşamba', 'perşembe', 'cuma', 'cumartesi'];
-    const [, dayText, monthText, weekdayText] = dateLabel.match(/^(\d{1,2})\s+(\S+)\s+(\S+)/u) || [];
-    const day = Number(dayText);
-    const month = monthNames.indexOf((monthText || '').toLocaleLowerCase('tr-TR'));
-    const weekday = weekdayNames.indexOf((weekdayText || '').toLocaleLowerCase('tr-TR'));
-    if (!day || month < 0 || weekday < 0) return null;
-    const today = getCurrentIstanbulDate();
-    for (let year = today.year; year <= today.year + 7; year += 1) {
-      const target = Date.UTC(year, month, day);
-      const targetDate = new Date(target);
-      if (targetDate.getUTCMonth() !== month || targetDate.getUTCDate() !== day ||
-          targetDate.getUTCDay() !== weekday || target < today.timestamp) continue;
-      return Math.round((target - today.timestamp) / 86400000);
-    }
-    return null;
-  }
-
-  function setCardProximity(card, countdown, dateLabel) {
-    card.classList.remove(
-      'session-card--today',
-      'session-card--soon',
-      'session-card--later',
-      'session-card--completed',
-      'session-card--unknown',
-      'session-card--past'
-    );
-    const status = card.querySelector('.session-card-status')?.textContent.trim();
-    if (status === 'Tamamlandı') {
+  function setProximity(card, countdown, session) {
+    card.classList.remove('session-card--today', 'session-card--soon', 'session-card--later', 'session-card--completed', 'session-card--unknown', 'session-card--past');
+    if (session.status === 'completed') {
       card.classList.add('session-card--completed');
       countdown.textContent = 'Tamamlandı';
       countdown.hidden = false;
       return;
     }
-    const appointmentDate = card.dataset.bookedAppointment === 'true'
-      ? window.demoBookedAppointment?.tarih
-      : null;
-    const days = appointmentDate
-      ? daysUntilDate(appointmentDate)
-      : daysUntilLabel(dateLabel || card.querySelector('.session-card-date-block')?.getAttribute('aria-label') || '');
-    if (days === null) {
+    if (!session.scheduled_start_at || !SV) {
       card.classList.add('session-card--unknown');
       countdown.hidden = true;
       return;
     }
+    const days = SV.daysUntil(session.scheduled_start_at);
     countdown.hidden = false;
-    if (days < 0) {
-      card.classList.add('session-card--past');
-      countdown.textContent = 'Seans tarihi geçti';
-    } else if (days === 0) {
-      card.classList.add('session-card--today');
-      countdown.textContent = 'Bugün';
-    } else if (days === 1) {
-      card.classList.add('session-card--today');
-      countdown.textContent = 'Yarın';
-    } else {
-      card.classList.add(days <= 3 ? 'session-card--soon' : 'session-card--later');
-      countdown.textContent = `${days} gün sonra`;
-    }
+    countdown.textContent = SV.countdownLabel(session.scheduled_start_at);
+    card.classList.add(days < 0 ? 'session-card--past' : days <= 1 ? 'session-card--today' : days <= 3 ? 'session-card--soon' : 'session-card--later');
   }
 
-  function enhanceDate(card, dateNode, dateLabel, timeLabel, onDateChange) {
-    const monthNames = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'];
-    const parts = dateLabel.trim().split(/\s+/);
-    const day = parts[0] || '';
-    const month = parts[1] || '';
-    const weekday = parts[2] || '';
+  function statusBadge(status, session) {
+    const done = session.status === 'completed';
+    status.textContent = done ? 'Tamamlandı' : 'Yaklaşan';
+    status.className = done
+      ? 'session-card-status inline-flex items-center rounded px-2.5 py-1 text-[12px] font-semibold bg-[#DCFCE7] text-[#166534] border border-[#BBF7D0]'
+      : 'session-card-status inline-flex items-center px-2.5 py-0.5 rounded text-[12px] font-semibold bg-[#EDE9FE] text-[#5B21B6] border border-[#DDD6FE]';
+  }
+
+  function buildCard(session, client) {
+    const name = Api.format.fullName(client.candidate) || 'Danışan';
+    const card = document.createElement('div');
+    card.className = 'session-card bg-[#FFFFFF] rounded-[8px] border border-outline-variant p-5 flex flex-col md:flex-row md:items-center justify-between gap-4';
+    card.dataset.sessionKey = session.status === 'completed' ? 'completed' : 'upcoming';
+    card.dataset.sessionId = session.id;
+
+    // Tarih bloğu
+    const parts = window.SlotTime && session.scheduled_start_at ? window.SlotTime.parts(session.scheduled_start_at) : null;
     const dateBlock = document.createElement('div');
     dateBlock.className = 'session-card-date-block';
-    dateBlock.setAttribute('aria-label', [day, month, weekday].filter(Boolean).join(' '));
-    const dayNode = document.createElement('strong');
-    dayNode.className = 'session-card-date-day';
-    dayNode.textContent = day;
-    const monthNode = document.createElement('span');
-    monthNode.className = 'session-card-date-month';
-    monthNode.textContent = monthNames.find(item => item === month)?.slice(0, 3) || month;
-    const weekdayNode = document.createElement('span');
-    weekdayNode.className = 'session-card-date-weekday';
-    weekdayNode.textContent = weekday;
-    dateBlock.append(dayNode, monthNode, weekdayNode);
-    card.insertBefore(dateBlock, card.firstElementChild);
-
-    function updateDate(value) {
-      const segments = value.split('·').map(part => part.trim());
-      const currentDate = segments[0] || dateLabel;
-      const currentParts = currentDate.split(/\s+/);
-      if (!/^\d{1,2}\s+\S+\s+\S+/.test(currentDate)) return;
-      dayNode.textContent = currentParts[0] || day;
-      monthNode.textContent = monthNames.find(item => item === currentParts[1])?.slice(0, 3) || currentParts[1] || month;
-      weekdayNode.textContent = currentParts.find((part, index) => index > 1 && !/^\d{4}$/.test(part)) || weekday;
-      dateBlock.setAttribute('aria-label', currentDate);
-      dateNode.replaceChildren(document.createTextNode(segments.slice(1).join(' · ') || timeLabel));
-      onDateChange();
+    if (parts) {
+      const [, month, day] = parts.date.split('-').map(Number);
+      dateBlock.setAttribute('aria-label', SV ? SV.dateLabel(session.scheduled_start_at) : parts.date);
+      const dayNode = document.createElement('strong');
+      dayNode.className = 'session-card-date-day';
+      dayNode.textContent = String(day);
+      const monthNode = document.createElement('span');
+      monthNode.className = 'session-card-date-month';
+      monthNode.textContent = MONTHS[month - 1].slice(0, 3);
+      const weekdayNode = document.createElement('span');
+      weekdayNode.className = 'session-card-date-weekday';
+      weekdayNode.textContent = window.SlotTime.weekdays[parts.weekday];
+      dateBlock.append(dayNode, monthNode, weekdayNode);
     }
 
-    const observer = new MutationObserver(() => updateDate(dateNode.textContent.trim()));
-    observer.observe(dateNode, { childList: true, subtree: true, characterData: true });
-    updateDate(`${dateLabel} · ${timeLabel}`);
-    return dateBlock;
-  }
-
-  if (tabs.length === 2 && tabList && list) {
-    tabList.className = 'session-tabs';
-    tabList.setAttribute('role', 'tablist');
-    tabList.setAttribute('aria-label', 'Seans durumu');
-    list.classList.add('session-card-list');
-    list.id = 'session-card-list';
-    list.setAttribute('role', 'tabpanel');
-    const emptyState = document.createElement('div');
-    emptyState.className = 'session-empty-state';
-    emptyState.hidden = true;
-    emptyState.setAttribute('role', 'status');
-    emptyState.setAttribute('aria-live', 'polite');
-    const emptyIcon = document.createElement('span');
-    emptyIcon.className = 'material-symbols-outlined session-empty-icon';
-    emptyIcon.setAttribute('aria-hidden', 'true');
-    emptyIcon.textContent = 'event_available';
-    const emptyMessage = document.createElement('p');
-    emptyMessage.className = 'session-empty-message';
-    const emptyHint = document.createElement('p');
-    emptyHint.className = 'session-empty-hint';
-    emptyState.append(emptyIcon, emptyMessage, emptyHint);
-
-    let activeStatus = 'Yaklaşan';
-    function renderSessionTabs() {
-      const counts = {
-        Yaklaşan: rows.filter(card => card.querySelector('.session-card-status')?.textContent.trim() === 'Yaklaşan').length,
-        Tamamlanan: rows.filter(card => card.querySelector('.session-card-status')?.textContent.trim() === 'Tamamlandı').length
-      };
-      renderSummary();
-
-      tabs.forEach(tab => {
-        const label = tab.dataset.sessionStatus;
-        const selected = label === activeStatus;
-        tab.setAttribute('aria-selected', String(selected));
-        tab.setAttribute('aria-controls', list.id);
-        tab.tabIndex = selected ? 0 : -1;
-        const count = document.createElement('span');
-        count.className = 'session-tab-count';
-        count.dataset.sessionCountFor = label === 'Yaklaşan' ? 'upcoming' : 'completed';
-        count.setAttribute('aria-label', `${counts[label]} seans`);
-        count.textContent = String(counts[label]);
-        tab.replaceChildren(document.createTextNode(label), count);
-      });
-
-      const activeTab = tabs.find(tab => tab.dataset.sessionStatus === activeStatus);
-      list.setAttribute('aria-labelledby', activeTab.id);
-      const targetStatus = activeStatus === 'Tamamlanan' ? 'Tamamlandı' : 'Yaklaşan';
-      let visibleCount = 0;
-      rows.forEach(card => {
-        const isVisible = card.querySelector('.session-card-status')?.textContent.trim() === targetStatus;
-        card.hidden = !isVisible;
-        if (isVisible) visibleCount += 1;
-      });
-      emptyMessage.textContent = activeStatus === 'Tamamlanan'
-        ? 'Henüz tamamlanan seans yok'
-        : 'Yaklaşan seans yok';
-      emptyHint.textContent = activeStatus === 'Tamamlanan'
-        ? 'Yeni seanslarını burada görebileceksin.'
-        : '';
-      emptyHint.hidden = activeStatus !== 'Tamamlanan';
-      emptyState.hidden = visibleCount > 0;
-      if (!emptyState.isConnected) list.append(emptyState);
-    }
-
-    tabs.forEach(tab => {
-      const label = tab.textContent.trim();
-      tab.dataset.sessionStatus = label;
-      tab.className = 'session-tab';
-      tab.id = `session-tab-${label === 'Yaklaşan' ? 'upcoming' : 'completed'}`;
-      tab.setAttribute('role', 'tab');
-      tab.addEventListener('click', () => {
-        activeStatus = label;
-        renderSessionTabs();
-      });
-      tab.addEventListener('keydown', event => {
-        const currentIndex = tabs.indexOf(tab);
-        let nextIndex = currentIndex;
-        if (event.key === 'ArrowRight' || event.key === 'ArrowDown') nextIndex = (currentIndex + 1) % tabs.length;
-        else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
-        else if (event.key === 'Home') nextIndex = 0;
-        else if (event.key === 'End') nextIndex = tabs.length - 1;
-        else return;
-        event.preventDefault();
-        tabs[nextIndex].focus();
-        tabs[nextIndex].click();
-      });
-    });
-    updateSessionTabs = renderSessionTabs;
-  }
-
-  rows.forEach((card, index) => {
-    const details = card.firstElementChild;
-    const actions = card.children[1];
-    const title = details.querySelector('h2');
-    const date = details.querySelector('p');
-    const status = Array.from(details.querySelectorAll('span'))
-      .find(span => span.textContent.trim() === 'Yaklaşan');
-    const price = details.querySelector('[data-session-price]');
-    if (!details || !actions || !title || !date || !status || !price) return;
-
-    const match = title.textContent.trim().match(/^(Seans\s+\d+\s*\/\s*\d+)\s*·\s*(.+)$/);
-    if (!match) return;
-    const [, sessionNumber, candidateName] = match;
-    card.classList.add('session-card');
+    const details = document.createElement('div');
     details.className = 'session-card-details flex flex-col';
-    actions.className = 'session-card-actions';
-
     const heading = document.createElement('div');
     heading.className = 'session-card-heading';
     const titleGroup = document.createElement('div');
     titleGroup.className = 'session-card-title-group';
-    const indexLabel = document.createElement('span');
-    indexLabel.className = 'session-card-index';
-    indexLabel.textContent = sessionNumber;
-    title.textContent = candidateName;
+    const avatar = document.createElement('span');
+    avatar.className = `session-card-avatar session-card-avatar--${avatarTone(name)}`;
+    avatar.textContent = G.initials(name);
+    avatar.setAttribute('aria-hidden', 'true');
+    const index = document.createElement('span');
+    index.className = 'session-card-index';
+    index.textContent = `Seans ${session.sequence_no} / ${client.enrollment.session_count}`;
+    const title = document.createElement('h2');
     title.className = 'session-card-title';
-    titleGroup.append(indexLabel, title);
-    status.classList.add('session-card-status');
+    title.textContent = name;
+    titleGroup.append(avatar, index, title);
+    const status = document.createElement('span');
+    statusBadge(status, session);
     heading.append(titleGroup, status);
 
-    const [dateLabel = '', timeLabel = ''] = date.textContent.split(' · ');
+    const date = document.createElement('p');
     date.className = 'session-card-date';
-    let refreshProximity = () => {};
-    const dateBlock = enhanceDate(card, date, dateLabel, timeLabel, () => refreshProximity());
+    date.textContent = SV ? SV.timeRange(session.scheduled_start_at, session.scheduled_end_at) : '';
 
-    const avatar = document.createElement('span');
-    avatar.className = `session-card-avatar session-card-avatar--${avatarTone(candidateName)}`;
-    avatar.textContent = candidateName.split(/\s+/).slice(0, 2)
-      .map(part => part.charAt(0).toLocaleUpperCase('tr-TR')).join('');
-    avatar.setAttribute('aria-hidden', 'true');
-    titleGroup.insertBefore(avatar, indexLabel);
-
+    const price = document.createElement('span');
     price.className = 'session-card-price';
-    const priceText = price.textContent.trim();
-    const priceParts = priceText.match(/^(Ücret:)\s*(.+)$/);
-    if (priceParts) {
-      const priceLabel = document.createElement('span');
-      priceLabel.className = 'session-card-price-label';
-      priceLabel.textContent = priceParts[1];
-      const priceValue = document.createElement('strong');
-      priceValue.className = 'session-card-price-value';
-      priceValue.textContent = priceParts[2];
-      price.replaceChildren(priceLabel, document.createTextNode(' '), priceValue);
-    }
+    const priceLabel = document.createElement('span');
+    priceLabel.className = 'session-card-price-label';
+    priceLabel.textContent = 'Ücret:';
+    const priceValue = document.createElement('strong');
+    priceValue.className = 'session-card-price-value';
+    priceValue.textContent = Api.format.money(client.enrollment.amount_minor, client.enrollment.currency);
+    price.append(priceLabel, document.createTextNode(' '), priceValue);
+
     const meta = document.createElement('div');
     meta.className = 'session-card-meta';
     const detailLink = document.createElement('a');
     detailLink.className = 'session-card-detail-link';
-    detailLink.href = 'guru-danisan-detay.html';
+    detailLink.href = 'guru-danisan-detay.html?' + new URLSearchParams({ enrollment: client.enrollment.id }).toString();
+    detailLink.dataset.navSkip = '';
     const detailIcon = document.createElement('span');
     detailIcon.className = 'material-symbols-outlined session-action-icon';
     detailIcon.textContent = 'arrow_forward';
@@ -453,185 +266,91 @@
     detailLink.append(detailIcon, detailText);
     const countdown = document.createElement('span');
     countdown.className = 'session-card-countdown';
-    const linkStatus = document.createElement('span');
-    linkStatus.className = 'session-card-link-status session-card-link-status--pending';
-    linkStatus.textContent = 'Görüşme linki eklenmedi';
-    linkStatus.setAttribute('role', 'status');
-    function updateLinkStatus(ready) {
-      card.dataset.meetingLinkReady = String(ready);
-      linkStatus.classList.toggle('session-card-link-status--ready', ready);
-      linkStatus.classList.toggle('session-card-link-status--pending', !ready);
-      linkStatus.textContent = ready ? 'Bağlantı hazır' : 'Görüşme linki eklenmedi';
-      renderSummary();
+    const join = document.createElement('span');
+    if (SV) SV.renderJoinPlaceholder(join);
+    meta.append(detailLink, countdown, join);
+    details.append(heading, date, price, meta);
+
+    const actions = document.createElement('div');
+    actions.className = 'session-card-actions';
+    const completeButton = document.createElement('button');
+    completeButton.type = 'button';
+    completeButton.className = 'session-complete-button';
+    completeButton.dataset.action = 'complete-session';
+    function syncButton() {
+      const done = session.status === 'completed';
+      setButtonContent(completeButton, done ? 'Tamamlandı' : 'Tamamlandı işaretle', 'check_circle');
+      completeButton.disabled = done;
+      completeButton.setAttribute('aria-disabled', String(done));
+      completeButton.title = done ? 'Bu seans zaten tamamlandı' : 'Seans yapıldıktan sonra işaretle';
     }
-    meta.append(detailLink, countdown, linkStatus);
-    details.replaceChildren(heading, date, price, meta);
-    refreshProximity = () => setCardProximity(card, countdown, dateBlock.getAttribute('aria-label'));
-    refreshProximity();
-
-    const addLinkButton = createButton('Görüşme linki ekle', 'session-link-add', 'add_link');
-    const completeButton = createButton('Tamamlandı işaretle', 'session-complete-button', 'check_circle');
-    completeButton.title = 'Seans saatinden sonra işaretlenebilir';
-    completeButton.disabled = !completionEnabled;
-    completeButton.setAttribute('aria-disabled', String(!completionEnabled));
-    actions.replaceChildren(addLinkButton, completeButton);
-
-    const linkActions = document.createElement('div');
-    linkActions.className = 'session-link-actions';
-    linkActions.hidden = true;
-    let savedUrl = '';
-    const meetingLink = document.createElement('a');
-    meetingLink.textContent = 'Linke git';
-    meetingLink.target = '_blank';
-    meetingLink.rel = 'noopener noreferrer';
-    const editButton = createButton('Düzenle', 'session-link-edit');
-    linkActions.append(meetingLink, editButton);
-
-    const editor = document.createElement('form');
-    editor.className = 'session-link-editor';
-    editor.hidden = true;
-    const field = document.createElement('div');
-    field.className = 'session-link-field';
-    const label = document.createElement('label');
-    label.textContent = 'Görüşme bağlantısı';
-    const input = document.createElement('input');
-    input.className = 'session-link-input';
-    input.type = 'url';
-    input.required = true;
-    input.placeholder = 'https://';
-    input.autocomplete = 'url';
-    label.htmlFor = `session-link-${index + 1}`;
-    input.id = label.htmlFor;
-    field.append(label, input);
-    const saveButton = createButton('Kaydet', 'session-link-save');
-    saveButton.type = 'submit';
-    const cancelButton = createButton('İptal', 'session-link-cancel');
-    editor.append(field, saveButton, cancelButton);
-    card.append(linkActions, editor);
-
-    function openEditor() {
-      input.value = savedUrl;
-      editor.hidden = false;
-      addLinkButton.hidden = true;
-      linkActions.hidden = true;
-      input.focus();
-    }
-
-    addLinkButton.addEventListener('click', openEditor);
-    editButton.addEventListener('click', openEditor);
-    cancelButton.addEventListener('click', () => {
-      editor.hidden = true;
-      addLinkButton.hidden = Boolean(savedUrl);
-      linkActions.hidden = !savedUrl;
-      (addLinkButton.hidden ? editButton : addLinkButton).focus();
-    });
-
-    editor.addEventListener('submit', event => {
-      event.preventDefault();
-      if (!input.reportValidity()) return;
-      const url = new URL(input.value);
-      if (!['http:', 'https:'].includes(url.protocol)) {
-        input.setCustomValidity('Bağlantı http veya https ile başlamalıdır.');
-        input.reportValidity();
-        input.addEventListener('input', () => input.setCustomValidity(''), { once: true });
-        return;
-      }
-      savedUrl = url.href;
-      meetingLink.href = savedUrl;
-      editor.hidden = true;
-      addLinkButton.hidden = true;
-      linkActions.hidden = false;
-      updateLinkStatus(true);
-      showToast('Görüşme bağlantısı kaydedildi.');
-      editButton.focus();
-    });
-
+    syncButton();
     completeButton.addEventListener('click', () => {
       if (completeButton.disabled) return;
-      pendingCompletion = { card, button: completeButton };
+      pendingCompletion = { card, session, button: completeButton, update(next) {
+        Object.assign(session, next);
+        card.dataset.sessionKey = 'completed';
+        statusBadge(status, session);
+        setProximity(card, countdown, session);
+        syncButton();
+      } };
       dialog.showModal();
       dialog.querySelector('button[value="cancel"]').focus();
     });
-  });
-  updateSessionTabs();
-  renderSummary();
-  setupSessionMobileNav();
+    actions.append(completeButton);
 
-  dialog.addEventListener('cancel', () => {
-    const button = pendingCompletion?.button;
-    pendingCompletion = null;
-    window.setTimeout(() => button?.focus(), 0);
-  });
-
-  dialog.addEventListener('close', () => {
-    if (dialog.returnValue !== 'confirm' || !pendingCompletion) {
-      pendingCompletion?.button.focus();
-      pendingCompletion = null;
-      return;
-    }
-    const { card } = pendingCompletion;
-    pendingCompletion = null;
-    setComplete(card);
-  });
+    card.append(dateBlock, details, actions);
+    setProximity(card, countdown, session);
+    return card;
+  }
 
   dialog.addEventListener('keydown', event => {
-    if (event.key === 'Escape') {
-      event.preventDefault();
-      dialog.close('cancel');
-      return;
-    }
-    if (event.key !== 'Tab') return;
-    const focusable = Array.from(dialog.querySelectorAll('button:not(:disabled)'));
-    if (!focusable.length) return;
-    const first = focusable[0];
-    const last = focusable[focusable.length - 1];
-    if (event.shiftKey && document.activeElement === first) {
-      event.preventDefault();
-      last.focus();
-    } else if (!event.shiftKey && document.activeElement === last) {
-      event.preventDefault();
-      first.focus();
+    if (event.key === 'Escape') { event.preventDefault(); dialog.close('cancel'); }
+  });
+  dialog.addEventListener('close', async () => {
+    const pending = pendingCompletion;
+    pendingCompletion = null;
+    if (!pending) return;
+    if (dialog.returnValue !== 'confirm') { pending.button.focus(); return; }
+    try {
+      const result = await Api.ui.withLoading(pending.button, () =>
+        Api.post(`/guru/enrollment-sessions/${pending.session.id}/complete`), { text: 'İşaretleniyor…' });
+      pending.update(result.session);
+      renderTabs();
+      toast(result.story_advanced ? 'Seans tamamlandı. Danışan hikâye adımına geçebilir.' : 'Seans tamamlandı olarak işaretlendi.');
+    } catch (error) {
+      toast(Api.ui.message(error));
+      pending.button.focus();
     }
   });
 
-  function setupSessionMobileNav() {
-    const sidebar = document.querySelector('.guru-session-page .advisor-sidebar');
-    const sidebarCard = sidebar?.firstElementChild;
-    const content = sidebarCard?.firstElementChild;
-    const brandRow = content?.querySelector(':scope > div:first-child');
-    const nav = content?.querySelector('nav');
-    if (!sidebar || !brandRow || !nav || brandRow.querySelector('.guru-session-mobile-toggle')) return;
-
-    nav.id = 'guru-session-mobile-menu';
-    const toggle = document.createElement('button');
-    toggle.type = 'button';
-    toggle.className = 'guru-session-mobile-toggle';
-    toggle.setAttribute('aria-controls', nav.id);
-    toggle.setAttribute('aria-expanded', 'false');
-    const icon = document.createElement('span');
-    icon.className = 'material-symbols-outlined';
-    icon.setAttribute('aria-hidden', 'true');
-    icon.textContent = 'menu';
-    const label = document.createElement('span');
-    label.textContent = 'Menüyü aç';
-    toggle.append(icon, label);
-    brandRow.appendChild(toggle);
-
-    function setOpen(open) {
-      sidebar.classList.toggle('guru-session-mobile-menu-open', open);
-      toggle.setAttribute('aria-expanded', String(open));
-      label.textContent = open ? 'Menüyü kapat' : 'Menüyü aç';
-      icon.textContent = open ? 'close' : 'menu';
-      if (open) nav.querySelector('a')?.focus();
-      else toggle.focus();
+  async function load() {
+    list.replaceChildren();
+    list.setAttribute('aria-busy', 'true');
+    try {
+      await window.sessionReady;
+      const clients = await Api.listAll('/guru/clients', { limit: 100 });
+      const active = clients.filter(client => client.enrollment.status === 'active' || client.enrollment.status === 'completed');
+      const lists = await G.mapLimit(active, 4, client =>
+        Api.get(`/guru/enrollments/${client.enrollment.id}/sessions`).then(data => (data.items || []).map(session => ({ session, client }))));
+      const entries = lists.flat().filter(({ session }) => session.status === 'scheduled' || session.status === 'completed');
+      entries.sort((a, b) => {
+        const ta = Date.parse(a.session.scheduled_start_at || a.session.completed_at || 0);
+        const tb = Date.parse(b.session.scheduled_start_at || b.session.completed_at || 0);
+        return a.session.status === 'completed' ? tb - ta : ta - tb;
+      });
+      cards = entries.map(({ session, client }) => buildCard(session, client));
+      list.replaceChildren(...cards);
+      renderTabs();
+    } catch (error) {
+      cards = [];
+      renderTabs();
+      Api.ui.showError(list, error, { position: 'before' });
+    } finally {
+      list.removeAttribute('aria-busy');
     }
-
-    toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
-    document.addEventListener('keydown', event => {
-      if (event.key === 'Escape' && sidebar.classList.contains('guru-session-mobile-menu-open')) setOpen(false);
-    });
-    document.addEventListener('click', event => {
-      if (!sidebar.contains(event.target) && sidebar.classList.contains('guru-session-mobile-menu-open')) setOpen(false);
-    });
   }
+
+  renderTabs();
+  load();
 })();

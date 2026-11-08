@@ -287,9 +287,6 @@ body .advisor-story-panel .advisor-story-copy {
   line-height: 1.7;
 }
 
-html[data-demo-ui="hidden"] .demo-only {
-  display: none !important;
-}
 
 body:has(.advisor-story-panel) main {
   padding-bottom: 5rem;
@@ -2130,8 +2127,7 @@ body.guru-notes-page .note-tab-count {
 }
 
 body.guru-notes-page .note-tab:focus-visible,
-body.guru-notes-page .note-history-actions button:focus-visible,
-body.guru-notes-page #demo-flow-nav a:focus-visible {
+body.guru-notes-page .note-history-actions button:focus-visible {
   outline: 3px solid #51409d;
   outline-offset: 3px;
 }
@@ -2521,17 +2517,6 @@ body #demo-role-switcher {
   background: var(--header-bg) !important;
   border-color: rgba(255, 255, 255, 0.35) !important;
   color: #fff !important;
-}
-
-body #demo-flow-nav {
-  background: var(--theme-gradient) !important;
-  border-color: rgba(255, 255, 255, 0.35) !important;
-  font-family: "IBM Plex Sans", sans-serif !important;
-}
-
-body #demo-flow-nav a {
-  border-radius: 999px !important;
-  font-family: "IBM Plex Sans", sans-serif !important;
 }
 
 body :is(button, a[role="button"], [role="button"]) {
@@ -3256,19 +3241,6 @@ body.story-entry-page .story-notes-toggle .material-symbols-outlined {
   font-size: 1.125rem;
 }
 
-body.story-entry-page > button.demo-only {
-  position: static !important;
-  display: block;
-  margin: 0 1rem 1rem auto;
-}
-
-body.story-entry-page > button.demo-only:focus-visible,
-body.story-entry-page #demo-flow-nav a:focus-visible {
-  outline: 3px solid #fff;
-  outline-offset: 3px;
-  box-shadow: 0 0 0 5px #51409d;
-}
-
 body.story-entry-page .advisor-sidebar nav a[aria-current="page"] {
   border-left-color: var(--panel-active-line) !important;
   background: var(--panel-item-active-bg) !important;
@@ -3541,18 +3513,6 @@ body.login-page .login-submit:disabled {
   opacity: .85;
 }
 
-body.login-page > button.demo-only {
-  position: static !important;
-  display: block;
-  margin: 0 1rem 1rem auto;
-}
-
-body.login-page > button.demo-only:focus-visible {
-  outline: 3px solid #fff;
-  outline-offset: 3px;
-  box-shadow: 0 0 0 5px #51409d;
-}
-
 @media (max-width: 480px) {
   body.login-page .login-content {
     padding-right: 1rem;
@@ -3563,8 +3523,6 @@ body.login-page > button.demo-only:focus-visible {
     padding: 1.25rem !important;
   }
 }
-
-
 
 body.guru-session-page .session-card {
   display: grid;
@@ -3918,9 +3876,7 @@ body.guru-session-page .session-tab-count {
   font-weight: 600;
 }
 
-body.guru-session-page .session-tab:focus-visible,
-body.guru-session-page #demo-flow-nav a:focus-visible,
-body.guru-session-page > button.demo-only:focus-visible {
+body.guru-session-page .session-tab:focus-visible {
   outline: 3px solid #51409d;
   outline-offset: 3px;
 }
@@ -4008,17 +3964,6 @@ body.guru-session-page .session-empty-hint {
   body.guru-session-page .session-link-editor {
     flex-direction: column;
     align-items: stretch;
-  }
-
-  body.guru-session-page #demo-flow-nav {
-    max-width: calc(100% - 1rem);
-    gap: .25rem !important;
-    padding: .35rem !important;
-  }
-
-  body.guru-session-page #demo-flow-nav a {
-    padding: .5rem .55rem !important;
-    white-space: nowrap;
   }
 }
 
@@ -5124,9 +5069,6 @@ body.guru-profile-editor .guru-profile-action-bar {
   z-index: 20;
 }
 
-body.guru-profile-editor > .demo-only {
-  bottom: 76px !important;
-}
 
 body.guru-profile-editor .guru-profile-action-bar button,
 body.guru-profile-editor .guru-profile-dialog button {
@@ -5571,14 +5513,6 @@ body.order-confirmation-page #submit-order-btn:focus-visible {
   outline-offset: 3px;
 }
 
-body.order-confirmation-page > button.demo-only {
-  bottom: calc(6rem + 16px) !important;
-}
-
-body.order-confirmation-page > div.demo-only {
-  bottom: calc(6rem + 56px) !important;
-}
-
 @media (max-width: 767px) {
   body.order-confirmation-page .order-next-steps {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -5605,14 +5539,6 @@ body.order-confirmation-page > div.demo-only {
 
   body.order-confirmation-page .order-payment-option-list {
     grid-template-columns: minmax(0, 1fr);
-  }
-
-  body.order-confirmation-page > button.demo-only {
-    bottom: calc(13rem + 16px) !important;
-  }
-
-  body.order-confirmation-page > div.demo-only {
-    bottom: calc(13rem + 56px) !important;
   }
 }
 
@@ -8873,7 +8799,7 @@ body.story-output-page .story-output-toast {
     font: 11pt/1.5 Arial, sans-serif !important;
   }
 
-  body.story-output-page :is(aside, .demo-only, .story-output-actions, .story-output-button,
+  body.story-output-page :is(aside, .story-output-actions, .story-output-button,
     .story-edit-hint, .story-next-step-card, .story-output-toast, #story-output-action-help,
     .story-output-followup-controls, .border-t.flex.items-center.justify-end) {
     display: none !important;
@@ -9486,37 +9412,6 @@ body:has(#otp-container) .resend-button {
 body:has(#otp-container) #resend-timer-box[hidden],
 body:has(#otp-container) #resend-button[hidden] {
   display: none !important;
-}
-
-body.login-page #demo-flow-nav,
-body:has(.registration-progress) #demo-flow-nav {
-  position: static !important;
-  inset: auto !important;
-  transform: none !important;
-  z-index: auto !important;
-  box-sizing: border-box;
-  width: max-content;
-  max-width: calc(100% - 2rem);
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: .35rem !important;
-  margin: .5rem auto !important;
-  padding: .35rem .5rem !important;
-  border-radius: 999px !important;
-}
-
-body.login-page #demo-flow-nav a,
-body:has(.registration-progress) #demo-flow-nav a {
-  padding: .4rem .65rem !important;
-  font-size: .875rem;
-  white-space: nowrap;
-}
-
-body.login-page #demo-flow-nav a:focus-visible,
-body:has(.registration-progress) #demo-flow-nav a:focus-visible {
-  outline: 3px solid #fff;
-  outline-offset: 2px;
-  box-shadow: 0 0 0 5px #51409d;
 }
 
 body.service-selection-page .service-progress-marker {
@@ -10351,13 +10246,6 @@ body.payment-success-page .payment-success-confetti-piece {
   }
 }
 
-body.payment-success-page > button.demo-only {
-  bottom: 1rem !important;
-}
-
-body.payment-success-page > div.demo-only {
-  bottom: 4rem !important;
-}
 
 @media (prefers-reduced-motion: reduce) {
   body.payment-success-page .payment-success-check,
@@ -10432,12 +10320,7 @@ body:has(.registration-progress) [class~="w-[440px]"] {
     text-align: center;
   }
 
-  body.login-page #demo-flow-nav,
-  body:has(.registration-progress) #demo-flow-nav {
-    max-width: calc(100% - 1rem);
-    border-radius: 1rem !important;
   }
-}
 
 body.guru-panel-page:not(.panel-dashboard) .advisor-sidebar {
   position: sticky;
@@ -11555,20 +11438,6 @@ body.guru-story-page .guru-mobile-menu-toggle:focus-visible {
   outline-offset: 3px;
 }
 
-body.guru-story-page > button.demo-only {
-  right: auto !important;
-  bottom: calc(88px + env(safe-area-inset-bottom)) !important;
-  left: 16px !important;
-  z-index: 1001 !important;
-}
-
-body.guru-story-page > div.demo-only {
-  right: auto !important;
-  bottom: calc(132px + env(safe-area-inset-bottom)) !important;
-  left: 16px !important;
-  z-index: 1001 !important;
-}
-
 body.guru-story-page .guru-mobile-menu-toggle {
   display: none;
   min-height: 40px;
@@ -11894,60 +11763,6 @@ body.guru-session-page > main {
   padding-bottom: calc(var(--session-demo-nav-height) + 24px);
 }
 
-body.guru-session-page > #demo-flow-nav {
-  position: static !important;
-  inset: auto !important;
-  display: flex !important;
-  width: max-content;
-  max-width: calc(100% - 2rem);
-  align-items: center;
-  justify-content: center;
-  gap: .35rem !important;
-  margin-bottom: calc(24px + env(safe-area-inset-bottom)) !important;
-  padding: .35rem !important;
-  border-radius: 999px !important;
-  box-shadow: var(--theme-shadow-elevation-sm) !important;
-  transform: none !important;
-  z-index: auto !important;
-}
-
-body.guru-session-page > #demo-flow-nav a {
-  min-height: 36px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: .45rem .7rem !important;
-  background: #35266f !important;
-  color: #fff !important;
-  font-size: .8125rem;
-  font-weight: 600;
-  line-height: 1;
-  text-decoration: none;
-  white-space: nowrap;
-}
-
-body.guru-session-page > #demo-flow-nav a:hover {
-  background: #241a52 !important;
-}
-
-body.guru-session-page > #demo-flow-nav a:focus-visible {
-  outline: 3px solid #fff;
-  outline-offset: 2px;
-  box-shadow: 0 0 0 5px var(--accent-indigo);
-}
-
-@media (max-width: 420px) {
-  body.guru-session-page > #demo-flow-nav {
-    gap: .2rem !important;
-    max-width: calc(100% - 1rem);
-    margin-bottom: calc(72px + env(safe-area-inset-bottom)) !important;
-  }
-
-  body.guru-session-page > #demo-flow-nav a {
-    padding: .45rem .5rem !important;
-    font-size: .75rem;
-  }
-}
 
 @media (prefers-reduced-motion: reduce) {
   body.guru-session-page .session-card {
@@ -12479,13 +12294,6 @@ body.guru-profile-editor .guru-profile-publish-toggle {
   margin: 0;
 }
 
-body.guru-profile-editor > button.demo-only {
-  position: static !important;
-  inset: auto !important;
-  display: block;
-  width: max-content;
-  margin: 1rem auto 7rem;
-}
 
 @media (max-width: 900px) {
   body.guru-profile-editor .guru-profile-preview-header {
@@ -13813,5 +13621,143 @@ body.panel-dashboard.guru-panel-page .guru-profile-content {
 
   body.panel-dashboard.guru-panel-page .guru-profile-menu-current {
     display: inline;
+  }
+}
+
+/* ─── API ortak durum bileşenleri (81 Frontend Platform, api-client.js Api.ui) ───────────────
+   Yeni görsel dil değildir: giriş ekranındaki mevcut uyarı kutusunun (auth-demo.js) ve alan
+   hatasının (.login-field-error) birebir değerleri; Tailwind CDN yüklenmeyen sayfalarda da çalışsın diye
+   sınıf olarak tanımlandı. */
+.api-alert {
+  margin: 0;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  background: #fef2f2;
+  padding: .5rem .75rem;
+  color: #b42318;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.api-alert[hidden] {
+  display: none;
+}
+
+.api-alert--info {
+  border-color: #dedaf4;
+  background: #eeecff;
+  color: #51409d;
+}
+
+.api-field-error {
+  margin: .25rem 0 0;
+  color: #b42318;
+  font-size: 13px;
+}
+
+[aria-busy="true"] {
+  cursor: progress;
+}
+
+/* ─── Panel kenar kartı "Çıkış yap" (81, QA-011; nav.js .panel-sidebar-logout[data-logout]) ──────
+   Mevcut panel menü öğesinin değerleri (renk, yükseklik, köşe, hover/odak) kullanılır. */
+body.panel-dashboard .panel-sidebar-logout {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: 8px;
+  box-sizing: border-box;
+  color: var(--panel-item-color);
+  cursor: pointer;
+  display: flex;
+  flex: 0 0 auto;
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: .875rem;
+  font-weight: 500;
+  gap: .625rem;
+  margin-top: .5rem;
+  min-height: 44px;
+  padding: .55rem .75rem;
+  text-align: left;
+  width: 100%;
+}
+
+body.panel-dashboard .panel-sidebar-logout .material-symbols-outlined {
+  color: inherit;
+  font-size: 20px;
+}
+
+body.panel-dashboard .panel-sidebar-logout:hover {
+  background: var(--panel-item-hover-bg);
+}
+
+body.panel-dashboard .panel-sidebar-logout:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 2px;
+}
+
+body.panel-dashboard .panel-sidebar-logout:disabled {
+  cursor: progress;
+  opacity: .7;
+}
+
+/* QA-012 ek: div sarmalayıcısı olmayan menü öğelerinde (profil, cv … HTML'i) etiket ortalanıyordu;
+   etiket sola, durum ikonu sağa. Dar (ikon) menüde etiket gizli olduğundan orada uygulanmaz. */
+@media (max-width: 768px), (min-width: 1025px) {
+  body.panel-dashboard .panel-sidebar nav > a > .panel-nav-label {
+    margin-right: auto;
+  }
+}
+
+/* Mobil çekmecede sabit menü/kapat düğmesi marka yazısının üstüne biniyordu. */
+@media (max-width: 768px) {
+  body.panel-dashboard .panel-sidebar .panel-sidebar-brand {
+    padding-left: 56px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  body.panel-dashboard .panel-sidebar-logout {
+    flex-direction: column;
+    gap: .2rem;
+    justify-content: center;
+    min-height: 58px;
+    padding: .35rem .15rem;
+    text-align: center;
+  }
+
+  body.panel-dashboard .panel-sidebar-logout::after {
+    content: attr(data-panel-short);
+    font-size: .6rem;
+    font-weight: 600;
+    line-height: 1.1;
+  }
+}
+
+/* ─── QA-013 (K66; 84 bulgusu, 84'ün geçici demo/guru-panel.css dosyasından taşındı, 81) ───────────
+   body.panel-dashboard.guru-panel-page .panel-sidebar { position: sticky } (0,3,1) ve guru-session-page /
+   guru-story-page mobil "sticky !important" kuralları ortak mobil çekmece kuralını
+   (@media max-width:768px body.panel-dashboard .panel-sidebar { position: fixed; translateX(-100%) }) eziyordu
+   → 390 px'te kenar çubuğu akışta 844 px yer kaplıyor, içerik ~920 px'ten başlıyordu. Dosyanın sonunda
+   aynı/yüksek özgüllükle guru panelinde de çekmece davranışı geri getirilir. */
+@media (max-width: 768px) {
+  body.panel-dashboard.guru-panel-page .panel-sidebar {
+    align-self: auto;
+    height: 100vh;
+    left: 0;
+    min-height: 0;
+    position: fixed !important;
+    top: 0;
+    transform: translateX(-100%);
+    width: var(--sidebar-width) !important;
+    z-index: 9999;
+  }
+
+  body.panel-dashboard.guru-panel-page.panel-menu-open .panel-sidebar {
+    transform: translateX(0);
+  }
+
+  body.panel-dashboard.guru-panel-page .panel-dashboard-grid {
+    display: block !important;
   }
 }

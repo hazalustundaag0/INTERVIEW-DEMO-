@@ -3,16 +3,22 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="refresh" content="0;url=danisman.html?id=selin-arslan">
   <title>Danışman profili · Interview Demo</title>
+  <!-- Eski URL yönlendirmesi (82): ?id=<guru_profiles.id> varsa danisman.html?id=…, yoksa danışman listesi.
+       Sabit 'selin-arslan' slug'ı kaldırıldı (GAP-U14). -->
   <script>
-    const target = new URL('danisman.html?id=selin-arslan', location.href);
-    const legacy = new URLSearchParams(location.search);
-    if (legacy.has('id')) target.searchParams.set('id', legacy.get('id'));
-    location.replace(target.href);
+    (function () {
+      var legacy = new URLSearchParams(location.search);
+      var id = legacy.get('id');
+      var target = id ? 'danisman.html?id=' + encodeURIComponent(id) : 'danismanlar.html';
+      location.replace(new URL(target, location.href).href);
+    })();
   </script>
+  <noscript><meta http-equiv="refresh" content="0;url=danismanlar.html"></noscript>
 <link rel="stylesheet" href="avatar.css"></head>
 <body>
-  <p>Danışman profiline yönlendiriliyorsun. <a href="danisman.html?id=selin-arslan">Profil sayfasını aç</a>.</p>
+  <p>Danışman profiline yönlendiriliyorsun. <a href="danismanlar.html">Danışmanları gör</a>.</p>
+<script src="config.js"></script>
+<script src="api-client.js"></script>
 <script src="avatar.js"></script></body>
 </html>

@@ -1,9 +1,20 @@
+// auth-demo.js — Ortak giriş formu (giris.html → aday, giris-danisman.html → guru).
+// Sahibi: 81 Frontend Platform (82 ve 84 aynı betiği kullanır).
+// POST /auth/login { email, password, client_type } — client_type sayfaya göre sabittir.
+// Token yalnız api-client.js'te (sessionStorage, rol başına anahtar) saklanır.
 (function () {
+  'use strict';
   const page = location.pathname.split('/').pop();
   if (!['giris.html', 'giris-danisman.html'].includes(page)) return;
+  if (!window.Api) {
+    console.error('auth-demo.js: api-client.js yüklenmemiş.');
+    return;
+  }
+  const Api = window.Api;
 
   const guruLogin = page === 'giris-danisman.html';
-  const returnTarget = window.safeReturnPath?.(new URLSearchParams(location.search).get('return')) || (guruLogin ? null : 'danismanlar.html');
+  const clientType = guruLogin ? Api.ROLES.GURU : Api.ROLES.CANDIDATE;
+  const returnTarget = Api.safeReturnPath(new URLSearchParams(location.search).get('return'));
   const form = document.querySelector('form');
   const emailInput = document.getElementById('email');
   const passwordInput = document.getElementById('password');
@@ -19,7 +30,8 @@
     return;
   }
 
-  if (!guruLogin) {
+  // Kayıt bağlantıları dönüş hedefini taşır (ör. hizmet.html?guru=<uuid>).
+  if (!guruLogin && returnTarget) {
     document.querySelectorAll('a').forEach(anchor => {
       if (!['Hesap oluştur', 'Kayıt ol'].includes(anchor.textContent.replace(/\s+/g, ' ').trim())) return;
       anchor.href = 'kayit.html?return=' + encodeURIComponent(returnTarget);
@@ -27,24 +39,24 @@
   }
 
   managerContact?.addEventListener('click', () => {
-    if (!managerContactMessage) {
-      console.error('Yönetici iletişim bildirim alanı bulunamadı.');
-      return;
-    }
-    managerContactMessage.textContent = 'Yöneticiyle iletişim demo ortamında kullanılamıyor.';
+    if (!managerContactMessage) return;
+    // Yönetici iletişimi için backend ucu yok; metin 84'ün kararına bırakıldı (GAP-D16).
+    managerContactMessage.textContent = 'Danışman hesapları yönetici tarafından davetle açılır. Davet e-postanı kontrol et.';
     managerContactMessage.hidden = false;
   });
 
+  // Mevcut giriş uyarı kutusu (theme.css .api-alert = eski kırmızı uyarı stili).
   const alert = document.createElement('p');
-  alert.className = 'hidden rounded-[8px] border border-[#FECACA] bg-[#FEF2F2] px-3 py-2 text-[13px] text-[#B42318]';
+  alert.className = 'api-alert';
+  alert.hidden = true;
   alert.setAttribute('role', 'alert');
   alert.setAttribute('aria-live', 'polite');
-  const submitButton = Array.from(form.querySelectorAll('button')).find(button =>
+  const submitButton = form.querySelector('button[type="submit"]') || Array.from(form.querySelectorAll('button')).find(button =>
     button.textContent.replace(/\s+/g, ' ').trim() === 'Giriş yap'
   );
+  if (submitButton) submitButton.setAttribute('data-action', 'login');
   form.noValidate = true;
-  const submitContainer = submitButton?.parentElement;
-  if (submitContainer) submitContainer.insertAdjacentElement('beforebegin', alert);
+  submitButton?.parentElement?.insertAdjacentElement('beforebegin', alert);
 
   function clearFieldError(input, error) {
     error.textContent = '';
@@ -58,9 +70,10 @@
     input.setAttribute('aria-invalid', 'true');
   }
 
-  function clearFieldErrors() {
+  function clearErrors() {
     clearFieldError(emailInput, emailError);
     clearFieldError(passwordInput, passwordError);
+    Api.ui.clearError(alert);
   }
 
   toggleButton?.addEventListener('click', () => {
@@ -71,46 +84,24 @@
     if (eyeIcon) eyeIcon.textContent = showPassword ? 'visibility' : 'visibility_off';
   });
 
-  let continuation = null;
-  try {
-    continuation = localStorage.getItem('demoDevam');
-  } catch (error) {
-    console.error('Giriş dönüş bilgisi okunamadı.', error);
-  }
-  if (!guruLogin && continuation === 'siparis.html') {
+  async function destinationAfterLogin() {
+    if (returnTarget) return returnTarget;
+    if (guruLogin) return Api.HOME_PAGES.guru;
+    // Kaydı (satın alma) olan aday ana ekrana, olmayan danışman seçimine.
     try {
-      const selection = JSON.parse(localStorage.getItem('demoSecim'));
-      if (selection) {
-        const banner = document.createElement('div');
-        banner.className = 'mb-4 rounded-[8px] border border-[#DEDaf4] bg-[#EEECFF] px-4 py-3';
-        const title = document.createElement('p');
-        title.className = 'text-[14px] font-semibold text-[#51409D]';
-        title.textContent = 'Devam etmek için giriş yap';
-        const price = Number(selection.price);
-        const amount = Number.isFinite(price)
-          ? new Intl.NumberFormat('tr-TR').format(price)
-          : String(selection.price || '—');
-        const details = document.createElement('p');
-        details.className = 'mt-1 text-[12px] text-[#7564C7]';
-        details.textContent = 'Seçimin: ' + (selection.service || '—') + ' · ' +
-          (selection.guru || '—') + ' · ' + amount + ' ₺';
-        banner.append(title, details);
-        form.insertAdjacentElement('beforebegin', banner);
-      }
+      const result = await Api.page('/candidate/enrollments', { limit: 1, role: clientType });
+      return result.items.length ? Api.HOME_PAGES.candidate : 'danismanlar.html';
     } catch (error) {
-      console.error('Hizmet seçimi giriş ekranında okunamadı.', error);
+      return Api.HOME_PAGES.candidate;
     }
   }
 
-  function showError(message) {
-    alert.textContent = message;
-    alert.classList.remove('hidden');
-  }
-
-  function continueToPage() {
+  let busy = false;
+  async function submit() {
+    if (busy) return;
     const email = emailInput.value.trim();
     const password = passwordInput.value;
-    clearFieldErrors();
+    clearErrors();
 
     if (!email) {
       showFieldError(emailInput, emailError, 'E-posta ve şifre alanlarını doldur.');
@@ -128,67 +119,51 @@
       return;
     }
 
-    const previousSession = window.getSession?.() || { role: null, state: null };
-    let hasProgress = false;
+    busy = true;
+    Api.ui.setLoading(submitButton, true, { text: 'Giriş yapılıyor...' });
     try {
-      hasProgress = ['demoOdemeAlindi', 'demoProfilTamamlandi', 'demoKvkkOnaylandi', 'demoCvOnaylandi']
-        .some(key => localStorage.getItem(key) === 'true');
-      localStorage.setItem('demoEmail', email);
+      await Api.auth.login({ email, password, clientType });
+      passwordInput.value = '';
+      location.href = await destinationAfterLogin();
     } catch (error) {
-      console.error('Giriş durumu okunamadı veya e-posta kaydedilemedi.', error);
-      showError('Giriş yapılamadı. Tarayıcı depolama alanını kontrol et.');
-      return;
+      Api.ui.setLoading(submitButton, false);
+      busy = false;
+      if (!(error instanceof Api.ApiError)) {
+        console.error('Giriş başarısız:', error);
+        Api.ui.showError(alert, 'Giriş yapılamadı. Lütfen tekrar dene.');
+        return;
+      }
+      if (error.is('client_not_allowed')) {
+        if (!guruLogin) {
+          // Aday girişinden guru hesabı denendi → mevcut "yanlış rol" ekranı.
+          location.href = 'giris-hata-rol.html';
+          return;
+        }
+        Api.ui.showError(alert, 'Bu hesap danışman paneline giriş yapamaz. Danışan girişini kullan.');
+        return;
+      }
+      if (error.isValidation) {
+        const unmatched = Api.ui.applyFieldErrors(form, error, { map: { email: '#email', password: '#password' } });
+        if (unmatched.length || !Object.keys(error.fields).length) Api.ui.showError(alert, error);
+        return;
+      }
+      Api.ui.showError(alert, error);
+      if (error.is('invalid_credentials')) passwordInput.focus();
     }
-
-    const role = guruLogin ? 'danisman' : 'danisan';
-    const name = guruLogin ? 'Selin Arslan' : previousSession.role === 'danisan' && previousSession.name
-      ? previousSession.name
-      : 'Elif Yılmaz';
-    const state = guruLogin ? 'active' : hasProgress || (previousSession.role === 'danisan' && previousSession.state === 'registered')
-      ? 'registered'
-      : previousSession.role === 'danisan' && previousSession.state
-        ? previousSession.state
-        : 'new';
-    if (!window.setSession?.({ role, name, state, email })) {
-      showError('Giriş yapılamadı. Tarayıcı depolama alanını kontrol et.');
-      return;
-    }
-
-    let destination = guruLogin ? 'guru-danisanlar.html' : returnTarget;
-    try {
-      if (returnTarget) destination = returnTarget;
-      localStorage.removeItem('demoDevam');
-    } catch (error) {
-      console.error('Giriş sonrası dönüş sayfası okunamadı.', error);
-    }
-    if (submitButton) {
-      submitButton.disabled = true;
-      submitButton.setAttribute('aria-busy', 'true');
-      submitButton.textContent = 'Giriş yapılıyor...';
-    }
-    window.setTimeout(() => {
-      location.href = destination;
-    }, 350);
   }
-
-  document.addEventListener('click', event => {
-    const button = event.target.closest('button');
-    if (button !== submitButton) return;
-    event.preventDefault();
-    event.stopPropagation();
-    event.stopImmediatePropagation();
-    continueToPage();
-  }, true);
 
   form.addEventListener('submit', event => {
     event.preventDefault();
-    continueToPage();
+    submit();
+  });
+  // Stitch kalıntısı click yakalayıcılarından önce davran.
+  submitButton?.addEventListener('click', event => {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    submit();
   });
 
-  form.addEventListener('input', () => {
-    alert.textContent = '';
-    alert.classList.add('hidden');
-  });
+  form.addEventListener('input', () => Api.ui.clearError(alert));
   emailInput.addEventListener('input', () => clearFieldError(emailInput, emailError));
   passwordInput.addEventListener('input', () => clearFieldError(passwordInput, passwordError));
 
@@ -196,20 +171,12 @@
     const tabs = Array.from(roleTablist.querySelectorAll('[role="tab"]'));
     const currentIndex = tabs.indexOf(event.target);
     if (currentIndex < 0) return;
-
     let nextIndex;
-    if (event.key === 'ArrowRight') {
-      nextIndex = (currentIndex + 1) % tabs.length;
-    } else if (event.key === 'ArrowLeft') {
-      nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
-    } else if (event.key === 'Home') {
-      nextIndex = 0;
-    } else if (event.key === 'End') {
-      nextIndex = tabs.length - 1;
-    } else {
-      return;
-    }
-
+    if (event.key === 'ArrowRight') nextIndex = (currentIndex + 1) % tabs.length;
+    else if (event.key === 'ArrowLeft') nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+    else if (event.key === 'Home') nextIndex = 0;
+    else if (event.key === 'End') nextIndex = tabs.length - 1;
+    else return;
     event.preventDefault();
     window.location.href = tabs[nextIndex].href;
   });

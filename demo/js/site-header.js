@@ -30,6 +30,8 @@
     document.body.classList.add('has-site-header');
     const header = document.createElement('header');
     header.className = compact ? 'site-header site-header--compact' : 'site-header';
+    header.dataset.sessionRole = session.role || '';
+    lastConfig = Object.assign({}, config, { backLabel: undefined, backHref: undefined });
     header.setAttribute('aria-label', 'Site üst menüsü');
 
     const inner = document.createElement('div');
@@ -122,9 +124,10 @@
 
       const user = document.createElement('div');
       user.className = 'site-header-user';
-      const initials = String(session.name || session.ad || (isAdvisor ? 'Selin Arslan' : 'Elif Yılmaz'))
-        .split(/\s+/).slice(0, 2).map(part => part.charAt(0).toLocaleUpperCase('tr-TR')).join('');
-      const name = String(session.name || session.ad || (isAdvisor ? 'Selin Arslan' : 'Elif Yılmaz'));
+      // İsim /auth/me önbelleğinden (gate.js getSession); sabit demo isimleri kaldırıldı (GAP-D06).
+      const name = String(session.name || session.ad || '');
+      const initials = name.split(/\s+/).filter(Boolean).slice(0, 2)
+        .map(part => part.charAt(0).toLocaleUpperCase('tr-TR')).join('');
       const trigger = document.createElement('button');
       trigger.className = 'site-header-user-trigger';
       trigger.type = 'button';
@@ -282,6 +285,29 @@
   }
 
   window.renderSiteHeader = renderSiteHeader;
+
+  // /auth/me doğrulaması bittiğinde: rol değiştiyse (ör. geçersiz token temizlendi) üst barı
+  // yeniden kur; aynı rolse yalnız adı/baş harfleri tazele.
+  let lastConfig = null;
+  document.addEventListener('session:ready', event => {
+    const header = document.querySelector('header.site-header');
+    if (!header || !lastConfig) return;
+    const session = event.detail || getCurrentSession();
+    if ((session.role || '') !== header.dataset.sessionRole) {
+      const host = document.createElement('div');
+      host.id = 'site-header';
+      header.replaceWith(host);
+      renderSiteHeader(lastConfig);
+      return;
+    }
+    const name = String(session.name || '');
+    if (!name) return;
+    const nameNode = header.querySelector('.site-header-user-name');
+    const avatar = header.querySelector('.site-header-avatar');
+    if (nameNode) nameNode.textContent = name;
+    if (avatar) avatar.textContent = name.split(/\s+/).filter(Boolean).slice(0, 2)
+      .map(part => part.charAt(0).toLocaleUpperCase('tr-TR')).join('');
+  });
 
   function initializeSiteHeader() {
     let host = document.getElementById('site-header');

@@ -1,5 +1,6 @@
+// avatar.js — Baş harf avatarları. Sahibi: 81. İsim oturumdan (/auth/me önbelleği) gelir; sabit isim yok (GAP-D06).
 (function () {
-  const DEFAULT_CANDIDATE_NAME = 'Elif Yılmaz';
+  const DEFAULT_CANDIDATE_NAME = '';
   const avatarSelector = [
     '[data-demo-avatar]',
     '.candidate-profile-avatar',
@@ -52,6 +53,7 @@
 
   window.DemoAvatar = { initials, sync: syncAvatars };
   syncAvatars(document);
+  document.addEventListener('session:ready', () => syncAvatars(document));
 
   new MutationObserver(records => {
     records.forEach(record => record.addedNodes.forEach(node => {

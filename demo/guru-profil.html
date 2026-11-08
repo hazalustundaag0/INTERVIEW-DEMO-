@@ -7,8 +7,11 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
   <link rel="stylesheet" href="../theme.css">
-  <script src="js/advisors.js"></script>
+  <script src="config.js"></script>
+<script src="api-client.js"></script>
+
   <script src="gate.js"></script>
+<script src="guru-ortak.js"></script>
 <link rel="stylesheet" href="avatar.css"></head>
 <body class="guru-profile-editor">
   <main><section class="guru-profile-content" aria-labelledby="guru-profile-heading">
@@ -35,7 +38,7 @@
             <h2 id="guru-profile-preview-heading">Danışanın göreceği önizleme</h2>
             <div class="guru-profile-preview-controls">
               <div class="guru-profile-preview-links">
-                <a id="guru-profile-visitor-preview" class="guru-profile-visitor-preview" href="danisman.html?id=selin-arslan&amp;onizleme=1">Ziyaretçi gibi önizle</a>
+                <a id="guru-profile-visitor-preview" class="guru-profile-visitor-preview" href="#">Ziyaretçi gibi önizle</a>
               </div>
               <label class="guru-profile-publish-toggle">
                 <input id="guru-profile-published" type="checkbox" role="switch" aria-label="Profil yayında">
@@ -45,12 +48,12 @@
           </div>
           <article class="guru-profile-preview-card">
             <div class="guru-profile-preview-hero">
-              <div class="guru-profile-preview-avatar" id="preview-avatar" aria-hidden="true">SA</div>
+              <div class="guru-profile-preview-avatar" id="preview-avatar" aria-hidden="true"></div>
               <div class="guru-profile-preview-identity">
-                <strong id="preview-name">Selin Arslan</strong>
-                <span id="preview-title">Kıdemli Satış Direktörü &amp; Mentor</span>
+                <strong id="preview-name"></strong>
+                <span id="preview-title"></span>
               </div>
-              <span class="guru-profile-preview-experience" id="preview-experience">12+ yıl deneyim</span>
+              <span class="guru-profile-preview-experience" id="preview-experience"></span>
             </div>
             <section class="guru-profile-preview-section">
               <h3>Hakkında</h3>
@@ -66,7 +69,7 @@
             </section>
             <section class="guru-profile-preview-section">
               <h3>Seans bilgileri</h3>
-              <dl><div><dt>Seans süresi</dt><dd>50 dakika</dd></div><div><dt>Ücret</dt><dd id="preview-price">1.500 ₺</dd></div><div><dt>Seans sayısı</dt><dd>2 seans</dd></div></dl>
+              <dl><div><dt>Seans süresi</dt><dd id="preview-duration"></dd></div><div><dt>Ücret</dt><dd id="preview-price"></dd></div><div><dt>Seans sayısı</dt><dd id="preview-sessions"></dd></div></dl>
             </section>
           </article>
         </aside>

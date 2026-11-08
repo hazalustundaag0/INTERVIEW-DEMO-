@@ -103,7 +103,4 @@
     advisorTitle.parentElement?.parentElement?.classList.add('story-advisor-notes-heading');
     advisorCard.querySelector('.story-notes-toggle')?.classList.add('story-notes-toggle');
   }
-
-  const demoFlow = document.getElementById('demo-flow-nav');
-  demoFlow?.classList.add('demo-only');
 })();

@@ -1,55 +1,60 @@
-// secim.js: hizmet sayfasındaki seçimi diğer sayfalara taşır
+// secim.js — Seçilen hizmet + danışman (guru). Sahibi: 81 Frontend Platform.
+// Eski davranış (demoSecim/demoTarih/demoSaat ile sayfa metnini bul-değiştir) kaldırıldı (GAP-D15, D10).
+// Seçim artık URL'de UUID olarak taşınır: ?service=<uuid>&guru=<uuid> (GAP-U14).
+//
+//   Selection.current()                 → { serviceId, guruId } (URL'den; eski ?danisman= de okunur)
+//   Selection.toQuery({serviceId, guruId}) → "service=…&guru=…"
+//   Selection.href('siparis.html', sel)  → "siparis.html?service=…&guru=…"
+//   await Selection.preview(sel)         → GET /candidate/checkout/preview (Preview nesnesi)
+//   await Selection.defaultService()     → GET /public/services ilk aktif hizmet (MVP'de tek hizmet)
 (function () {
+  'use strict';
+
+  // Tasarım düzeltmesi (veriden bağımsız, eski secim.js'ten korunur).
   document.querySelectorAll('span').forEach(function (el) {
     if (el.textContent.trim() !== 'Kıdemli Satış Direktörü & Mentor') return;
     el.style.removeProperty('font-family');
     el.style.removeProperty('font-size');
   });
 
-  var s; try { s = JSON.parse(localStorage.getItem('demoSecim')); } catch (e) {}
-  if (!s) return;
-  var fmt = function (n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '.'); };
-  var guruName = s.guru;
-  if (location.pathname.endsWith('/siparis.html') &&
-      (typeof guruName !== 'string' || !guruName.trim())) guruName = 'Selin Arslan';
-  var chosenTarih = localStorage.getItem('demoTarih') || '11 Ocak Pazartesi';
-  var chosenSaat = localStorage.getItem('demoSaat') || '14:00 - 14:50';
+  const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
-  var pairs = [
-    ['Satış hikâyesi oluşturma', s.service],
-    ['1.500', fmt(s.price || 1500)],
-    ['Selin Arslan', guruName],
-    ['2 seans', s.sessions + ' seans'],
-    ['11 Aralık Pazartesi', chosenTarih],
-    ['11 Ocak Pazartesi', chosenTarih],
-    ['14:00 - 14:50', chosenSaat]
-  ];
-  var w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT), n;
-  while ((n = w.nextNode())) {
-    pairs.forEach(function (p) { if (n.nodeValue.indexOf(p[0]) > -1) n.nodeValue = n.nodeValue.split(p[0]).join(p[1]); });
+  function clean(value) {
+    return typeof value === 'string' && UUID.test(value.trim()) ? value.trim() : null;
   }
 
-  if (location.pathname.endsWith('/siparis.html')) {
-    var serviceTitle = Array.prototype.find.call(document.querySelectorAll('span'), function (el) {
-      return el.textContent.trim() === s.service && el.classList.contains('font-bold');
-    });
-    if (serviceTitle && !serviceTitle.parentElement.querySelector('[data-order-advisor]')) {
-      var advisor = document.createElement('span');
-      advisor.dataset.orderAdvisor = 'true';
-      advisor.className = 'text-[13px] text-muted-text mt-1 leading-relaxed';
-      advisor.textContent = 'Danışman: ' + guruName;
-      serviceTitle.insertAdjacentElement('afterend', advisor);
-    }
-
-    var totalLabel = Array.prototype.find.call(document.querySelectorAll('span'), function (el) {
-      return el.textContent.trim() === 'Toplam';
-    });
-    if (totalLabel) {
-      totalLabel.textContent = 'Danışman ücreti (KDV dahil)';
-      var taxLabel = Array.prototype.find.call(totalLabel.parentElement.children, function (el) {
-        return el.textContent.trim() === 'KDV dahil';
-      });
-      if (taxLabel) taxLabel.remove();
-    }
+  function current() {
+    const params = new URLSearchParams(location.search);
+    return {
+      serviceId: clean(params.get('service')),
+      guruId: clean(params.get('guru')) || clean(params.get('danisman'))
+    };
   }
+
+  function toQuery(selection) {
+    const sel = selection || current();
+    const params = new URLSearchParams();
+    if (clean(sel.serviceId)) params.set('service', sel.serviceId);
+    if (clean(sel.guruId)) params.set('guru', sel.guruId);
+    return params.toString();
+  }
+
+  function href(page, selection) {
+    const query = toQuery(selection);
+    return page + (query ? '?' + query : '');
+  }
+
+  function preview(selection) {
+    const sel = selection || current();
+    return window.Api.get('/candidate/checkout/preview', {
+      query: { service_id: sel.serviceId, guru_id: sel.guruId }
+    });
+  }
+
+  async function defaultService() {
+    const data = await window.Api.get('/public/services', { auth: false });
+    return (data && data.items && data.items[0]) || null;
+  }
+
+  window.Selection = Object.freeze({ current, toQuery, href, preview, defaultService });
 })();
