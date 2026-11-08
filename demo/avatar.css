@@ -1,14 +1,14 @@
 body[class] .demo-avatar.demo-avatar {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  border: 1px solid var(--color-rule) !important;
-  border-radius: 50% !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-rule);
+  border-radius: 50%;
   background-color: var(--color-paper-3) !important;
-  color: var(--color-ink-2);
-  font-family: var(--font-display) !important;
+  color: var(--color-ink-2) !important;
+  font-family: var(--font-display);
   font-size: 0.875rem;
-  font-weight: 500 !important;
+  font-weight: 500;
   line-height: 1;
   overflow: hidden;
 }
@@ -27,7 +27,7 @@ body[class] .demo-avatar[data-avatar="8"] {
   background-size: cover;
   background-position: center;
   font-size: 0;
-  color: transparent;
+  color: transparent !important;
   line-height: 0;
 }
 
@@ -172,8 +172,6 @@ body[class] .demo-avatar.candidate-profile-avatar,
 body[class] .demo-avatar.story-profile-avatar,
 body[class] .demo-avatar.question-avatar {
   background-image: url("avatars/avatar-8.svg") !important;
-  color: transparent !important;
-  font-size: 0 !important;
 }
 
 body[class] .advisor-directory-card[data-advisor-id="selin-arslan"] .advisor-directory-avatar,
@@ -213,8 +211,4 @@ body[class] .client-profile-avatar {
 body[class] .site-header-avatar,
 body[class] #sidebar .sidebar-avatar {
   background-image: url("avatars/avatar-8.svg");
-}
-
-body[class] .demo-avatar.site-header-avatar {
-  background-image: url("avatars/avatar-8.svg") !important;
 }

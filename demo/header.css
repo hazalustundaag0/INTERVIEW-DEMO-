@@ -30,7 +30,7 @@
 .site-header-brand {
   flex: 0 0 7.25rem;
   width: 7.25rem;
-  color: var(--color-ink) !important;
+  color: var(--color-ink);
   font-size: 1rem;
   font-weight: 600;
   letter-spacing: -.02em;
@@ -126,8 +126,8 @@
   transition: background-color 140ms ease;
 }
 
-.site-header-button--primary,
-body .site-header .btn-header-primary {
+.site-header .site-header-button--primary,
+.site-header .btn-header-primary {
   border: 0;
   box-shadow: none;
   background: var(--color-accent) !important;
@@ -135,14 +135,14 @@ body .site-header .btn-header-primary {
   font-weight: 500;
 }
 
-.site-header-button--primary:hover,
-body .site-header .btn-header-primary:hover {
+.site-header .site-header-button--primary:hover,
+.site-header .btn-header-primary:hover {
   background: var(--color-accent-deep) !important;
   color: var(--color-accent-ink) !important;
 }
 
-.site-header-button--secondary,
-body .site-header .btn-header-secondary {
+.site-header .site-header-button--secondary,
+.site-header .btn-header-secondary {
   border: 0;
   box-shadow: inset 0 0 0 1.5px currentColor;
   background: transparent !important;
@@ -150,8 +150,8 @@ body .site-header .btn-header-secondary {
   font-weight: 500;
 }
 
-.site-header-button--secondary:hover,
-body .site-header .btn-header-secondary:hover {
+.site-header .site-header-button--secondary:hover,
+.site-header .btn-header-secondary:hover {
   background: var(--color-paper-2) !important;
   color: var(--color-ink) !important;
 }
@@ -223,7 +223,7 @@ body .site-header .btn-header-secondary:hover {
 
 .site-header-panel[hidden],
 .site-header-toggle[hidden] {
-  display: none !important;
+  display: none;
 }
 
 .site-header-user-menu {
@@ -237,12 +237,12 @@ body .site-header .btn-header-secondary:hover {
   padding: .375rem;
   border: 1px solid var(--color-rule);
   border-radius: 16px;
-  background: var(--color-paper-2) !important;
+  background: var(--color-paper-2);
   box-shadow: none;
 }
 
 .site-header-user-menu[hidden] {
-  display: none !important;
+  display: none;
 }
 
 .site-header-user-menu a {
@@ -252,17 +252,15 @@ body .site-header .btn-header-secondary:hover {
   align-items: center;
   padding: .625rem .75rem;
   border-radius: 999px;
-  color: var(--color-ink) !important;
+  color: var(--color-ink);
   font-size: .875rem;
   font-weight: 500;
   text-decoration: none;
 }
-
 .site-header-user-menu a:hover {
-  background: var(--color-paper-3) !important;
-  color: var(--color-ink) !important;
+  background: var(--color-paper-3);
+  color: var(--color-ink);
 }
-
 .site-header-user-menu a:focus-visible {
   outline-color: var(--color-ink);
 }
@@ -297,7 +295,7 @@ body .site-header .btn-header-secondary:hover {
 }
 
 .has-site-header main.pt-16 {
-  padding-top: 0 !important;
+  padding-top: 0;
 }
 
 @media (max-width: 767px) {
