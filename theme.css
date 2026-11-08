@@ -11978,7 +11978,7 @@ body :is(button, input[type="button"], input[type="submit"], input[type="reset"]
   text-decoration: none;
 }
 
-body :is(button, input[type="button"], input[type="submit"], input[type="reset"], a[role="button"], [role="button"], .btn):not(.question-previous-button):not(.question-save-later):not(.question-next-button):not(.question-skip-button):not(.story-output-button):not(.story-output-followup-open):not(.story-output-followup-submit):not(.story-output-followup-defer):not(.cv-add-record):not(.cv-edit-record):not(.cv-delete-record):not(.cv-remove-skill):not(#skills-list > button):not(#skills-list > span > button) {
+body :is(button, input[type="button"], input[type="submit"], input[type="reset"], a[role="button"], [role="button"], .btn):not(.question-previous-button):not(.question-save-later):not(.question-next-button):not(.question-skip-button):not(.question-progress-control):not(.story-output-button):not(.story-output-followup-open):not(.story-output-followup-submit):not(.story-output-followup-defer):not(.cv-add-record):not(.cv-edit-record):not(.cv-delete-record):not(.cv-remove-skill):not(.question-progress-control):not(.availability-empty-action):not(.availability-slot):not(.availability-week-nav):not(.availability-week-today):not(#skills-list > button):not(#skills-list > span > button) {
   min-height: 48px;
   border: 1.5px solid var(--color-rule-2);
   border-radius: var(--radius-pill) !important;
@@ -12385,7 +12385,7 @@ body.public-landing .landing-reveal {
   transform: none !important;
 }
 
-body :is(button, input[type="button"], input[type="submit"], input[type="reset"], a[role="button"], [role="button"], .btn):not(.cv-add-record):not(.cv-edit-record):not(.cv-delete-record):not(.cv-remove-skill):not(#skills-list > button):not(#skills-list > span > button) {
+body :is(button, input[type="button"], input[type="submit"], input[type="reset"], a[role="button"], [role="button"], .btn):not(.question-progress-control):not(.cv-add-record):not(.cv-edit-record):not(.cv-delete-record):not(.cv-remove-skill):not(.question-progress-control):not(.availability-empty-action):not(.availability-slot):not(.availability-week-nav):not(.availability-week-today):not(#skills-list > button):not(#skills-list > span > button) {
   min-height: 48px;
   border-radius: var(--radius-pill) !important;
 }
@@ -12761,4 +12761,13 @@ body[class] p {
   height: auto;
   overflow: visible;
   border-radius: 0;
+}
+
+body.story-output-page .story-output-missing-detail {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }
