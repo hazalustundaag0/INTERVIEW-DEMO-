@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <defs>
+    <clipPath id="crop"><circle cx="64" cy="64" r="64"/></clipPath>
+  </defs>
+  <g clip-path="url(#crop)">
+    <rect width="128" height="128" fill="#e9e3f7"/>
+    <path d="M16 128c2-24 19-38 48-38s46 14 48 38" fill="#5b2fd6"/>
+    <path d="M54 76h20v22H54z" fill="#d8d0eb"/>
+    <path d="M39 44c0-19 10-30 25-30s25 11 25 30v20c0 20-11 31-25 31S39 84 39 64z" fill="#f3effa"/>
+    <path d="M38 52c-5-25 7-41 27-41 19 0 30 14 26 39-5-5-8-12-9-20-10 8-24 12-42 12z" fill="#262233"/>
+    <path d="M39 47c-6 7-7 17-5 27 4-2 7-7 9-14zM88 45c6 8 7 19 5 29-5-3-7-8-9-15z" fill="#262233"/>
+    <path d="M48 91c5 7 10 10 16 10s11-3 16-10l13 7 11 30H24l11-30z" fill="#ede8f8"/>
+  </g>
+</svg>

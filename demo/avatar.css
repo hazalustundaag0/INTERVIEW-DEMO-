@@ -4,11 +4,217 @@ body[class] .demo-avatar.demo-avatar {
   justify-content: center !important;
   border: 1px solid var(--color-rule) !important;
   border-radius: 50% !important;
-  background: var(--color-paper-3) !important;
-  color: var(--color-ink-2) !important;
+  background-color: var(--color-paper-3) !important;
+  color: var(--color-ink-2);
   font-family: var(--font-display) !important;
-  font-size: 0.875rem !important;
+  font-size: 0.875rem;
   font-weight: 500 !important;
-  line-height: 1 !important;
+  line-height: 1;
   overflow: hidden;
+}
+
+body.advisor-directory-page .advisor-directory-avatar.demo-avatar,
+body[class] .demo-avatar[data-avatar="1"],
+body[class] .demo-avatar[data-avatar="2"],
+body[class] .demo-avatar[data-avatar="3"],
+body[class] .demo-avatar[data-avatar="4"],
+body[class] .demo-avatar[data-avatar="5"],
+body[class] .demo-avatar[data-avatar="6"],
+body[class] .demo-avatar[data-avatar="7"],
+body[class] .demo-avatar[data-avatar="8"] {
+  background-color: transparent !important;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  font-size: 0;
+  color: transparent;
+  line-height: 0;
+}
+
+body[class] .demo-avatar[data-avatar="1"] {
+  background-image: url("avatars/avatar-1.svg") !important;
+}
+
+body[class] .demo-avatar[data-avatar="2"] {
+  background-image: url("avatars/avatar-2.svg") !important;
+}
+
+body[class] .demo-avatar[data-avatar="3"] {
+  background-image: url("avatars/avatar-3.svg") !important;
+}
+
+body[class] .demo-avatar[data-avatar="4"] {
+  background-image: url("avatars/avatar-4.svg") !important;
+}
+
+body[class] .demo-avatar[data-avatar="5"] {
+  background-image: url("avatars/avatar-5.svg") !important;
+}
+
+body[class] .demo-avatar[data-avatar="6"] {
+  background-image: url("avatars/avatar-6.svg") !important;
+}
+
+body[class] .demo-avatar[data-avatar="7"] {
+  background-image: url("avatars/avatar-7.svg") !important;
+}
+
+body[class] .demo-avatar[data-avatar="8"] {
+  background-image: url("avatars/avatar-8.svg") !important;
+}
+
+body[class] :is(
+  .advisor-directory-avatar,
+  .public-advisor-avatar,
+  .public-advisor-similar-avatar,
+  .candidate-session-advisor-avatar,
+  .payment-success-advisor-avatar,
+  .service-summary-avatar,
+  .guru-profile-preview-avatar,
+  .client-profile-avatar,
+  .site-header-avatar,
+  .sidebar-avatar,
+  .panel-sidebar-avatar,
+  .candidate-profile-avatar,
+  .story-profile-avatar,
+  .question-avatar,
+  .session-card-avatar
+) {
+  border: 1.5px solid var(--color-rule-2);
+  border-radius: 50%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: transparent;
+  font-size: 0;
+  overflow: hidden;
+}
+
+img.avatar {
+  display: block;
+  border: 1.5px solid var(--color-rule-2);
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+img.avatar--sm {
+  width: 32px;
+  height: 32px;
+}
+
+img.avatar--md {
+  width: 48px;
+  height: 48px;
+}
+
+img.avatar--lg {
+  width: 72px;
+  height: 72px;
+}
+
+img.avatar--xl {
+  width: 120px;
+  height: 120px;
+}
+
+body[class] .site-header-avatar {
+  width: 32px;
+  height: 32px;
+  flex-basis: 32px;
+}
+
+body[class] #sidebar .sidebar-avatar {
+  width: 48px;
+  height: 48px;
+  flex-basis: 48px;
+}
+
+body[class] .advisor-directory-avatar,
+body[class] .candidate-session-advisor-avatar,
+body[class] .payment-success-advisor-avatar,
+body[class] .client-profile-avatar,
+body[class] .session-card-avatar {
+  width: 48px;
+  height: 48px;
+  flex-basis: 48px;
+}
+
+body[class] .public-advisor-avatar,
+body[class] .guru-profile-preview-avatar {
+  width: 72px;
+  height: 72px;
+  flex-basis: 72px;
+}
+
+body[class] .public-advisor-similar-avatar,
+body[class] .service-summary-avatar,
+body[class] .panel-sidebar-avatar {
+  width: 32px;
+  height: 32px;
+  flex-basis: 32px;
+}
+
+body[class] .candidate-profile-avatar,
+body[class] .story-profile-avatar,
+body[class] .question-avatar {
+  background-image: url("avatars/avatar-8.svg");
+}
+
+body[class] .panel-sidebar-avatar,
+body[class] .guru-profile-avatar {
+  background-image: url("avatars/avatar-8.svg");
+}
+
+body[class] .demo-avatar.site-header-avatar,
+body[class] .demo-avatar.client-profile-avatar,
+body[class] .demo-avatar.session-card-avatar,
+body[class] .demo-avatar.candidate-profile-avatar,
+body[class] .demo-avatar.story-profile-avatar,
+body[class] .demo-avatar.question-avatar {
+  background-image: url("avatars/avatar-8.svg") !important;
+  color: transparent !important;
+  font-size: 0 !important;
+}
+
+body[class] .advisor-directory-card[data-advisor-id="selin-arslan"] .advisor-directory-avatar,
+body[class] .public-advisor-similar-card[href*="selin-arslan"] .public-advisor-similar-avatar {
+  background-image: url("avatars/avatar-7.svg");
+}
+
+body[class] .advisor-directory-card[data-advisor-id="emre-kaya"] .advisor-directory-avatar,
+body[class] .public-advisor-similar-card[href*="emre-kaya"] .public-advisor-similar-avatar {
+  background-image: url("avatars/avatar-2.svg");
+}
+
+body[class] .advisor-directory-card[data-advisor-id="merve-celik"] .advisor-directory-avatar,
+body[class] .public-advisor-similar-card[href*="merve-celik"] .public-advisor-similar-avatar {
+  background-image: url("avatars/avatar-4.svg");
+}
+
+body[class] .advisor-directory-card[data-advisor-id="burak-tan"] .advisor-directory-avatar,
+body[class] .public-advisor-similar-card[href*="burak-tan"] .public-advisor-similar-avatar {
+  background-image: url("avatars/avatar-5.svg");
+}
+
+body[class] :is(
+  .public-advisor-avatar,
+  .candidate-session-advisor-avatar,
+  .payment-success-advisor-avatar,
+  .service-summary-avatar,
+  .guru-profile-preview-avatar
+) {
+  background-image: url("avatars/avatar-7.svg");
+}
+
+body[class] .client-profile-avatar {
+  background-image: url("avatars/avatar-8.svg");
+}
+
+body[class] .site-header-avatar,
+body[class] #sidebar .sidebar-avatar {
+  background-image: url("avatars/avatar-8.svg");
+}
+
+body[class] .demo-avatar.site-header-avatar {
+  background-image: url("avatars/avatar-8.svg") !important;
 }

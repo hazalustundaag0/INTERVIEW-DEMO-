@@ -81,6 +81,15 @@ Sentence case, short and exact: the stem, the bar, the minute, the track count. 
 ## Do-nots
 
 - Heads, nav links, buttons, named labels and status chips start with a capital; prose and placeholders retain sentence case.
+- **Demo avatar mapping:** hash each trimmed display name with 32-bit FNV-1a over Unicode code points, then use `hash % 7 + 1` for avatars 1–7. The same name always resolves to the same portrait; signed-in user avatars always use avatar 8.
+
+| Person | Local avatar |
+| --- | --- |
+| Selin Arslan | `../demo/avatars/avatar-7.svg` |
+| Emre Kaya | `../demo/avatars/avatar-2.svg` |
+| Merve Çelik | `../demo/avatars/avatar-4.svg` |
+| Burak Tan | `../demo/avatars/avatar-5.svg` |
+| Signed-in user / panel user | `../demo/avatars/avatar-8.svg` |
 - Never a second chromatic colour, in a photograph either; the violet is the only one.
 - Never a purple-to-pink gradient, a mesh behind text or a glow.
 - Never square controls or 4px radii; Ultraviolet is round.
