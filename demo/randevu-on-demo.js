@@ -34,7 +34,7 @@
 
   function toast(msg) {
     var t = document.createElement('div');
-    t.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#51409D;color:#fff;padding:12px 22px;border-radius:10px;font-size:14px;font-weight:500;z-index:99999;box-shadow:0 4px 14px rgba(0,0,0,0.2);font-family:IBM Plex Sans, sans-serif;';
+    t.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#51409D;color:#fff;padding:12px 22px;border-radius:10px;font-size:14px;font-weight:500;z-index:99999;font-family:IBM Plex Sans, sans-serif;';
     t.textContent = msg;
     document.body.appendChild(t);
     setTimeout(function () { t.remove(); }, 2500);

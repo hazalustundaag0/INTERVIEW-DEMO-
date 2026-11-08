@@ -2,13 +2,13 @@ body[class] .demo-avatar.demo-avatar {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  border: 1px solid #E9E4F5 !important;
+  border: 1px solid var(--color-rule) !important;
   border-radius: 50% !important;
-  background: #EEF2FF !important;
-  color: #4338CA !important;
-  font-family: "IBM Plex Sans", sans-serif !important;
+  background: var(--color-paper-3) !important;
+  color: var(--color-ink-2) !important;
+  font-family: var(--font-display) !important;
   font-size: 0.875rem !important;
-  font-weight: 600 !important;
+  font-weight: 500 !important;
   line-height: 1 !important;
   overflow: hidden;
 }

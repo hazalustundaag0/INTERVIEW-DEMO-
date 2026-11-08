@@ -1,15 +1,5 @@
 :root {
-  --shared-sidebar-width: 272px;
-  --shared-sidebar-background: linear-gradient(155deg, #352b78 0%, #433582 55%, #51409d 100%);
-  --shared-sidebar-text: rgba(255, 255, 255, .92);
-  --shared-sidebar-active: rgba(255, 255, 255, .2);
-  --shared-sidebar-border: rgba(255, 255, 255, .35);
-  --shared-sidebar-badge: rgba(255, 255, 255, .16);
-  --shared-sidebar-muted: rgba(255, 255, 255, .58);
-  --shared-sidebar-avatar: #3f37c9;
-  --shared-sidebar-color: #fff;
-  --shared-sidebar-shadow: 4px 0 24px rgba(38, 29, 86, .16);
-  --shared-sidebar-icon-color: rgba(255, 255, 255, .9);
+  --sidebar-width: 272px;
 }
 
 body.shared-sidebar-page {
@@ -22,7 +12,7 @@ body.shared-sidebar-page > #sidebar {
   inset: 0 auto 0 0 !important;
   z-index: 1000;
   display: flex !important;
-  width: var(--shared-sidebar-width) !important;
+  width: var(--sidebar-width) !important;
   height: 100vh !important;
   min-height: 100vh !important;
   box-sizing: border-box;
@@ -30,11 +20,11 @@ body.shared-sidebar-page > #sidebar {
   overflow-y: auto;
   padding: 1.5rem 1rem 1rem;
   border: 0 !important;
-  border-radius: 0 !important;
-  background: var(--shared-sidebar-background) !important;
-  color: var(--shared-sidebar-color) !important;
-  box-shadow: var(--shared-sidebar-shadow);
-  font-family: "IBM Plex Sans", sans-serif;
+  border-radius: var(--radius-card) !important;
+  background: var(--color-paper-2) !important;
+  color: var(--color-ink) !important;
+  box-shadow: none;
+  font-family: var(--font-body);
 }
 
 #sidebar .sidebar-panel {
@@ -48,8 +38,8 @@ body.shared-sidebar-page > #sidebar {
   display: block;
   margin: 0 .25rem 1rem;
   padding: .5rem .5rem .85rem;
-  border-bottom: 1px solid var(--shared-sidebar-border);
-  color: var(--shared-sidebar-color);
+  border-bottom: 1px solid var(--color-rule);
+  color: var(--color-ink);
   font-size: .95rem;
   font-weight: 700;
   line-height: 1.35;
@@ -72,9 +62,10 @@ body.shared-sidebar-page > #sidebar {
   gap: .5rem;
   padding: .6rem .75rem;
   border: 1px solid transparent;
-  border-radius: 10px;
+  border-radius: var(--radius-pill);
   background: transparent;
-  color: var(--shared-sidebar-text);
+  color: var(--color-ink-2);
+  font-family: var(--font-display);
   font-size: .875rem;
   font-weight: 400;
   line-height: 1.25;
@@ -83,14 +74,14 @@ body.shared-sidebar-page > #sidebar {
 }
 
 #sidebar .sidebar-link:hover {
-  background: var(--shared-sidebar-badge) !important;
-  color: var(--shared-sidebar-color) !important;
+  background: var(--color-accent-soft) !important;
+  color: var(--color-ink) !important;
 }
 
 #sidebar .sidebar-link[aria-current="page"] {
-  border-color: var(--shared-sidebar-border) !important;
-  background: var(--shared-sidebar-active) !important;
-  color: var(--shared-sidebar-color) !important;
+  border-color: transparent !important;
+  background: var(--color-accent) !important;
+  color: var(--color-accent-ink) !important;
   font-weight: 500;
 }
 
@@ -128,7 +119,7 @@ body.shared-sidebar-page > #sidebar {
   flex: 0 0 auto;
   align-items: center;
   justify-content: center;
-  color: var(--shared-sidebar-icon-color);
+  color: var(--color-ink-2);
 }
 
 #sidebar .sidebar-state .sidebar-svg {
@@ -139,10 +130,11 @@ body.shared-sidebar-page > #sidebar {
 #sidebar .sidebar-badge {
   flex: 0 0 auto;
   padding: .18rem .48rem;
-  border: 1px solid var(--shared-sidebar-border);
+  border: 0;
   border-radius: 999px;
-  background: var(--shared-sidebar-badge);
-  color: var(--shared-sidebar-color);
+  background: var(--color-accent-soft);
+  color: var(--color-ink);
+  font-family: var(--font-display);
   font-size: .68rem;
   font-weight: 500;
   white-space: nowrap;
@@ -150,12 +142,12 @@ body.shared-sidebar-page > #sidebar {
 
 #sidebar .sidebar-locked {
   cursor: not-allowed;
-  color: var(--shared-sidebar-muted);
+  color: var(--color-muted);
 }
 
 #sidebar .sidebar-locked-copy {
   margin: .1rem .75rem .4rem 2.75rem;
-  color: var(--shared-sidebar-muted);
+  color: var(--color-muted);
   font-size: .68rem;
   line-height: 1.35;
 }
@@ -167,7 +159,7 @@ body.shared-sidebar-page > #sidebar {
   gap: .7rem;
   margin-top: auto;
   padding: .75rem .25rem .25rem;
-  border-top: 1px solid var(--shared-sidebar-border);
+  border-top: 1px solid var(--color-rule);
 }
 
 #sidebar .sidebar-avatar {
@@ -177,10 +169,10 @@ body.shared-sidebar-page > #sidebar {
   flex: 0 0 40px;
   align-items: center;
   justify-content: center;
-  border: 2px solid var(--shared-sidebar-border);
+  border: 1px solid var(--color-rule);
   border-radius: 50%;
-  background: var(--shared-sidebar-avatar);
-  color: var(--shared-sidebar-color);
+  background: var(--color-paper-3);
+  color: var(--color-ink);
   font-size: .8rem;
   font-weight: 700;
 }
@@ -194,7 +186,7 @@ body.shared-sidebar-page > #sidebar {
 
 #sidebar .sidebar-user-name {
   overflow: hidden;
-  color: var(--shared-sidebar-color);
+  color: var(--color-ink);
   font-size: .85rem;
   font-weight: 600;
   line-height: 1.2;
@@ -203,17 +195,17 @@ body.shared-sidebar-page > #sidebar {
 }
 
 #sidebar .sidebar-user-role {
-  color: var(--shared-sidebar-muted);
+  color: var(--color-muted);
   font-size: .68rem;
   line-height: 1.2;
 }
 
 body.shared-sidebar-page > main {
-  width: calc(100% - var(--shared-sidebar-width)) !important;
+  width: calc(100% - var(--sidebar-width)) !important;
   max-width: none !important;
   min-height: 100vh;
   box-sizing: border-box;
-  margin: 0 0 0 var(--shared-sidebar-width) !important;
+  margin: 0 0 0 var(--sidebar-width) !important;
   padding: 2rem !important;
 }
 
@@ -236,7 +228,7 @@ body.shared-sidebar-page .sidebar-content-grid > :not(#sidebar) {
 }
 
 body.shared-sidebar-page > main.sidebar-content-grid {
-  width: calc(100% - var(--shared-sidebar-width)) !important;
+  width: calc(100% - var(--sidebar-width)) !important;
 }
 
 body.shared-sidebar-page :is(html, body, main) {
@@ -245,13 +237,13 @@ body.shared-sidebar-page :is(html, body, main) {
 
 @media (max-width: 760px) {
   :root {
-    --shared-sidebar-width: 224px;
+    --sidebar-width: 224px;
   }
 }
 
 @media (max-width: 560px) {
   :root {
-    --shared-sidebar-width: 0px;
+    --sidebar-width: 0px;
   }
 
   body.shared-sidebar-page > #sidebar {

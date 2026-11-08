@@ -529,7 +529,7 @@ const ROUTES = {
       let link = Array.from(nav.querySelectorAll('a')).find(anchor => anchor.textContent.includes(item.label));
       if (!link) {
         link = document.createElement('a');
-        link.className = 'flex items-center justify-between px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-[#7564C7] transition-colors';
+        link.className = 'flex items-center justify-between px-space-md py-space-sm rounded-full text-on-surface-variant hover:bg-[#7564C7] transition-colors';
         link.innerHTML = `<div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[20px] text-outline">${item.icon}</span><span class="font-headline-sm text-body-md text-[#1E1E1C]"></span></div>`;
         nav.appendChild(link);
       }
@@ -903,18 +903,19 @@ const ROUTES = {
     btn.textContent = '☰ Demo';
     btn.style.cssText = `
       position: fixed; bottom: 16px; right: 16px; z-index: 99999;
-      background: #51409D; color: #fff; border: none; border-radius: 8px;
-      padding: 8px 14px; font-size: 13px; font-weight: 600;
-      cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-      font-family: 'IBM Plex Sans', sans-serif;
+      background: var(--color-accent); color: var(--color-accent-ink); border: none; border-radius: 999px;
+      min-height: 48px; padding: 0 16px; font-size: 13px; font-weight: 500;
+      cursor: pointer; 
+      font-family: var(--font-display); text-transform: lowercase;
     `;
 
     const menu = document.createElement('div');
     menu.className = 'demo-only';
     menu.style.cssText = `
       position: fixed; bottom: 56px; right: 16px; z-index: 99999;
-      background: #fff; border-radius: 10px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.18);
+      background: var(--color-paper-2); border: 0; border-radius: 16px;
+      box-shadow: var(--shadow-card);
+      
       overflow-y: auto; max-height: 70vh; min-width: 220px;
       display: none;
     `;
@@ -924,12 +925,12 @@ const ROUTES = {
       item.href = p.file;
       item.textContent = p.label;
       item.style.cssText = `
-        display: block; padding: 9px 16px; font-size: 13px; color: #1c1c1a;
-        text-decoration: none; font-family: 'IBM Plex Sans', sans-serif;
-        border-bottom: 1px solid #7564C7;
-        ${p.file === PAGE ? 'background:#51409D; font-weight:600; color:#fff;' : ''}
+        display: block; padding: 9px 16px; font-size: 13px; color: var(--color-ink-2);
+        text-decoration: none; font-family: var(--font-body);
+        border-bottom: 1px solid var(--color-rule);
+        ${p.file === PAGE ? 'background:var(--color-accent); font-weight:500; color:var(--color-accent-ink);' : ''}
       `;
-      item.addEventListener('mouseenter', () => { if (p.file !== PAGE) item.style.background = '#7564C7'; });
+      item.addEventListener('mouseenter', () => { if (p.file !== PAGE) item.style.background = 'var(--color-accent-soft)'; });
       item.addEventListener('mouseleave', () => { if (p.file !== PAGE) item.style.background = ''; });
       menu.appendChild(item);
     });
@@ -945,7 +946,7 @@ const ROUTES = {
         option.role === 'danisman' ? 'guru-danisanlar.html' :
           option.role === 'danisan' ? 'hizmet.html' : 'index.html';
       item.textContent = option.label;
-      item.style.cssText = 'display:block;padding:9px 16px;font-size:13px;color:#7564C7;text-decoration:none;font-family:"IBM Plex Sans",sans-serif;border-top:1px solid #7564C7';
+      item.style.cssText = 'display:block;padding:9px 16px;font-size:13px;color:var(--color-ink-2);text-decoration:none;font-family:var(--font-body);border-top:1px solid var(--color-rule);text-transform:lowercase';
       item.addEventListener('click', event => {
         event.preventDefault();
         if (option.logout) {
@@ -989,13 +990,13 @@ const ROUTES = {
 
     if (PAGE === 'seanslar.html') {
       const stateGroup = document.createElement('div');
-      stateGroup.style.cssText = 'padding:10px 12px 12px;border-top:1px solid #7564C7;font-family:"IBM Plex Sans",sans-serif';
+      stateGroup.style.cssText = 'padding:10px 12px 12px;border-top:1px solid var(--color-rule);font-family:var(--font-body)';
       stateGroup.innerHTML = `
-        <div style="font-size:12px;font-weight:600;color:#7564C7;margin-bottom:8px">Görüşme linki durumu</div>
+        <div style="font-size:12px;font-weight:500;color:var(--color-muted);margin-bottom:8px;text-transform:lowercase">Görüşme linki durumu</div>
         <div style="display:grid;gap:6px">
-          <button type="button" data-link-state="yok" style="padding:7px 9px;border:1px solid #7564C7;border-radius:6px;background:#fff;color:#1c1c1a;text-align:left;font:inherit;font-size:12px;cursor:pointer">Link yok</button>
-          <button type="button" data-link-state="beklemede" style="padding:7px 9px;border:1px solid #7564C7;border-radius:6px;background:#fff;color:#1c1c1a;text-align:left;font:inherit;font-size:12px;cursor:pointer">Link var, 15 dk'dan fazla</button>
-          <button type="button" data-link-state="acik" style="padding:7px 9px;border:1px solid #7564C7;border-radius:6px;background:#fff;color:#1c1c1a;text-align:left;font:inherit;font-size:12px;cursor:pointer">15 dk içinde</button>
+          <button type="button" data-link-state="yok" style="min-height:48px;padding:0 12px;border:1.5px solid var(--color-rule-2);border-radius:999px;background:var(--color-paper);color:var(--color-ink);text-align:left;font:inherit;font-size:12px;cursor:pointer">Link yok</button>
+          <button type="button" data-link-state="beklemede" style="min-height:48px;padding:0 12px;border:1.5px solid var(--color-rule-2);border-radius:999px;background:var(--color-paper);color:var(--color-ink);text-align:left;font:inherit;font-size:12px;cursor:pointer">Link var, 15 dk'dan fazla</button>
+          <button type="button" data-link-state="acik" style="min-height:48px;padding:0 12px;border:1.5px solid var(--color-rule-2);border-radius:999px;background:var(--color-paper);color:var(--color-ink);text-align:left;font:inherit;font-size:12px;cursor:pointer">15 dk içinde</button>
         </div>`;
       stateGroup.querySelectorAll('[data-link-state]').forEach(option => {
         option.addEventListener('click', () => {
@@ -1042,24 +1043,24 @@ const ROUTES = {
     const modal = document.createElement('div');
     modal.innerHTML = `
       <div data-availability-overlay style="position:fixed;inset:0;z-index:100000;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;padding:16px">
-        <form aria-label="Müsaitlik ekle" style="width:100%;max-width:440px;background:#fff;border-radius:12px;padding:24px;color:#1e1e1c;box-shadow:0 12px 40px rgba(0,0,0,.2);font-family:'IBM Plex Sans',sans-serif">
+        <form aria-label="Müsaitlik ekle" style="width:100%;max-width:440px;background:var(--color-paper-2);border:0;border-radius:16px;padding:24px;color:var(--color-ink);font-family:var(--font-body)">
           <h2 style="margin:0 0 6px;font-size:20px">Müsaitlik ekle</h2>
-          <p style="margin:0 0 20px;color:#7564C7;font-size:14px">Adayların randevu alabileceği tarih ve saati seç.</p>
+          <p style="margin:0 0 20px;color:var(--color-muted);font-size:14px">Adayların randevu alabileceği tarih ve saati seç.</p>
           <label style="display:block;margin-bottom:12px;font-size:14px">Tarih
-            <input name="date" type="date" required style="display:block;width:100%;margin-top:6px;padding:10px;border:1px solid #7564C7;border-radius:8px;font:inherit">
+            <input name="date" type="date" required style="display:block;width:100%;margin-top:6px;padding:10px;border:0;border-radius:999px;font:inherit">
           </label>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
             <label style="font-size:14px">Başlangıç
-              <input name="start" type="time" required style="display:block;width:100%;margin-top:6px;padding:10px;border:1px solid #7564C7;border-radius:8px;font:inherit">
+              <input name="start" type="time" required style="display:block;width:100%;margin-top:6px;padding:10px;border:0;border-radius:999px;font:inherit">
             </label>
             <label style="font-size:14px">Bitiş
-              <input name="end" type="time" required style="display:block;width:100%;margin-top:6px;padding:10px;border:1px solid #7564C7;border-radius:8px;font:inherit">
+              <input name="end" type="time" required style="display:block;width:100%;margin-top:6px;padding:10px;border:0;border-radius:999px;font:inherit">
             </label>
           </div>
-          <p data-availability-feedback role="status" aria-live="polite" style="min-height:20px;margin:12px 0;color:#a33;font-size:13px"></p>
+          <p class="availability-time-feedback" data-availability-feedback role="status" aria-live="polite" style="min-height:20px;margin:12px 0;font-size:13px"></p>
           <div style="display:flex;justify-content:flex-end;gap:8px">
-            <button type="button" data-availability-close style="padding:9px 14px;border:1px solid #7564C7;border-radius:8px;background:#fff;color:#1e1e1c;cursor:pointer">Vazgeç</button>
-            <button type="submit" style="padding:9px 14px;border:0;border-radius:8px;background:#51409D;color:#fff;cursor:pointer">Kaydet</button>
+            <button type="button" data-availability-close style="min-height:48px;padding:0 16px;border:1.5px solid var(--color-rule-2);border-radius:999px;background:var(--color-paper);color:var(--color-ink);cursor:pointer">Vazgeç</button>
+            <button type="submit" style="min-height:48px;padding:0 16px;border:0;border-radius:999px;background:var(--color-accent);color:var(--color-accent-ink);cursor:pointer">Kaydet</button>
           </div>
         </form>
       </div>`;
@@ -1071,8 +1072,8 @@ const ROUTES = {
     const endInput = form.elements.namedItem('end');
     const feedback = overlay.querySelector('[data-availability-feedback]');
     const list = document.createElement('div');
-    list.style.cssText = 'background:#fff;border:1px solid #7564C7;border-radius:8px;padding:16px 20px;margin-top:16px;font-family:"IBM Plex Sans",sans-serif';
-    list.innerHTML = '<h2 style="margin:0 0 12px;font-size:16px;color:#1e1e1c">Eklenen müsaitlikler</h2><p data-availability-empty style="margin:0;color:#7564C7;font-size:14px">Henüz eklenmiş müsaitlik yok.</p><ul data-availability-list style="display:grid;gap:8px;margin:0;padding:0;list-style:none"></ul>';
+    list.style.cssText = 'background:var(--color-paper-2);border:0;border-radius:16px;padding:16px 20px;margin-top:16px;font-family:var(--font-body);box-shadow:var(--shadow-card)';
+    list.innerHTML = '<h2 style="margin:0 0 12px;font-size:16px;color:var(--color-ink)">Eklenen müsaitlikler</h2><p data-availability-empty style="margin:0;color:var(--color-muted);font-size:14px">Henüz eklenmiş müsaitlik yok.</p><ul data-availability-list style="display:grid;gap:8px;margin:0;padding:0;list-style:none"></ul>';
     const priceCard = pageSection.querySelector('[data-guru-service-price]');
     pageSection.insertBefore(list, priceCard || null);
     const slotsList = list.querySelector('[data-availability-list]');
@@ -1100,7 +1101,8 @@ const ROUTES = {
 
     function showFeedback(message, isError) {
       feedback.textContent = message;
-      feedback.style.color = isError ? '#a33' : '#51409D';
+      feedback.classList.toggle('is-error', Boolean(isError));
+      feedback.style.color = isError ? 'var(--color-ink)' : 'var(--color-ink-2)';
     }
 
     function renderSlots() {
@@ -1110,7 +1112,7 @@ const ROUTES = {
         const row = document.createElement('li');
         const date = new Date(`${slot.date}T12:00:00`);
         row.textContent = `${date.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })} · ${slot.start} - ${slot.end}`;
-        row.style.cssText = 'padding:10px 12px;border-radius:8px;background:#EEECFF;color:#EEECFF;font-size:14px';
+        row.style.cssText = 'padding:10px 12px;border-radius:16px;background:var(--color-paper-3);color:var(--color-ink);font-size:14px';
         slotsList.appendChild(row);
       });
     }
@@ -1150,7 +1152,7 @@ const ROUTES = {
           const dateKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
           slots.filter(slot => slot.date === dateKey && slot.start.slice(0, 2) === hour).forEach(slot => {
             const appointment = document.createElement('div');
-            appointment.className = 'h-full rounded-[6px] bg-[#EEECFF] border border-[#BCB7F5] p-1.5 text-left flex flex-col justify-center';
+            appointment.className = 'h-full rounded-[16px] bg-[#EEECFF] border border-[#BCB7F5] p-1.5 text-left flex flex-col justify-center';
             const time = document.createElement('div');
             time.className = 'flex items-center gap-1 text-[11px] font-semibold text-[#51409D]';
             time.textContent = `${slot.start} - ${slot.end}`;

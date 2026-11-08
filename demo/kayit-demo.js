@@ -41,16 +41,16 @@
   items.forEach(({ inp }) => {
     const l = (inp.id && document.querySelector(`label[for="${inp.id}"]`)) ||
               inp.closest('div')?.querySelector('label');
-    if (l && !l.textContent.includes('*')) l.insertAdjacentHTML('beforeend', ' <span style="color:#B3261E">*</span>');
+    if (l && !l.textContent.includes('*')) l.insertAdjacentHTML('beforeend', ' <span style="color:var(--color-muted)">*</span>');
   });
 
   const showError = (inp, msg) => {
     clearError(inp);
-    inp.style.borderColor = '#B3261E';
+    inp.style.borderColor = 'var(--color-rule-2)';
     const m = document.createElement('div');
     m.className = 'demo-err';
     m.textContent = msg;
-    m.style.cssText = 'color:#B3261E;font-size:13px;margin-top:6px';
+    m.style.cssText = 'color:var(--color-ink);font-size:13px;margin-top:6px';
     (inp.closest('div') || inp.parentElement).appendChild(m);
   };
   const clearError = (inp) => {

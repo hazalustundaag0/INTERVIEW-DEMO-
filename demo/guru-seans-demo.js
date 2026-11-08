@@ -88,7 +88,7 @@
     const status = card.querySelector('.session-card-status');
     if (status) {
       status.textContent = 'Tamamlandı';
-      status.className = 'session-card-status inline-flex items-center rounded px-2.5 py-1 text-[12px] font-semibold bg-[#DCFCE7] text-[#166534] border border-[#BBF7D0]';
+      status.className = 'session-card-status';
       status.tabIndex = -1;
       status.focus();
     }

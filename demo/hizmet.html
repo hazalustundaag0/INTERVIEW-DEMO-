@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 
 <html lang="tr" style=""><head>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500&amp;family=Onest:wght@400&amp;display=swap" rel="stylesheet">
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="web_standard" name="shell-type"/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <script id="tailwind-config">
@@ -15,24 +16,24 @@
       theme: {
         extend: {
           colors: {
-            "dark-petrol": "#51409D",
-            "primary-petrol": "#51409D",
-            "light-petrol": "#EEECFF",
-            "copper": "#7564C7",
-            "page-bg": "#7564C7",
-            "card-border": "#7564C7",
-            "muted-text": "#7564C7",
-            "charcoal": "#1C1C1A",
+            "dark-petrol": "var(--color-accent-deep)",
+            "primary-petrol": "var(--color-accent)",
+            "light-petrol": "var(--color-paper-3)",
+            "copper": "var(--color-accent)",
+            "page-bg": "var(--color-paper)",
+            "card-border": "var(--color-rule)",
+            "muted-text": "var(--color-muted)",
+            "charcoal": "var(--color-ink)",
           },
           fontFamily: {
-            sans: ["IBM Plex Sans", "sans-serif"]
+            sans: ["Onest", "ui-sans-serif", "sans-serif"]
           },
           boxShadow: {
-            'card': '0 1px 2px rgba(81, 64, 157, 0.06), 0 8px 24px rgba(81, 64, 157, 0.07)',
-            'btn': '0 2px 6px rgba(81, 64, 157, 0.18)'
+            'card': 'var(--shadow-card)',
+            'btn': 'var(--shadow-card)'
           },
           borderRadius: {
-            'custom': '10px'
+            'custom': '16px'
           }
         }
       }
@@ -306,14 +307,14 @@
   nav.style.display = 'flex';
   nav.style.gap = '10px';
   nav.style.padding = '8px 12px';
-  nav.style.background = 'rgba(81, 64, 157, 0.94)';
-  nav.style.color = '#fff';
-  nav.style.border = '1px solid rgba(255, 255, 255, 0.08)';
+  nav.style.background = 'var(--color-paper)';
+  nav.style.color = 'var(--color-ink)';
+  nav.style.border = '1px solid var(--color-rule)';
   nav.style.borderRadius = '999px';
-  nav.style.boxShadow = '0 8px 24px rgba(0,0,0,0.18)';
+  
   nav.style.zIndex = '99999';
   nav.style.fontFamily = 'IBM Plex Sans, sans-serif';
-  nav.innerHTML = '<a href="' + prevPage + '" style="color:#fff; text-decoration:none; padding:8px 12px; border-radius:999px; background:rgba(255,255,255,0.08);">Önceki</a><a href="/" style="color:#fff; text-decoration:none; padding:8px 12px; border-radius:999px; background:rgba(255,255,255,0.08);">Ana sayfa</a><a href="' + nextPage + '" style="color:#fff; text-decoration:none; padding:8px 12px; border-radius:999px; background:#7564C7;">Sonraki</a>';
+  nav.innerHTML = '<a href="' + prevPage + '" style="color:var(--color-ink); text-decoration:none; padding:8px 12px; border-radius:999px; background:rgba(255,255,255,0.08);">Önceki</a><a href="/" style="color:var(--color-ink); text-decoration:none; padding:8px 12px; border-radius:999px; background:rgba(255,255,255,0.08);">Ana sayfa</a><a href="' + nextPage + '" style="color:var(--color-ink); text-decoration:none; padding:8px 12px; border-radius:999px; background:var(--color-accent);">Sonraki</a>';
   document.body.appendChild(nav);
 
   const goNext = function (event) {

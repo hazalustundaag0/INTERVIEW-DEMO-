@@ -15,24 +15,6 @@
     }
   }
 
-  function addConfetti() {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    var layer = document.querySelector('.payment-success-confetti');
-    if (!layer) return;
-
-    var colors = ['#51409d', '#35a66b', '#e7aa55', '#df7c73', '#9381df'];
-    for (var index = 0; index < 28; index += 1) {
-      var piece = document.createElement('span');
-      piece.className = 'payment-success-confetti-piece';
-      piece.style.setProperty('--confetti-x', (Math.random() * 100).toFixed(2) + '%');
-      piece.style.setProperty('--confetti-delay', (Math.random() * 0.2).toFixed(2) + 's');
-      piece.style.setProperty('--confetti-duration', '1.25s');
-      piece.style.setProperty('--confetti-color', colors[index % colors.length]);
-      piece.style.setProperty('--confetti-rotation', Math.round(Math.random() * 540 - 270) + 'deg');
-      layer.appendChild(piece);
-    }
-  }
-
   function initializeReceipt() {
     var session = typeof window.getSession === 'function' ? window.getSession() : null;
     var selection = readSelection() || {};
@@ -82,7 +64,6 @@
       window.print();
     });
 
-    addConfetti();
   }
 
   if (document.readyState === 'loading') {

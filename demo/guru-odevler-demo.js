@@ -235,7 +235,7 @@
     }
 
     detailOverlay.innerHTML = `
-      <div style="background:#FFFFFF;border-radius:14px;padding:24px;width:100%;max-width:540px;max-height:85vh;overflow-y:auto;box-shadow:0 16px 40px rgba(0,0,0,0.2);font-family:'IBM Plex Sans',sans-serif;color:#1E1E1C;">
+      <div style="background:#FFFFFF;border-radius:14px;padding:24px;width:100%;max-width:540px;max-height:85vh;overflow-y:auto;font-family:'IBM Plex Sans',sans-serif;color:#1E1E1C;">
         <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;">
           <div>
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
