@@ -1,7 +1,7 @@
 // kayit-demo.js: kayıt formu doğrulaması (demo)
 (function () {
   const NEXT = 'eposta.html';
-  const returnTarget = window.safeReturnPath?.(new URLSearchParams(location.search).get('return')) || 'danismanlar.html';
+  const returnTarget = window.safeReturnPath?.(new URLSearchParams(location.search).get('return')) || 'index.html';
   const fields = [...document.querySelectorAll('input')]
     .filter(i => !['checkbox', 'radio', 'hidden', 'submit', 'button'].includes(i.type));
 

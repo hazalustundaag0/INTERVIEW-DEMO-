@@ -3,7 +3,7 @@
   if (!['giris.html', 'giris-danisman.html'].includes(page)) return;
 
   const guruLogin = page === 'giris-danisman.html';
-  const returnTarget = window.safeReturnPath?.(new URLSearchParams(location.search).get('return')) || (guruLogin ? null : 'danismanlar.html');
+  const returnTarget = window.safeReturnPath?.(new URLSearchParams(location.search).get('return')) || (guruLogin ? null : 'index.html');
   const form = document.querySelector('form');
   const emailInput = document.getElementById('email');
   const passwordInput = document.getElementById('password');
