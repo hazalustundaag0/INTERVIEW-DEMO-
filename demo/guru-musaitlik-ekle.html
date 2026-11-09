@@ -21,12 +21,12 @@
           <h1 class="text-[24px] font-semibold leading-tight text-[#1E1E1C]">Müsaitlik ekle</h1>
           <p class="mt-1 text-[14px] text-muted">Her seans 50 dakikadır. Adaylar yalnızca açtığın saatlerden randevu alabilir.</p>
         </div>
-        <div class="rounded-[10px] border border-outline-variant bg-white p-5 shadow-sm sm:p-8">
+        <div class="rounded-[var(--radius-card)] border border-[var(--color-rule)] bg-[var(--color-paper)] p-5 shadow-none sm:p-8">
           <form id="availability-form" novalidate>
             <div class="availability-date-field mb-5 text-[14px] font-semibold text-[#1E1E1C]">
               <label for="availability-date">Tarih</label>
               <span class="availability-date-control mt-2">
-                <input id="availability-date" class="w-full rounded-[8px] border border-[#DEDaf4] px-3 py-2.5 pr-12 text-[14px] font-normal text-[#1E1E1C] focus:border-[#51409D] focus:outline-none focus:ring-0" type="date" value="2027-01-15">
+                <input id="availability-date" class="w-full rounded-[var(--radius-pill)] border border-[var(--color-rule-2)] px-3 py-2.5 pr-12 text-[14px] font-normal text-[var(--color-ink)] focus:border-[var(--color-focus)] focus:outline-none focus:ring-0" type="date" value="2027-01-15">
                 <button class="availability-date-picker" type="button" aria-label="Takvimi aç" aria-controls="availability-date">
                   <svg class="availability-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M7.5 3v4M16.5 3v4M3.5 9.5h17M8 13h2m4 0h2m-8 4h2m4 0h2"/></svg>
                 </button>
@@ -42,26 +42,26 @@
 
             <div class="mt-6 border-t border-outline-variant pt-5">
               <label class="inline-flex cursor-pointer items-center gap-2 text-[14px] font-semibold text-[#1E1E1C]">
-                <input id="repeat-weekly" class="h-4 w-4 rounded border-[#51409D] text-[#51409D] focus:ring-[#51409D]" type="checkbox">
+                <input id="repeat-weekly" class="h-4 w-4 rounded border-[var(--color-rule-2)] text-[var(--color-accent)] focus:ring-[var(--color-focus)]" type="checkbox">
                 Her hafta tekrarla
               </label>
               <label id="repeat-count-wrap" class="mt-4 hidden max-w-[220px] text-[14px] font-medium text-[#1E1E1C]" for="repeat-count">
                 Kaç hafta?
-                <select id="repeat-count" class="mt-2 block w-full rounded-[8px] border border-[#DEDaf4] bg-white px-3 py-2.5 text-[14px] focus:border-[#51409D] focus:outline-none focus:ring-0">
+                <select id="repeat-count" class="mt-2 block w-full rounded-[var(--radius-card)] border border-[var(--color-rule-2)] bg-[var(--color-paper)] px-3 py-2.5 text-[14px] focus:border-[var(--color-focus)] focus:outline-none focus:ring-0">
                   <option value="4" selected>4</option><option value="8">8</option><option value="12">12</option>
                 </select>
               </label>
             </div>
 
-            <div class="mt-6 rounded-[8px] border border-outline-variant bg-surface-container-low p-4">
+            <div class="mt-6 rounded-[var(--radius-card)] border border-[var(--color-rule)] bg-[var(--color-paper-2)] p-4">
               <h2 id="preview-heading" class="text-[14px] font-semibold text-[#1E1E1C]">Eklenecek saatler (0)</h2>
               <ul id="preview-list" aria-live="polite" class="mt-3 flex flex-col gap-2 text-[13px] text-muted"></ul>
             </div>
 
-            <p id="form-error" class="mt-4 hidden text-[14px] text-[#B42318]" role="alert" aria-live="polite"></p>
+            <p id="form-error" class="mt-4 hidden text-[14px] text-[var(--color-ink)]" role="alert" aria-live="polite"></p>
             <div class="mt-7 flex items-center justify-between gap-4 border-t border-outline-variant pt-5">
               <a class="text-[14px] font-semibold text-muted hover:text-[#1E1E1C]" href="guru-musaitlik.html">← Vazgeç</a>
-              <button id="save-availability" class="availability-save-button rounded-[8px] bg-[#51409D] px-6 py-2.5 text-[14px] font-semibold text-white shadow-sm hover:opacity-90" type="submit" disabled>0 saat ekle</button>
+              <button id="save-availability" class="availability-save-button rounded-[var(--radius-pill)] bg-[var(--color-accent)] px-6 py-2.5 text-[14px] font-semibold text-[var(--color-accent-ink)] shadow-none hover:opacity-90" type="submit" disabled>0 saat ekle</button>
             </div>
           </form>
         </div>
@@ -92,6 +92,9 @@
       const datePickerButton = document.querySelector('.availability-date-picker');
       const times = [];
       let nextRowId = 0;
+      const params = new URLSearchParams(location.search);
+      const editId = params.get('edit');
+      let editingSlot = null;
 
       function readSlots() {
         const saved = localStorage.getItem(STORAGE_KEY);
@@ -109,9 +112,22 @@
         }
       }
 
+      if (editId) {
+        editingSlot = readSlots().find(slot => slot.id === editId && slot.durum === 'musait') || null;
+        if (editingSlot) {
+          dateInput.value = editingSlot.tarih;
+          repeat.disabled = true;
+          document.title = 'Müsaitliği düzenle · Interview Demo';
+          document.querySelector('main section h1').textContent = 'Müsaitliği düzenle';
+        } else {
+          error.textContent = 'Düzenlenecek müsaitlik bulunamadı.';
+          error.classList.remove('hidden');
+        }
+      }
+
       function createTimeSelect(value) {
         const select = document.createElement('select');
-        select.className = 'availability-start-input rounded-[8px] border border-[#DEDaf4] bg-white px-2 py-2.5 text-[14px] text-[#1E1E1C] focus:border-[#51409D] focus:outline-none focus:ring-0 sm:px-3';
+        select.className = 'availability-start-input rounded-[var(--radius-card)] border border-[var(--color-rule-2)] bg-[var(--color-paper)] px-2 py-2.5 text-[14px] text-[var(--color-ink)] focus:border-[var(--color-focus)] focus:outline-none focus:ring-0 sm:px-3';
         select.id = 'availability-start-' + (++nextRowId);
         for (let minutes = 9 * 60; minutes <= 18 * 60; minutes += 30) {
           const option = document.createElement('option');
@@ -135,7 +151,7 @@
         startCaption.textContent = 'Başlangıç';
         startLabel.append(startCaption, start);
         const end = document.createElement('input');
-        end.className = 'availability-end-input rounded-[8px] border border-[#DEDaf4] px-2 py-2.5 text-[14px] sm:px-3';
+        end.className = 'availability-end-input rounded-[var(--radius-card)] border border-[var(--color-rule-2)] px-2 py-2.5 text-[14px] text-[var(--color-ink)] sm:px-3';
         end.type = 'text';
         end.disabled = true;
         end.setAttribute('aria-label', 'Bitiş, seans süresine göre otomatik hesaplanır');
@@ -154,6 +170,7 @@
         remove.type = 'button';
         remove.setAttribute('aria-label', 'Bu saati kaldır');
         remove.textContent = '×';
+        remove.hidden = Boolean(editingSlot);
         row.append(startLabel, arrow, endLabel, remove);
         timeRows.appendChild(row);
         const entry = { row: row, start: start, end: end, remove: remove, startLabel: startLabel };
@@ -202,11 +219,11 @@
           const [hour, minute] = entry.start.value.split(':').map(Number);
           const finish = hour * 60 + minute + 50;
           entry.end.value = String(Math.floor(finish / 60)).padStart(2, '0') + ':' + String(finish % 60).padStart(2, '0');
-          entry.remove.hidden = false;
+          entry.remove.hidden = Boolean(editingSlot);
         });
 
-        repeatWrap.classList.toggle('hidden', !repeat.checked);
-        addTime.classList.toggle('hidden', times.length >= 5);
+        repeatWrap.classList.toggle('hidden', Boolean(editingSlot) || !repeat.checked);
+        addTime.classList.toggle('hidden', Boolean(editingSlot) || times.length >= 5);
         preview.replaceChildren();
         times.forEach(function (entry) {
           const item = document.createElement('li');
@@ -220,6 +237,7 @@
           const remove = document.createElement('button');
           remove.className = 'availability-preview-remove';
           remove.type = 'button';
+          remove.hidden = Boolean(editingSlot);
           remove.setAttribute('aria-label', entry.start.value + ' saatini özet listesinden kaldır');
           remove.textContent = '×';
           remove.addEventListener('click', function () {
@@ -228,8 +246,10 @@
           item.append(summary, remove);
           preview.appendChild(item);
         });
-        previewHeading.textContent = 'Eklenecek saatler (' + times.length + ')';
-        saveButton.textContent = times.length + ' saat ekle';
+        previewHeading.textContent = editingSlot
+          ? 'Güncellenecek saat'
+          : 'Eklenecek saatler (' + times.length + ')';
+        saveButton.textContent = editingSlot ? 'Müsaitliği güncelle' : times.length + ' saat ekle';
         const validationMessage = validate();
         error.textContent = validationMessage;
         error.classList.toggle('hidden', !validationMessage);
@@ -237,6 +257,7 @@
       }
 
       function validate() {
+        if (editId && !editingSlot) return 'Düzenlenecek müsaitlik bulunamadı.';
         times.forEach(function (entry) {
           entry.feedback.textContent = '';
           entry.feedback.hidden = true;
@@ -247,6 +268,9 @@
         if (!dateInput.value) return 'Tarih seç.';
         if (dateInput.value < '2027-01-11') return 'Geçmiş bir tarih seçemezsin.';
         const slots = readSlots();
+        if (editingSlot && !slots.some(slot => slot.id === editingSlot.id)) {
+          return 'Bu müsaitlik artık bulunamıyor. Sayfayı yenile.';
+        }
         const dates = datesToPreview();
         const pending = [];
         for (const date of dates) {
@@ -255,7 +279,7 @@
             const startMinute = hour * 60 + minute;
             const endMinute = startMinute + 50;
             const collision = slots.find(function (slot) {
-              if (slot.tarih !== date) return false;
+              if (slot.id === editingSlot?.id || slot.tarih !== date) return false;
               const [otherHour, otherMinute] = slot.bas.split(':').map(Number);
               const [otherEndHour, otherEndMinute] = slot.bit.split(':').map(Number);
               return intervalsOverlap(startMinute, endMinute, otherHour * 60 + otherMinute, otherEndHour * 60 + otherEndMinute);
@@ -311,18 +335,25 @@
             const [hour, minute] = entry.start.value.split(':').map(Number);
             const finish = hour * 60 + minute + 50;
             entries.push({
-              id: window.crypto && crypto.randomUUID ? crypto.randomUUID() : 'm' + Date.now() + Math.random().toString(16).slice(2),
+              ...(editingSlot || {}),
+              id: editingSlot ? editingSlot.id :
+                window.crypto && crypto.randomUUID ? crypto.randomUUID() : 'm' + Date.now() + Math.random().toString(16).slice(2),
               tarih: date,
               bas: entry.start.value,
               bit: String(Math.floor(finish / 60)).padStart(2, '0') + ':' + String(finish % 60).padStart(2, '0'),
-              durum: 'musait'
+              durum: editingSlot ? editingSlot.durum : 'musait'
             });
           });
         });
         try {
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(slots.concat(entries)));
+          const updatedSlots = editingSlot
+            ? slots.map(slot => slot.id === editingSlot.id ? { ...slot, ...entries[0] } : slot)
+            : slots.concat(entries);
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedSlots));
           localStorage.setItem('demoMusaitlikHafta', entries[0].tarih);
-          location.href = 'guru-musaitlik.html?eklendi=' + entries.length;
+          location.href = editingSlot
+            ? 'guru-musaitlik.html?guncellendi=1'
+            : 'guru-musaitlik.html?eklendi=' + entries.length;
         } catch (saveError) {
           console.error('Müsaitlik kaydedilemedi.', saveError);
           error.textContent = 'Müsaitlik kaydedilemedi. Tarayıcı depolama alanını kontrol et.';
@@ -330,15 +361,15 @@
         }
       });
 
-      const params = new URLSearchParams(location.search);
       const requestedDate = params.get('date');
       const requestedStart = params.get('start');
-      if (requestedDate && /^\d{4}-\d{2}-\d{2}$/.test(requestedDate)) dateInput.value = requestedDate;
+      if (!editingSlot && requestedDate && /^\d{4}-\d{2}-\d{2}$/.test(requestedDate)) dateInput.value = requestedDate;
       const validStarts = Array.from({ length: 19 }, function (_, index) {
         const minutes = 9 * 60 + index * 30;
         return String(Math.floor(minutes / 60)).padStart(2, '0') + ':' + String(minutes % 60).padStart(2, '0');
       });
-      addTimeRow(validStarts.includes(requestedStart) ? requestedStart : '14:00');
+      const initialStart = editingSlot ? editingSlot.bas : requestedStart;
+      addTimeRow(validStarts.includes(initialStart) ? initialStart : '14:00');
       addTime.classList.toggle('hidden', times.length >= 5);
     })();
   </script>

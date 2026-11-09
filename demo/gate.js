@@ -286,19 +286,21 @@
     if (advisorGrid && Array.isArray(advisors) && advisors.length) {
       advisorGrid.replaceChildren(...advisors.map(advisor => {
         const card = document.createElement('div');
-        card.className = 'bg-white border border-[#7564C7] rounded-lg p-6 flex flex-col justify-between shadow-none';
+        card.className = 'bg-[var(--color-paper-2)] border border-[var(--color-rule)] rounded-[var(--radius-card)] p-6 flex flex-col justify-between shadow-none';
         card.dataset.advisorId = advisor.id;
         const identity = document.createElement('div');
         identity.className = 'flex flex-col items-start';
         const avatar = document.createElement('div');
-        avatar.className = 'w-12 h-12 rounded-full bg-[#51409D] text-white font-semibold flex items-center justify-center mb-4 text-base';
-        avatar.setAttribute('aria-hidden', 'true');
-        avatar.textContent = advisor.ad.split(/\s+/).slice(0, 2).map(part => part.charAt(0).toLocaleUpperCase('tr-TR')).join('');
+        avatar.className = 'w-12 h-12 rounded-full bg-[var(--color-paper-3)] text-[var(--color-ink-2)] font-semibold flex items-center justify-center mb-4 text-base';
+        avatar.dataset.demoAvatar = '';
+        avatar.dataset.avatarName = advisor.ad;
+        avatar.setAttribute('role', 'img');
+        avatar.setAttribute('aria-label', advisor.ad);
         const name = document.createElement('h3');
-        name.className = 'text-lg font-semibold text-[#1E1E1C]';
+        name.className = 'text-lg font-semibold text-[var(--color-ink)]';
         name.textContent = advisor.ad;
         const title = document.createElement('p');
-        title.className = 'text-sm text-[#4B5563] mt-1 mb-4';
+        title.className = 'text-sm text-[var(--color-ink-2)] mt-1 mb-4';
         title.textContent = advisor.unvan;
         const facts = document.createElement('div');
         facts.className = 'landing-advisor-facts';
@@ -326,7 +328,7 @@
         tags.className = 'flex flex-wrap gap-1.5 pt-2';
         advisor.sektorler.forEach(sector => {
           const tag = document.createElement('span');
-          tag.className = 'bg-[#EEECFF] text-[#433582] text-xs px-2.5 py-1 rounded border border-[#C4B5FD]';
+          tag.className = 'bg-[var(--color-paper-3)] text-[var(--color-ink-2)] text-xs px-2.5 py-1 rounded-[var(--radius-pill)] border border-[var(--color-rule-2)]';
           tag.textContent = sector;
           tags.appendChild(tag);
         });

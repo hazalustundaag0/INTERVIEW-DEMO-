@@ -5279,14 +5279,17 @@ body.service-selection-page .service-progress-fill {
 
 body.service-selection-page .service-card,
 body.service-selection-page .guru-card {
-  border-color: #dedaf4 !important;
-  background: #fff !important;
-  color: #1f2937 !important;
+  border: 1px solid var(--color-rule);
+  border-color: var(--color-rule);
+  border-radius: var(--radius-card);
+  background: var(--color-paper-2);
+  color: var(--color-ink);
 }
 
 body.service-selection-page :is(.service-card.active, .guru-card.active) {
-  border: 2px solid #51409d !important;
-  background: #eeecff !important;
+  /* The retained Tailwind border utility otherwise overrides this selected state. */
+  border: 2px solid var(--color-accent) !important;
+  background: var(--color-accent-soft);
   box-shadow: none;
 }
 
@@ -5457,8 +5460,8 @@ body.service-selection-page .guru-card:hover {
 }
 
 body.service-selection-page .guru-card.demo-sel {
-  border: 2px solid #51409d !important;
-  background: #eeecff !important;
+  border: 2px solid var(--color-accent);
+  background: var(--color-accent-soft);
   box-shadow: none;
 }
 
@@ -5703,18 +5706,15 @@ body.service-selection-page .demo-svc--soon:hover {
   }
 }
 
-body.service-selection-page #guru-search {
-  border: 1px solid #9b87e8 !important;
-}
-
 body.service-selection-page #guru-search::placeholder {
-  color: #4b5563 !important;
+  color: var(--color-muted) !important;
   opacity: 1;
 }
 
 body.service-selection-page #guru-search:focus {
-  border-color: #51409d !important;
-  box-shadow: none;
+  /* Match the shared input rule's !important focus ring with the theme focus token. */
+  box-shadow: inset 0 0 0 1.5px var(--color-focus) !important;
+  outline: 0 !important;
 }
 
 body.service-selection-page #sector-chips {
@@ -5724,20 +5724,27 @@ body.service-selection-page #sector-chips {
 
 body.service-selection-page #sector-chips button {
   min-height: 2.25rem;
-  border: 1px solid var(--color-rule-2);
-  background: var(--color-paper);
-  color: var(--color-ink);
+  /* The global button reset uses !important, so these theme states must match it. */
+  border: 1px solid var(--color-rule) !important;
+  border-radius: var(--radius-pill) !important;
+  background: var(--color-paper) !important;
+  color: var(--color-ink) !important;
   cursor: pointer;
 }
 
 body.service-selection-page #sector-chips button[aria-pressed="true"] {
-  border-color: var(--color-accent);
-  background: var(--color-accent);
-  color: var(--color-accent-ink);
+  border-color: var(--color-accent) !important;
+  background: var(--color-accent) !important;
+  color: var(--color-accent-ink) !important;
+}
+
+body.service-selection-page #sector-chips button:hover {
+  background: var(--color-accent-soft) !important;
+  color: var(--color-ink) !important;
 }
 
 body.service-selection-page #sector-chips button:focus-visible {
-  outline: 3px solid #51409d;
+  outline: 3px solid var(--color-focus);
   outline-offset: 2px;
 }
 
@@ -5763,6 +5770,9 @@ body.service-selection-page {
 body.service-selection-page .service-selection-summary {
   min-height: 5rem;
   box-sizing: border-box;
+  border-top: 1px solid var(--color-rule);
+  background: var(--color-paper);
+  box-shadow: none;
 }
 
 body.service-selection-page .service-selection-summary > div {
@@ -10260,9 +10270,10 @@ body.guru-story-page .advisor-source-column {
 }
 
 body.guru-story-page .advisor-source-card {
-  overflow: hidden;
+  min-width: 0;
+  overflow-wrap: anywhere;
   border: 1px solid var(--color-rule);
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-card);
   background: var(--color-paper);
   box-shadow: none;
 }
@@ -10296,10 +10307,43 @@ body.guru-story-page .advisor-source-list {
 }
 
 body.guru-story-page .advisor-source-answer {
+  min-width: 0;
+  overflow-wrap: anywhere;
   border-left: 3px solid var(--color-rule);
-  border-radius: 0 var(--radius-pill) var(--radius-pill) 0;
+  border-radius: 0 var(--radius-card) var(--radius-card) 0;
   padding: .8rem .9rem;
   background: var(--color-paper);
+}
+
+body.guru-story-page .story-output-sentence,
+body.guru-story-page .bg-surface-container-low > p > span {
+  display: inline;
+  border: 0 !important;
+  border-radius: 4px;
+  padding: 0 .15em;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+body.guru-story-page .story-output-sentence:focus,
+body.guru-story-page .bg-surface-container-low > p > span:focus {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+body.guru-story-page .advisor-source-heading + [class~="bg-[#FFFFFF]"] {
+  box-sizing: border-box;
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  border-radius: var(--radius-card);
+}
+
+body.guru-story-page .advisor-source-heading + [class~="bg-[#FFFFFF]"] > div:first-child,
+body.guru-story-page .advisor-source-heading + [class~="bg-[#FFFFFF]"] > div:first-child > span:last-child,
+body.guru-story-page .advisor-source-heading + [class~="bg-[#FFFFFF]"] > p {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 body.guru-story-page .advisor-source-answer.is-source-active,
@@ -11978,7 +12022,7 @@ body :is(button, input[type="button"], input[type="submit"], input[type="reset"]
   text-decoration: none;
 }
 
-body :is(button, input[type="button"], input[type="submit"], input[type="reset"], a[role="button"], [role="button"], .btn):not(.question-previous-button):not(.question-save-later):not(.question-next-button):not(.question-skip-button):not(.question-progress-control):not(.story-output-button):not(.story-output-followup-open):not(.story-output-followup-submit):not(.story-output-followup-defer):not(.cv-add-record):not(.cv-edit-record):not(.cv-delete-record):not(.cv-remove-skill):not(.question-progress-control):not(.availability-empty-action):not(.availability-slot):not(.availability-week-nav):not(.availability-week-today):not(#skills-list > button):not(#skills-list > span > button) {
+body :is(button, input[type="button"], input[type="submit"], input[type="reset"], a[role="button"], [role="button"], .btn):not(.question-previous-button):not(.question-save-later):not(.question-next-button):not(.question-skip-button):not(.question-progress-control):not(.story-output-button):not(.story-output-followup-open):not(.story-output-followup-submit):not(.story-output-followup-defer):not(.cv-add-record):not(.cv-edit-record):not(.cv-delete-record):not(.cv-remove-skill):not(.availability-empty-action):not(.availability-slot):not(.availability-week-nav):not(.availability-week-today):not(#skills-list > button):not(#skills-list > span > button):not(button[role="tab"]):not(.story-output-sentence):not([contenteditable]):not(#file-tab) {
   min-height: 48px;
   border: 1.5px solid var(--color-rule-2);
   border-radius: var(--radius-pill) !important;
@@ -12385,11 +12429,6 @@ body.public-landing .landing-reveal {
   transform: none !important;
 }
 
-body :is(button, input[type="button"], input[type="submit"], input[type="reset"], a[role="button"], [role="button"], .btn):not(.question-progress-control):not(.cv-add-record):not(.cv-edit-record):not(.cv-delete-record):not(.cv-remove-skill):not(.question-progress-control):not(.availability-empty-action):not(.availability-slot):not(.availability-week-nav):not(.availability-week-today):not(#skills-list > button):not(#skills-list > span > button) {
-  min-height: 48px;
-  border-radius: var(--radius-pill) !important;
-}
-
 body :is(.site-header, [role="banner"]) {
   border-bottom: 1px solid var(--color-rule) !important;
   border-radius: 0 !important;
@@ -12475,7 +12514,8 @@ body.login-page .login-contact-link:focus-visible {
   }
 }
 
-body #toggle-password {
+body #toggle-password,
+body #togglePassword {
   position: absolute;
   right: 0 !important;
   width: 40px !important;
@@ -12489,7 +12529,8 @@ body #toggle-password {
   background: transparent !important;
 }
 
-body #toggle-password:hover {
+body #toggle-password:hover,
+body #togglePassword:hover {
   box-shadow: none !important;
   background: transparent !important;
 }
@@ -12770,4 +12811,204 @@ body.story-output-page .story-output-missing-detail {
   overflow: hidden;
   clip: rect(0 0 0 0);
   white-space: nowrap;
+}
+
+/* Alt çizgili sekmeler */
+html body button[role="tab"],
+html body [data-client-profile] + .border-b.border-outline-variant > button {
+  height: auto !important;
+  min-height: 0 !important;
+  padding: 0 0 12px !important;
+  border: 0 !important;
+  border-bottom: 2px solid transparent !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  text-decoration: none !important;
+}
+html body button[role="tab"][aria-selected="true"],
+html body [data-client-profile] + .border-b.border-outline-variant > button:is([class*="border-b-2"], [class*="text-[#51409D]"]) {
+  border-bottom-color: var(--color-accent) !important;
+  color: var(--color-accent) !important;
+}
+html body button[role="tab"][aria-selected="false"],
+html body [data-client-profile] + .border-b.border-outline-variant > button:not([class*="border-b-2"]):not([class*="text-[#51409D]"]) {
+  border-bottom-color: transparent !important;
+  color: var(--color-muted) !important;
+}
+
+/* Material ikonu */
+html body span.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined' !important;
+  font-weight: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  white-space: nowrap;
+  font-variant-ligatures: common-ligatures !important;
+  font-feature-settings: 'liga' 1 !important;
+  -webkit-font-feature-settings: 'liga' 1 !important;
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+/* Dolu viyole ana eylem düğmeleri */
+html body .availability-slot-primary {
+  min-height: 48px;
+  border: 0 !important;
+  border-radius: var(--radius-pill) !important;
+  background-color: var(--color-accent) !important;
+  color: var(--color-accent-ink) !important;
+  text-decoration: none !important;
+}
+html body button[class*="bg-[#51409D]"],
+html body button[data-deliver-id],
+html body.candidate-sessions-page button[data-calendar-download] {
+  background-color: var(--color-accent) !important;
+  color: var(--color-accent-ink) !important;
+  border-color: transparent !important;
+}
+html body .availability-slot-primary:hover {
+  background-color: var(--color-accent-deep) !important;
+}
+html body button[class*="bg-[#51409D]"]:hover,
+html body button[data-deliver-id]:hover,
+html body.candidate-sessions-page button[data-calendar-download]:hover {
+  background-color: var(--color-accent-deep) !important;
+  opacity: .9 !important;
+}
+
+body .registration-password-field {
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+body .registration-form .registration-input {
+  border: 0 !important;
+  border-radius: var(--radius-pill) !important;
+  background-color: var(--color-paper) !important;
+  box-shadow: inset 0 0 0 1.5px var(--color-rule-2) !important;
+}
+
+body .registration-form .registration-field:focus-within .registration-input {
+  box-shadow: inset 0 0 0 1.5px var(--color-focus) !important;
+}
+
+body .registration-form .registration-password-field .registration-input {
+  padding-right: 48px !important;
+}
+
+body #togglePassword.registration-password-toggle {
+  right: 4px !important;
+}
+
+body #registerForm button[type="submit"] {
+  height: 48px;
+  border-radius: var(--radius-pill) !important;
+  background-color: var(--color-accent) !important;
+  box-shadow: none !important;
+  color: var(--color-accent-ink) !important;
+}
+
+body #registerForm button[type="submit"]:hover {
+  background-color: var(--color-accent-deep) !important;
+}
+
+/* The shared button reset is !important; these scoped tab states must override it. */
+body.bg-background.font-body-md.text-body-md.antialiased.min-h-screen.flex.flex-col.justify-between .story-upload-tabs > button {
+  min-height: 0;
+  padding: .625rem 1rem;
+  border: 1px solid var(--color-rule) !important;
+  border-radius: var(--radius-pill) !important;
+  background: var(--color-paper) !important;
+  color: var(--color-ink) !important;
+}
+
+/* Scoped token overrides match the priority of the shared card and control rules. */
+body.bg-background.font-body-md.text-body-md.antialiased.min-h-screen.flex.flex-col.justify-between :is(.story-upload-page-card, .story-upload-form-card) {
+  border: 0 !important;
+  border-radius: var(--radius-card) !important;
+  background: var(--color-paper-2) !important;
+  box-shadow: var(--shadow-card) !important;
+}
+
+body.bg-background.font-body-md.text-body-md.antialiased.min-h-screen.flex.flex-col.justify-between .story-upload-textarea {
+  background: var(--color-paper) !important;
+  color: var(--color-ink) !important;
+  border-color: var(--color-rule) !important;
+  border-radius: var(--radius-card) !important;
+}
+
+body.bg-background.font-body-md.text-body-md.antialiased.min-h-screen.flex.flex-col.justify-between .story-upload-textarea:focus {
+  border-color: var(--color-focus) !important;
+}
+
+body.bg-background.font-body-md.text-body-md.antialiased.min-h-screen.flex.flex-col.justify-between .story-upload-tabs:has(+ div:not([class~="hidden"])) > button:first-child,
+body.bg-background.font-body-md.text-body-md.antialiased.min-h-screen.flex.flex-col.justify-between .story-upload-tabs:has(+ div[class~="hidden"]) > button:nth-child(2) {
+  border-color: var(--color-accent) !important;
+  background: var(--color-accent) !important;
+  color: var(--color-accent-ink) !important;
+}
+
+body.bg-background.font-body-md.text-body-md.antialiased.min-h-screen.flex.flex-col.justify-between .story-upload-tabs + div[class~="bg-[#7564C7]"] {
+  /* The dynamically-added Tailwind color utilities would otherwise keep this area dark. */
+  border: 1px solid var(--color-rule) !important;
+  border-radius: var(--radius-card) !important;
+  background: var(--color-paper) !important;
+  color: var(--color-ink) !important;
+}
+
+body.bg-background.font-body-md.text-body-md.antialiased.min-h-screen.flex.flex-col.justify-between .story-upload-tabs + div[class~="bg-[#7564C7]"]:hover,
+body.bg-background.font-body-md.text-body-md.antialiased.min-h-screen.flex.flex-col.justify-between .story-upload-tabs + div[class~="bg-[#7564C7]"]:focus-within {
+  border-color: var(--color-focus) !important;
+  background: var(--color-accent-soft) !important;
+}
+
+body.bg-background.font-body-md.text-body-md.antialiased.min-h-screen.flex.flex-col.justify-between .story-upload-tabs + div[class~="bg-[#7564C7]"] > p {
+  color: var(--color-ink) !important;
+}
+
+body.bg-background.font-body-md.text-body-md.antialiased.min-h-screen.flex.flex-col.justify-between .story-upload-tabs + div[class~="bg-[#7564C7]"] input[type="file"] {
+  background: var(--color-paper) !important;
+  color: var(--color-ink) !important;
+}
+
+body.bg-background.font-body-md.text-body-md.antialiased.min-h-screen.flex.flex-col.justify-between .story-upload-tabs + div[class~="bg-[#7564C7]"] input[type="file"]::file-selector-button {
+  margin-right: 1rem;
+  padding: .5rem 1rem;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--color-accent-soft);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  cursor: pointer;
+}
+
+/* The shared button reset is !important, so these scoped chip styles must match it. */
+body.bg-background.font-body-md.text-body-md.text-on-surface.antialiased.min-h-screen.flex.flex-col.justify-between .story-chip {
+  border: 1px solid var(--color-rule) !important;
+  border-radius: var(--radius-pill) !important;
+  background: var(--color-paper) !important;
+  color: var(--color-ink) !important;
+}
+
+body.bg-background.font-body-md.text-body-md.text-on-surface.antialiased.min-h-screen.flex.flex-col.justify-between .story-chip:hover {
+  border-color: var(--color-focus) !important;
+  background: var(--color-accent-soft) !important;
+}
+
+body.bg-background.font-body-md.text-body-md.text-on-surface.antialiased.min-h-screen.flex.flex-col.justify-between .story-chip--selected {
+  border-color: var(--color-accent) !important;
+  background: var(--color-accent) !important;
+  color: var(--color-accent-ink) !important;
+}
+
+body.bg-background.font-body-md.text-body-md.text-on-surface.antialiased.min-h-screen.flex.flex-col.justify-between .story-chip.story-chip--selected:hover {
+  border-color: var(--color-accent) !important;
+  background: var(--color-accent) !important;
+  color: var(--color-accent-ink) !important;
 }

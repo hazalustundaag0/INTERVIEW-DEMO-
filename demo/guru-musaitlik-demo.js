@@ -75,27 +75,23 @@
   function showDeliveryNotice() {
     const params = new URLSearchParams(location.search);
     const count = Number(params.get('eklendi'));
-    if (!Number.isFinite(count) || count < 1) return;
+    const updated = params.get('guncellendi') === '1';
+    if (!updated && (!Number.isFinite(count) || count < 1)) return;
     const notice = document.createElement('div');
-    notice.className = 'rounded-[8px] border border-[#BCB7F5] bg-[#EEECFF] px-4 py-3 text-[14px] font-semibold text-[#51409D]';
+    notice.className = 'rounded-[var(--radius-card)] border px-4 py-3 text-[14px] font-semibold';
+    notice.style.borderColor = 'var(--color-rule)';
+    notice.style.backgroundColor = 'var(--color-paper-2)';
+    notice.style.color = 'var(--color-ink-2)';
     notice.setAttribute('role', 'status');
-    notice.textContent = count + ' saat eklendi. Adaylar artık bu saatlerden randevu alabilir.';
+    notice.textContent = updated
+      ? 'Müsaitlik güncellendi.'
+      : count + ' saat eklendi. Adaylar artık bu saatlerden randevu alabilir.';
     section.insertBefore(notice, section.firstChild);
     window.setTimeout(function () { notice.remove(); }, 5000);
     params.delete('eklendi');
+    params.delete('guncellendi');
     const query = params.toString();
     history.replaceState(null, '', location.pathname + (query ? '?' + query : '') + location.hash);
-  }
-
-  function showToast(message) {
-    document.querySelector('.availability-toast')?.remove();
-    const toast = document.createElement('div');
-    toast.className = 'availability-toast';
-    toast.setAttribute('role', 'status');
-    toast.setAttribute('aria-live', 'polite');
-    toast.textContent = message;
-    document.body.appendChild(toast);
-    window.setTimeout(function () { toast.remove(); }, 2800);
   }
 
   function openAddAvailability(date, time) {
@@ -103,11 +99,20 @@
     location.href = 'guru-musaitlik-ekle.html?' + query.toString();
   }
 
+  addButton?.addEventListener('click', function () {
+    openAddAvailability(dateKey(weekStart), '09:00');
+  });
+
   function openSlotDetails(slot, anchor) {
     closePopover(false);
     const popover = document.createElement('div');
     popover.id = 'availability-popover';
-    popover.className = 'availability-slot-popover fixed z-[100000] w-[min(300px,calc(100%_-_32px))] rounded-[8px] border border-[#7564C7] bg-white p-4 shadow-xl';
+    popover.className = 'availability-slot-popover fixed z-[100000] w-[min(300px,calc(100%_-_32px))] border p-4';
+    popover.style.borderColor = 'var(--color-rule)';
+    popover.style.borderRadius = 'var(--radius-card)';
+    popover.style.backgroundColor = 'var(--color-paper)';
+    popover.style.boxShadow = 'none';
+    popover.style.color = 'var(--color-ink)';
     popover.setAttribute('role', 'dialog');
     popover.setAttribute('aria-modal', 'false');
     popover.setAttribute('aria-label', slot.durum === 'rezerve' ? 'Rezerve randevu bilgileri' : 'Müsaitlik işlemleri');
@@ -118,23 +123,24 @@
     const date = parseDate(slot.tarih);
     const time = slot.bas + ' - ' + slot.bit;
     const heading = document.createElement('p');
-    heading.className = 'text-[14px] font-semibold text-[#1E1E1C]';
+    heading.className = 'text-[14px] font-semibold';
     heading.textContent = dateLabel(date, true) + ' · ' + time;
     popover.appendChild(heading);
 
     if (slot.durum === 'rezerve') {
       const reserved = document.createElement('p');
-      reserved.className = 'mt-2 text-[13px] font-semibold text-[#51409D]';
+      reserved.className = 'mt-2 text-[13px] font-semibold';
+      reserved.style.color = 'var(--color-accent)';
       reserved.textContent = slot.aday || 'Aday';
       const detailsLink = document.createElement('a');
       detailsLink.href = 'guru-danisan-detay.html';
-      detailsLink.className = 'mt-3 inline-flex min-h-9 items-center justify-center rounded-lg bg-[#51409D] px-3 py-2 text-[13px] font-semibold text-white';
+      detailsLink.className = 'availability-slot-primary mt-3 inline-flex items-center justify-center px-3 py-2 text-[13px] font-semibold';
       detailsLink.textContent = 'Detaya git';
       popover.append(reserved, detailsLink);
     } else {
       const removeButton = document.createElement('button');
       removeButton.type = 'button';
-      removeButton.className = 'mt-3 rounded-lg bg-[#51409D] px-3 py-2 text-[13px] font-semibold text-white hover:opacity-90';
+      removeButton.className = 'availability-slot-primary mt-3 px-3 py-2 text-[13px] font-semibold';
       removeButton.textContent = 'Sil';
       removeButton.addEventListener('click', function () {
         const updated = loadSlots().filter(item => item.id !== slot.id);
@@ -145,11 +151,15 @@
       });
       const editButton = document.createElement('button');
       editButton.type = 'button';
-      editButton.className = 'mt-3 ml-2 rounded-lg border border-[#DDD6FE] bg-[#F5F2FF] px-3 py-2 text-[13px] font-semibold text-[#4338CA] hover:bg-[#EDE9FE]';
+      editButton.className = 'mt-3 ml-2 px-3 py-2 text-[13px] font-semibold';
       editButton.textContent = 'Düzenle';
       editButton.addEventListener('click', function () {
-        closePopover();
-        showToast('Düzenleme demo için gösteriliyor.');
+        const query = new URLSearchParams({
+          edit: slot.id,
+          date: slot.tarih,
+          start: slot.bas
+        });
+        location.href = 'guru-musaitlik-ekle.html?' + query.toString();
       });
       popover.append(removeButton, editButton);
     }
@@ -216,7 +226,7 @@
       empty = document.createElement('div');
       empty.dataset.availabilityEmptyState = '';
       empty.className = 'flex flex-col items-center gap-3 px-5 py-12 text-center';
-      empty.innerHTML = '<span class="material-symbols-outlined text-[34px] text-[#7564C7]" aria-hidden="true">event_busy</span><p class="max-w-[360px] text-[14px] leading-6 text-[#7564C7]">Henüz müsaitlik eklemedin. Saat eklemeden adaylar randevu alamaz.</p><a class="inline-flex items-center gap-1.5 rounded-[8px] bg-[#51409D] px-4 py-2.5 text-[14px] font-semibold text-white" href="guru-musaitlik-ekle.html">+ Müsaitlik Ekle</a>';
+      empty.innerHTML = '<span class="material-symbols-outlined text-[34px] text-[var(--color-accent)]" aria-hidden="true">event_busy</span><p class="max-w-[360px] text-[14px] leading-6 text-[var(--color-muted)]">Henüz müsaitlik eklemedin. Saat eklemeden adaylar randevu alamaz.</p><a class="availability-slot-primary inline-flex items-center gap-1.5 px-4 py-2.5 text-[14px] font-semibold" href="guru-musaitlik-ekle.html">+ Müsaitlik Ekle</a>';
       calendar.appendChild(empty);
     }
   }
@@ -247,8 +257,8 @@
       cell.dataset.today = String(isToday);
       cell.children[0].textContent = weekdayNames[index];
       cell.children[1].textContent = date.getDate() + ' ' + monthNames[date.getMonth()].slice(0, 3);
-      cell.classList.toggle('bg-[#7564C7]/70', weekend);
-      cell.children[0].classList.toggle('text-[#7564C7]', weekend);
+      cell.style.backgroundColor = weekend ? 'var(--color-accent-soft)' : '';
+      cell.children[0].style.color = weekend ? 'var(--color-accent)' : '';
       cell.children[0].classList.toggle('text-[#1E1E1C]', !weekend);
       cell.setAttribute('aria-current', isToday ? 'date' : 'false');
     });

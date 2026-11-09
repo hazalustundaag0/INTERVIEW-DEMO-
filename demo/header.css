@@ -181,8 +181,8 @@
   flex: 0 0 1.875rem;
   place-items: center;
   border-radius: 50%;
-  background: var(--color-paper-3) !important;
-  color: var(--color-ink) !important;
+  background: var(--color-paper-3);
+  color: var(--color-ink);
   font-size: .75rem;
   font-weight: 700;
 }
