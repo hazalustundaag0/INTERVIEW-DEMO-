@@ -1,0 +1,175 @@
+/* profil.css — Aday "Profilini tamamlayalım" ekranı (profil.html).
+   Hikâyem/Seanslarım ile aynı dil: desenli zemin üstünde beyaz kart, koyu mor vurgu.
+   theme.css bu sayfadaki kartı ve alanları lila tona çektiği için seçiciler
+   :not(#pf-*) ile güçlendirildi (siparis-akis.css'teki yaklaşımın aynısı). */
+
+body.candidate-profile-page {
+  --pf-ink: #0F0A1C;
+  --pf-ink-2: #475569;
+  --pf-accent: #6D3FE0;
+  --pf-accent-deep: #2A1F5C;
+  --pf-rule: rgba(109, 40, 217, .14);
+  --pf-field: #D9D2EE;
+  --pf-soft: #F8F6FE;
+}
+
+/* ─── Adım çubuğu: kutusuz, Hikâyem'deki gibi ince ───────────────────────── */
+body.candidate-profile-page main section > div:first-child:not(#pf-a):not(#pf-b):not(#pf-c):not(#pf-d) {
+  background: rgba(255, 255, 255, .9) !important;
+  border: 1px solid var(--pf-rule) !important;
+  border-radius: 999px !important;
+  box-shadow: none !important;
+  padding: 10px 18px !important;
+}
+body.candidate-profile-page main section > div:first-child .w-6.h-6:not(#pf-a):not(#pf-b):not(#pf-c):not(#pf-d) {
+  width: 26px !important; height: 26px !important;
+  background: #FFFFFF !important;
+  color: var(--pf-ink-2) !important;
+  border: 1.5px solid var(--pf-field) !important;
+  font-size: 12px !important;
+}
+body.candidate-profile-page main section > div:first-child > div > div:first-child .w-6.h-6:not(#pf-a):not(#pf-b):not(#pf-c):not(#pf-d) {
+  background: var(--pf-accent) !important;
+  border-color: var(--pf-accent) !important;
+  color: #FFFFFF !important;
+}
+body.candidate-profile-page main section > div:first-child > div > div:first-child span:last-child:not(#pf-a):not(#pf-b):not(#pf-c):not(#pf-d) {
+  color: var(--pf-ink) !important; font-weight: 600 !important;
+}
+body.candidate-profile-page main section > div:first-child .opacity-60:not(#pf-a):not(#pf-b):not(#pf-c):not(#pf-d) { opacity: 1 !important; }
+body.candidate-profile-page main section > div:first-child .opacity-60 span:last-child:not(#pf-a):not(#pf-b):not(#pf-c):not(#pf-d) { color: var(--pf-ink-2) !important; }
+body.candidate-profile-page main section > div:first-child .h-\[2px\]:not(#pf-a):not(#pf-b):not(#pf-c):not(#pf-d) {
+  height: 1.5px !important; background: var(--pf-field) !important;
+}
+
+/* ─── Ana kart: beyaz, net kenarlı ───────────────────────────────────────── */
+body.candidate-profile-page main section > div:nth-of-type(2):not(#pf-a):not(#pf-b):not(#pf-c):not(#pf-d) {
+  background: #FFFFFF !important;
+  border: 1px solid var(--pf-rule) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 2px 4px rgba(15, 10, 28, .03), 0 18px 40px -18px rgba(109, 40, 217, .18) !important;
+  padding: 36px !important;
+}
+@media (max-width: 640px) {
+  body.candidate-profile-page main section > div:nth-of-type(2):not(#pf-a):not(#pf-b):not(#pf-c):not(#pf-d) { padding: 22px !important; }
+}
+
+/* Başlık: sol çizgi yerine sade başlık bloğu */
+body.candidate-profile-page main section > div:nth-of-type(2) > div:first-child:not(#pf-a):not(#pf-b):not(#pf-c):not(#pf-d) {
+  border-left: 0 !important; padding-left: 0 !important; margin-bottom: 28px !important;
+}
+body.candidate-profile-page main h1:not(#pf-a):not(#pf-b):not(#pf-c):not(#pf-d) {
+  font-family: Outfit, ui-sans-serif, system-ui, sans-serif !important;
+  font-size: clamp(1.5rem, 1.2rem + 1vw, 1.85rem) !important;
+  font-weight: 500 !important; letter-spacing: -.01em !important; line-height: 1.2 !important;
+  color: var(--pf-ink) !important;
+}
+body.candidate-profile-page main h1 + p:not(#pf-a):not(#pf-b):not(#pf-c):not(#pf-d) {
+  color: var(--pf-ink-2) !important; font-size: 15px !important; margin-top: 6px !important;
+}
+
+/* ─── Profil fotoğrafı kutusu ────────────────────────────────────────────── */
+body.candidate-profile-page .profile-photo:not(#pf-a):not(#pf-b):not(#pf-c):not(#pf-d) {
+  background: var(--pf-soft) !important;
+  border: 1px solid var(--pf-rule) !important;
+  border-radius: 16px !important;
+  padding: 18px 20px !important;
+}
+body.candidate-profile-page .profile-photo-avatar:not(#pf-a):not(#pf-b):not(#pf-c):not(#pf-d) {
+  background: #FFFFFF !important; color: var(--pf-accent-deep) !important;
+  border: 1.5px solid var(--pf-field) !important;
+  box-shadow: 0 0 0 4px rgba(109, 63, 224, .08) !important;
+}
+body.candidate-profile-page .profile-photo-title:not(#pf-a):not(#pf-b):not(#pf-c):not(#pf-d) { color: var(--pf-ink) !important; font-weight: 600 !important; }
+body.candidate-profile-page .profile-photo-button:not(#pf-a):not(#pf-b):not(#pf-c):not(#pf-d) {
+  background: #FFFFFF !important; color: var(--pf-ink) !important;
+  border: 1.5px solid var(--pf-field) !important; border-radius: 999px !important;
+}
+body.candidate-profile-page .profile-photo-button:not(:disabled):hover:not(#pf-a):not(#pf-b):not(#pf-c):not(#pf-d) {
+  border-color: var(--pf-accent) !important; color: var(--pf-accent) !important;
+}
+
+/* ─── Form alanları ──────────────────────────────────────────────────────── */
+body.candidate-profile-page main form:not(#pf-a):not(#pf-b):not(#pf-c):not(#pf-d) { gap: 26px !important; }
+body.candidate-profile-page main form label:not(#pf-a):not(#pf-b):not(#pf-c):not(#pf-d) {
+  color: var(--pf-ink) !important; font-weight: 600 !important; font-size: 14px !important;
+}
+body.candidate-profile-page main form textarea:not(#pf-a):not(#pf-b):not(#pf-c):not(#pf-d),
+body.candidate-profile-page main form input:not([type=file]):not(#pf-a):not(#pf-b):not(#pf-c):not(#pf-d) {
+  background: #FFFFFF !important;
+  border: 1.5px solid var(--pf-field) !important;
+  border-radius: 14px !important;
+  color: var(--pf-ink) !important;
+  box-shadow: none !important;
+  transition: border-color .15s ease, box-shadow .15s ease !important;
+}
+body.candidate-profile-page main form textarea::placeholder,
+body.candidate-profile-page main form input::placeholder { color: #9A93B3 !important; }
+body.candidate-profile-page main form textarea:hover:not(#pf-a):not(#pf-b):not(#pf-c):not(#pf-d),
+body.candidate-profile-page main form input:not([type=file]):hover:not(#pf-a):not(#pf-b):not(#pf-c):not(#pf-d) {
+  border-color: #BFB2E6 !important;
+}
+body.candidate-profile-page main form textarea:focus:not(#pf-a):not(#pf-b):not(#pf-c):not(#pf-d),
+body.candidate-profile-page main form input:not([type=file]):focus:not(#pf-a):not(#pf-b):not(#pf-c):not(#pf-d) {
+  border-color: var(--pf-accent) !important;
+  box-shadow: 0 0 0 4px rgba(109, 63, 224, .12) !important;
+  outline: none !important;
+}
+/* Hedef pozisyon tek satırlık bir cevap: alanı kısalt */
+body.candidate-profile-page main form [data-field="target_position"] textarea:not(#pf-a):not(#pf-b):not(#pf-c):not(#pf-d) {
+  min-height: 52px !important; height: 52px; resize: vertical;
+}
+body.candidate-profile-page main form p.text-muted:not(#pf-a):not(#pf-b):not(#pf-c):not(#pf-d) { color: #6B6585 !important; }
+
+/* Seçim çipleri: beyaz; seçilince koyu mor (Hizmet seçimindeki gibi) */
+body.candidate-profile-page main .theme-choice-chip:not(#pf-a):not(#pf-b):not(#pf-c):not(#pf-d) {
+  background: #FFFFFF !important;
+  color: var(--pf-ink) !important;
+  border: 1.5px solid var(--pf-field) !important;
+  border-radius: 999px !important;
+  padding: 10px 18px !important;
+  font-weight: 500 !important;
+  box-shadow: none !important;
+  transition: border-color .15s ease, background-color .15s ease, color .15s ease !important;
+}
+body.candidate-profile-page main .theme-choice-chip:hover:not([aria-pressed="true"]):not(#pf-a):not(#pf-b):not(#pf-c):not(#pf-d) {
+  border-color: var(--pf-accent) !important; color: var(--pf-accent) !important;
+}
+body.candidate-profile-page main .theme-choice-chip[aria-pressed="true"]:not(#pf-a):not(#pf-b):not(#pf-c):not(#pf-d) {
+  background: var(--pf-accent-deep) !important;
+  border-color: var(--pf-accent-deep) !important;
+  color: #FFFFFF !important;
+}
+
+/* ─── Alt bölüm ve ana buton ─────────────────────────────────────────────── */
+body.candidate-profile-page main form > div:last-child:not(#pf-a):not(#pf-b):not(#pf-c):not(#pf-d) {
+  border-top: 1px solid var(--pf-rule) !important;
+  margin-top: 8px !important; padding-top: 24px !important;
+}
+body.candidate-profile-page [data-action="profile-save"]:not(#pf-a):not(#pf-b):not(#pf-c):not(#pf-d) {
+  background: var(--pf-accent) !important;
+  color: #FFFFFF !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  height: 48px !important; padding: 0 26px !important;
+  font-family: Outfit, ui-sans-serif, system-ui, sans-serif !important; font-weight: 500 !important;
+  box-shadow: 0 10px 24px -12px rgba(109, 63, 224, .7) !important;
+}
+body.candidate-profile-page [data-action="profile-save"] span:not(#pf-a):not(#pf-b):not(#pf-c):not(#pf-d) { color: #FFFFFF !important; }
+body.candidate-profile-page [data-action="profile-save"]:not(:disabled):hover:not(#pf-a):not(#pf-b):not(#pf-c):not(#pf-d) {
+  background: var(--pf-accent-deep) !important;
+}
+body.candidate-profile-page [data-action="profile-save"]:disabled:not(#pf-a):not(#pf-b):not(#pf-c):not(#pf-d) {
+  background: #CFC6F0 !important; box-shadow: none !important;
+}
+body.candidate-profile-page [data-action="profile-later"]:not(#pf-a):not(#pf-b):not(#pf-c):not(#pf-d) {
+  color: var(--pf-ink-2) !important; font-weight: 500 !important;
+}
+body.candidate-profile-page [data-action="profile-later"]:hover:not(#pf-a):not(#pf-b):not(#pf-c):not(#pf-d) { color: var(--pf-accent) !important; }
+
+/* Mobil: adım çubuğu taşmasın — yalnız etkin adımın adı görünür */
+@media (max-width: 640px) {
+  body.candidate-profile-page main section > div:first-child:not(#pf-a):not(#pf-b):not(#pf-c):not(#pf-d) { padding: 8px 14px !important; }
+  body.candidate-profile-page main section > div:first-child .opacity-60 span:last-child:not(#pf-a):not(#pf-b):not(#pf-c):not(#pf-d) { display: none !important; }
+  body.candidate-profile-page main section > div:first-child .h-\[2px\]:not(#pf-a):not(#pf-b):not(#pf-c):not(#pf-d) { margin: 0 6px !important; min-width: 12px; }
+}

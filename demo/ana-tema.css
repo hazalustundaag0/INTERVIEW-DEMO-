@@ -1,0 +1,171 @@
+/* ana-tema.css — Aday Ana Ekran (ana.html).
+   Profilim / CV'm / Hikâyem ile aynı sade dil: desenli zemin, koyu üst bant, beyaz kartlar.
+   Yerleşim: bant içinde selam → bandın üstüne binen "Sıradaki adım" (tam genişlik) →
+   altta iki sütun: solda Yolculuğun, sağda Seanslarım + Danışmanın; iki sütunun alt kenarı hizalı.
+   DOM'a dokunmaz (giriş kartı ve yan kart ızgarası display:contents ile açılır).
+   theme.css'i aşmak için seçiciler :not(#an-*) ile güçlendirildi. */
+
+body.candidate-dashboard-page {
+  --an-ink: #0F0A1C;
+  --an-ink-2: #475569;
+  --an-accent: #6D3FE0;
+  --an-deep: #2A1F5C;
+  --an-rule: rgba(109, 40, 217, .14);
+  --an-field: #D9D2EE;
+  --an-soft: #F8F6FE;
+  --an-tint: #EEECFF;
+  --an-band: 230px;
+}
+
+/* ─── Izgara + bant ──────────────────────────────────────────────────────── */
+body.candidate-dashboard-page main section:not(#an-a):not(#an-b):not(#an-c):not(#an-d) {
+  position: relative; isolation: isolate;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-rows: auto auto auto auto 1fr;
+  column-gap: 20px !important; row-gap: 20px !important;
+  align-items: stretch;
+}
+body.candidate-dashboard-page main section::before {
+  content: ""; position: absolute; z-index: -1; left: 0; right: 0; top: 0;
+  height: var(--an-band); border-radius: 20px; background: var(--an-deep);
+}
+body.candidate-dashboard-page main section .candidate-dashboard-intro-card:not(#an-a):not(#an-b):not(#an-c):not(#an-d),
+body.candidate-dashboard-page main section .candidate-dashboard-intro-card > div:not(#an-a):not(#an-b):not(#an-c):not(#an-d),
+body.candidate-dashboard-page main section .candidate-dashboard-side-cards:not(#an-a):not(#an-b):not(#an-c):not(#an-d) { display: contents !important; }
+
+body.candidate-dashboard-page main section h1:not(#an-a):not(#an-b):not(#an-c):not(#an-d) {
+  grid-column: 1 / -1; grid-row: 1; margin: 0 !important; padding: 36px 36px 0 !important;
+  color: #FFFFFF !important; font-family: Outfit, ui-sans-serif, system-ui, sans-serif !important;
+  font-size: clamp(1.6rem, 1.2rem + 1vw, 2rem) !important; font-weight: 500 !important; letter-spacing: -.01em;
+}
+body.candidate-dashboard-page main section h1 + p:not(#an-a):not(#an-b):not(#an-c):not(#an-d) {
+  grid-column: 1 / -1; grid-row: 2; margin: -12px 0 4px !important; padding: 0 36px !important;
+  color: rgba(255, 255, 255, .75) !important; font-size: 15px !important;
+}
+
+/* Ortak beyaz kart (Hikâyem'deki panel ile aynı) */
+body.candidate-dashboard-page main section .candidate-dashboard-intro-card .w-full.py-4:not(#an-a):not(#an-b):not(#an-c):not(#an-d),
+body.candidate-dashboard-page main section .next-step-card:not(#an-a):not(#an-b):not(#an-c):not(#an-d),
+body.candidate-dashboard-page main section .candidate-dashboard-side-cards > div:not(#an-a):not(#an-b):not(#an-c):not(#an-d) {
+  background: #FFFFFF !important;
+  border: 1px solid var(--an-rule) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 1px 2px rgba(15, 10, 28, .04) !important;
+  margin: 0 !important;
+}
+body.candidate-dashboard-page main section h3:not(#an-a):not(#an-b):not(#an-c):not(#an-d), body.candidate-dashboard-page main section .candidate-dashboard-intro-card .w-full.py-4::before {
+  font-family: Outfit, ui-sans-serif, sans-serif !important; font-weight: 500 !important;
+  font-size: 18px !important; color: var(--an-ink) !important;
+}
+
+/* ─── Sıradaki adım: bandın üstünde, tam genişlik, yatay ────────────────── */
+body.candidate-dashboard-page main section .next-step-card:not(#an-a):not(#an-b):not(#an-c):not(#an-d) { grid-column: 1 / -1; grid-row: 3; padding: 26px 28px !important; margin: 0 20px !important; }
+body.candidate-dashboard-page main section .next-step-stripe:not(#an-a):not(#an-b):not(#an-c):not(#an-d) { display: none !important; }
+body.candidate-dashboard-page main section .next-step-content:not(#an-a):not(#an-b):not(#an-c):not(#an-d) { display: flex !important; flex-direction: row !important; align-items: center !important; justify-content: space-between !important; gap: 24px !important; }
+body.candidate-dashboard-page main section .next-step-badge:not(#an-a):not(#an-b):not(#an-c):not(#an-d) { background: none !important; border: 0 !important; padding: 0 !important; }
+body.candidate-dashboard-page main section .next-step-dot:not(#an-a):not(#an-b):not(#an-c):not(#an-d) { display: none !important; }
+body.candidate-dashboard-page main section .next-step-label:not(#an-a):not(#an-b):not(#an-c):not(#an-d) {
+  color: var(--an-accent) !important; font-size: 12px !important; font-weight: 600 !important;
+  letter-spacing: .08em !important; text-transform: uppercase;
+}
+body.candidate-dashboard-page main section .next-step-title:not(#an-a):not(#an-b):not(#an-c):not(#an-d) { color: var(--an-ink) !important; font-family: Outfit, ui-sans-serif, sans-serif !important; font-weight: 500 !important; font-size: 21px !important; margin-top: 6px !important; }
+body.candidate-dashboard-page main section .next-step-description:not(#an-a):not(#an-b):not(#an-c):not(#an-d) { color: var(--an-ink-2) !important; margin-top: 4px !important; }
+body.candidate-dashboard-page main section .next-step-actions:not(#an-a):not(#an-b):not(#an-c):not(#an-d) { display: flex !important; flex: none; gap: 14px; align-items: center; }
+body.candidate-dashboard-page main section .next-step-cta:not(#an-a):not(#an-b):not(#an-c):not(#an-d) {
+  background: var(--an-accent) !important; color: #FFFFFF !important; border: 0 !important;
+  border-radius: 999px !important; height: 46px !important; padding: 0 24px !important;
+  font-family: Outfit, ui-sans-serif, sans-serif !important; font-weight: 500 !important; box-shadow: none !important;
+}
+body.candidate-dashboard-page main section .next-step-cta:hover:not(#an-a):not(#an-b):not(#an-c):not(#an-d) { background: var(--an-deep) !important; }
+body.candidate-dashboard-page main section .next-step-notes-link:not(#an-a):not(#an-b):not(#an-c):not(#an-d) { color: var(--an-accent) !important; font-weight: 500; }
+
+/* ─── Sol: Yolculuğun (satır 4–5; sağdaki iki kartla aynı yükseklik) ────── */
+body.candidate-dashboard-page main section .candidate-dashboard-intro-card .w-full.py-4:not(#an-a):not(#an-b):not(#an-c):not(#an-d) {
+  grid-column: 1; grid-row: 4 / span 2; padding: 24px 26px !important;
+  display: flex !important; flex-direction: column;
+}
+body.candidate-dashboard-page main section .candidate-dashboard-intro-card .w-full.py-4::before { content: "Yolculuğun"; display: block; }
+body.candidate-dashboard-page main section .candidate-progress:not(#an-a):not(#an-b):not(#an-c):not(#an-d) {
+  display: flex !important; flex-direction: column !important; align-items: stretch !important;
+  justify-content: flex-start !important; grid-template-columns: none !important;
+  gap: 0 !important; margin-top: 14px;
+}
+body.candidate-dashboard-page main section .candidate-progress-track:not(#an-a):not(#an-b):not(#an-c):not(#an-d) { display: none !important; }
+body.candidate-dashboard-page main section .candidate-progress-step:not(#an-a):not(#an-b):not(#an-c):not(#an-d) {
+  display: flex !important; width: auto !important; flex-direction: row !important; align-items: center !important;
+  justify-content: flex-start !important; gap: 14px !important;
+  padding: 14px 0 !important; border-bottom: 1px solid var(--an-rule);
+}
+body.candidate-dashboard-page main section .candidate-progress-step:last-child:not(#an-a):not(#an-b):not(#an-c):not(#an-d) { border-bottom: 0; padding-bottom: 0 !important; }
+body.candidate-dashboard-page main section .candidate-progress-step > span:not(#an-a):not(#an-b):not(#an-c):not(#an-d) { flex: 1; text-align: left; font-size: 15px !important; color: var(--an-ink) !important; font-weight: 500 !important; }
+body.candidate-dashboard-page main section .candidate-progress-step[data-step-state="upcoming"] > span:not(#an-a):not(#an-b):not(#an-c):not(#an-d) { color: var(--an-ink-2) !important; font-weight: 400 !important; }
+body.candidate-dashboard-page main section .candidate-progress-step[data-step-state="current"] > span:not(#an-a):not(#an-b):not(#an-c):not(#an-d) { font-weight: 600 !important; }
+body.candidate-dashboard-page main section .candidate-progress-step::after {
+  content: "Sırada"; flex: none; font-size: 13px; color: #8A84A3;
+}
+body.candidate-dashboard-page main section .candidate-progress-step[data-step-state="complete"]::after { content: "Tamamlandı"; color: var(--an-ink-2); }
+body.candidate-dashboard-page main section .candidate-progress-step[data-step-state="current"]::after { content: "Şu an buradasın"; color: var(--an-accent); font-weight: 600; }
+/* Sade numaralı daireler; simge yerine sıra numarası */
+body.candidate-dashboard-page main section .candidate-progress-step:not(#an-a):not(#an-b):not(#an-c):not(#an-d) { counter-increment: an-step; }
+body.candidate-dashboard-page main section .candidate-progress:not(#an-a):not(#an-b):not(#an-c):not(#an-d) { counter-reset: an-step; }
+body.candidate-dashboard-page main section .candidate-progress-step > div:not(#an-a):not(#an-b):not(#an-c):not(#an-d) {
+  width: 30px !important; height: 30px !important; flex: none;
+  border-radius: 999px !important; border: 1.5px solid var(--an-field) !important; box-shadow: none !important;
+  background: #FFFFFF !important; color: var(--an-ink-2) !important;
+  font: 600 13px/1 Outfit, ui-sans-serif, sans-serif !important;
+}
+body.candidate-dashboard-page main section .candidate-progress-step > div > .material-symbols-outlined:not(#an-a):not(#an-b):not(#an-c):not(#an-d) { font-size: 17px !important; }
+body.candidate-dashboard-page main section .candidate-progress-step[data-step-state="complete"] > div:not(#an-a):not(#an-b):not(#an-c):not(#an-d) { background: var(--an-tint) !important; border-color: var(--an-tint) !important; color: var(--an-accent) !important; }
+body.candidate-dashboard-page main section .candidate-progress-step[data-step-state="current"] > div:not(#an-a):not(#an-b):not(#an-c):not(#an-d) { background: var(--an-accent) !important; border-color: var(--an-accent) !important; color: #FFFFFF !important; }
+/* Mevcut adımda kitap simgesi yerine numara */
+body.candidate-dashboard-page main section .candidate-progress-step[data-step-state="current"] > div > .material-symbols-outlined:not(#an-a):not(#an-b):not(#an-c):not(#an-d) { font-size: 0 !important; }
+body.candidate-dashboard-page main section .candidate-progress-step[data-step-state="current"] > div::before { content: counter(an-step); }
+
+/* ─── Sağ: Seanslarım (satır 4) ve Danışmanın (satır 5) ─────────────────── */
+body.candidate-dashboard-page main section .candidate-dashboard-side-cards > div:not(#an-a):not(#an-b):not(#an-c):not(#an-d) { grid-column: 2; padding: 24px 26px !important; justify-content: flex-start !important; }
+body.candidate-dashboard-page main section .candidate-session-card:not(#an-a):not(#an-b):not(#an-c):not(#an-d) { grid-row: 4; }
+body.candidate-dashboard-page main section .candidate-dashboard-side-cards > div:last-child:not(#an-a):not(#an-b):not(#an-c):not(#an-d) { grid-row: 5; }
+body.candidate-dashboard-page main section .candidate-dashboard-side-cards h3:not(#an-a):not(#an-b):not(#an-c):not(#an-d) { margin-bottom: 6px !important; }
+body.candidate-dashboard-page main section .candidate-session-list:not(#an-a):not(#an-b):not(#an-c):not(#an-d) { gap: 0 !important; }
+body.candidate-dashboard-page main section .candidate-session-row:not(#an-a):not(#an-b):not(#an-c):not(#an-d) {
+  padding: 14px 0 !important; border: 0 !important; border-bottom: 1px solid var(--an-rule) !important;
+  flex-wrap: wrap; gap: 10px;
+}
+body.candidate-dashboard-page main section .candidate-session-row:last-child:not(#an-a):not(#an-b):not(#an-c):not(#an-d) { border-bottom: 0 !important; padding-bottom: 0 !important; }
+body.candidate-dashboard-page main section .candidate-session-title:not(#an-a):not(#an-b):not(#an-c):not(#an-d) { color: var(--an-ink) !important; font-weight: 500 !important; font-size: 15px !important; }
+body.candidate-dashboard-page main section .candidate-session-badge:not(#an-a):not(#an-b):not(#an-c):not(#an-d) { border: 0 !important; font-weight: 500 !important; }
+body.candidate-dashboard-page main section .candidate-session-badge--complete:not(#an-a):not(#an-b):not(#an-c):not(#an-d) { background: var(--an-tint) !important; color: var(--an-accent) !important; }
+body.candidate-dashboard-page main section .candidate-session-badge--complete::before { display: none !important; }
+body.candidate-dashboard-page main section .candidate-session-badge--planned:not(#an-a):not(#an-b):not(#an-c):not(#an-d) { background: #F1EEF8 !important; color: var(--an-ink-2) !important; }
+body.candidate-dashboard-page main section .candidate-booking-link:not(#an-a):not(#an-b):not(#an-c):not(#an-d) {
+  color: var(--an-accent) !important; font-weight: 600 !important; text-decoration: none !important;
+  border: 1.5px solid var(--an-field) !important; border-radius: 999px !important; padding: 5px 14px !important; background: #FFFFFF !important;
+}
+body.candidate-dashboard-page main section .candidate-booking-link:hover:not(#an-a):not(#an-b):not(#an-c):not(#an-d) { border-color: var(--an-accent) !important; }
+
+body.candidate-dashboard-page main section .candidate-dashboard-side-cards .demo-avatar:not(#an-a):not(#an-b):not(#an-c):not(#an-d) {
+  background: var(--an-tint) !important; color: var(--an-deep) !important; box-shadow: none !important;
+  width: 48px !important; height: 48px !important; font-size: 15px !important;
+}
+body.candidate-dashboard-page main section .candidate-dashboard-side-cards > div:last-child > div:not(#an-a):not(#an-b):not(#an-c):not(#an-d) { justify-content: flex-start !important; gap: 0; margin-top: 8px; }
+body.candidate-dashboard-page main section .candidate-dashboard-side-cards > div:last-child .border-t:not(#an-a):not(#an-b):not(#an-c):not(#an-d) { border-color: var(--an-rule) !important; margin-top: 16px !important; padding-top: 14px !important; }
+body.candidate-dashboard-page main section .candidate-advisor-copy:not(#an-a):not(#an-b):not(#an-c):not(#an-d) { font-size: 14px !important; color: var(--an-ink-2) !important; }
+body.candidate-dashboard-page main section .candidate-advisor-link:not(#an-a):not(#an-b):not(#an-c):not(#an-d) {
+  display: inline-flex !important; align-items: center; margin-top: 12px !important;
+  color: var(--an-ink) !important; background: #FFFFFF !important; text-decoration: none !important;
+  border: 1.5px solid var(--an-field) !important; border-radius: 999px !important; padding: 8px 16px !important; font-weight: 500 !important;
+}
+body.candidate-dashboard-page main section .candidate-advisor-link:hover:not(#an-a):not(#an-b):not(#an-c):not(#an-d) { border-color: var(--an-accent) !important; color: var(--an-accent) !important; }
+
+/* ─── Dar ekranlar: tek sütun ────────────────────────────────────────────── */
+@media (max-width: 1023px) {
+  body.candidate-dashboard-page main section:not(#an-a):not(#an-b):not(#an-c):not(#an-d) { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; --an-band: 210px; }
+  body.candidate-dashboard-page main section h1:not(#an-a):not(#an-b):not(#an-c):not(#an-d), body.candidate-dashboard-page main section h1 + p:not(#an-a):not(#an-b):not(#an-c):not(#an-d), body.candidate-dashboard-page main section .next-step-card:not(#an-a):not(#an-b):not(#an-c):not(#an-d),
+  body.candidate-dashboard-page main section .candidate-dashboard-intro-card .w-full.py-4:not(#an-a):not(#an-b):not(#an-c):not(#an-d),
+  body.candidate-dashboard-page main section .candidate-dashboard-side-cards > div:not(#an-a):not(#an-b):not(#an-c):not(#an-d) { grid-column: 1; grid-row: auto !important; }
+  body.candidate-dashboard-page main section .next-step-card:not(#an-a):not(#an-b):not(#an-c):not(#an-d) { margin: 0 14px !important; }
+  body.candidate-dashboard-page main section .next-step-content:not(#an-a):not(#an-b):not(#an-c):not(#an-d) { flex-direction: column !important; align-items: flex-start !important; }
+  body.candidate-dashboard-page main section h1:not(#an-a):not(#an-b):not(#an-c):not(#an-d) { padding: 26px 22px 0 !important; }
+  body.candidate-dashboard-page main section h1 + p:not(#an-a):not(#an-b):not(#an-c):not(#an-d) { padding: 0 22px !important; }
+}

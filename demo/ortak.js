@@ -1,10 +1,12 @@
 // ortak.js: genel sabit öğeleri sayfaya uyarla; danışman menüsünü sticky bırak.
 (function () {
-  const page = location.pathname.split('/').pop() || '';
+  const page = window.Routes.page();
   window.addEventListener('load', function () {
     document.querySelectorAll('body *').forEach(function (el) {
       if (el.matches('.panel-sidebar')) return;
-      if (page.startsWith('guru-') && el.matches('.advisor-sidebar')) return;
+      // Etap 4: paylaşımlı menü (sidebar.js) ve mobil ☰ düğmesi kendi konumunu sidebar.css'le yönetir.
+      if (el.closest('#sidebar') || el.matches('.sidebar-toggle')) return;
+      if (window.Routes.isPanel(page, 'guru') && el.matches('.advisor-sidebar')) return;
       if (el.matches('.site-header')) return;
       var cs = getComputedStyle(el);
       if (cs.position !== 'sticky' && cs.position !== 'fixed') return;

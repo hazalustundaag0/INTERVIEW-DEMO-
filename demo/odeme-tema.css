@@ -1,0 +1,119 @@
+/* odeme-tema.css — Ödeme (siparis.html) sayfası, fatura düzeni referansıyla:
+   solda tek beyaz ana kart (bölümler çizgiyle ayrılır, hizmet özeti koyu mor bant),
+   sağda sipariş detayları + büyük toplam + ana düğme. DOM/JS değişmez; siparis-akis.css'in üstüne yazar. */
+body.order-confirmation-page { --od-deep:#2A1F5C; --od-accent:#6D3FE0; --od-line:#ECE9FA; --od-ink:#1C1A33; --od-muted:#6B6880; }
+
+/* Başlık: bant yerine sade satır */
+body.order-confirmation-page .oc-hero:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e) { margin: 0 0 1.5rem !important; padding: .5rem 0 0 !important; }
+body.order-confirmation-page .oc-hero::before,
+body.order-confirmation-page .oc-sparks,
+body.order-confirmation-page .oc-hero-icon { display: none !important; }
+body.order-confirmation-page .oc-hero > div:first-of-type:not(.oc-sparks):not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e) { margin-bottom: .6rem !important; }
+body.order-confirmation-page .oc-hero a:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e) { color: var(--od-muted) !important; font-size: .82rem !important; }
+body.order-confirmation-page .oc-hero a:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e):hover { color: var(--od-accent) !important; }
+body.order-confirmation-page .oc-hero-text h1:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e) { font-family: Outfit, sans-serif !important; font-size: clamp(1.6rem, 2.4vw, 2rem) !important; font-weight: 600 !important; color: var(--od-deep) !important; letter-spacing: -.01em; }
+body.order-confirmation-page .oc-hero-text p:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e) { color: var(--od-muted) !important; font-weight: 400 !important; font-size: .95rem !important; }
+
+/* Sol: tek ana kart */
+body.order-confirmation-page .order-layout { gap: 1.5rem !important; grid-template-columns: minmax(0, 1fr) minmax(300px, 360px) !important; }
+body.order-confirmation-page .order-layout > .flex.flex-col:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e) {
+  gap: 0 !important; padding: 1.75rem !important;
+  background: #FFFFFF !important; border: 1px solid var(--od-line) !important; border-radius: 20px !important;
+  box-shadow: 0 24px 48px -36px rgba(42, 31, 92, .45) !important;
+}
+body.order-confirmation-page .order-layout > .flex.flex-col > .oc-card:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e) {
+  padding: 1.5rem 0 !important; border: 0 !important; border-top: 1px solid var(--od-line) !important;
+  border-radius: 0 !important; background: transparent !important; box-shadow: none !important;
+}
+body.order-confirmation-page .order-layout > .flex.flex-col > .oc-card:last-child:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e) { padding-bottom: 0 !important; }
+body.order-confirmation-page .order-layout > .flex.flex-col h2:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e) { font-family: Outfit, sans-serif !important; font-size: 1.05rem !important; font-weight: 600 !important; color: var(--od-ink) !important; }
+body.order-confirmation-page .order-layout > .flex.flex-col .w-\[3px\]:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e) { display: none !important; }
+
+/* Hizmet özeti: koyu mor bant */
+body.order-confirmation-page .order-layout > .flex.flex-col > .oc-summary:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e) {
+  position: relative; overflow: hidden; isolation: isolate;
+  padding: 1.6rem 1.75rem !important; margin-bottom: .25rem; border: 0 !important; border-radius: 18px !important;
+  background: linear-gradient(120deg, #2A1F5C 0%, #4B36A8 60%, #6D3FE0 100%) !important;
+  box-shadow: 0 20px 40px -28px rgba(42, 31, 92, .8) !important;
+}
+body.order-confirmation-page .oc-summary::before,
+body.order-confirmation-page .oc-summary::after { content: ""; position: absolute; z-index: -1; border-radius: 50%; border: 1px solid rgba(255,255,255,.12); pointer-events: none; }
+body.order-confirmation-page .oc-summary::before { width: 22rem; height: 22rem; right: -8rem; top: -11rem; background: rgba(255,255,255,.05); }
+body.order-confirmation-page .oc-summary::after { width: 14rem; height: 14rem; right: 4rem; bottom: -9rem; }
+body.order-confirmation-page .oc-summary .oc-thumb:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e) { background: rgba(255,255,255,.12) !important; border: 1px solid rgba(255,255,255,.18); border-radius: 16px !important; }
+body.order-confirmation-page .oc-summary .oc-thumb svg { stroke: #FFFFFF !important; }
+body.order-confirmation-page .oc-summary .oc-item { grid-template-columns: 4.5rem minmax(0, 1fr) !important; }
+body.order-confirmation-page .oc-summary .oc-title:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e) { font-family: Outfit, sans-serif !important; font-weight: 600 !important; font-size: 1.35rem !important; color: #FFFFFF !important; }
+body.order-confirmation-page .oc-summary .oc-sub *:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e),
+body.order-confirmation-page .oc-summary .oc-sub:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e) { color: rgba(255,255,255,.78) !important; }
+body.order-confirmation-page .oc-summary .oc-advisor-chip span:not(.oc-advisor-av):not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e) { color: #FFFFFF !important; }
+body.order-confirmation-page .oc-summary span.oc-advisor-av:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e) { background: #FFFFFF !important; color: var(--od-deep) !important; }
+body.order-confirmation-page .oc-summary .oc-feats li:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e) { color: rgba(255,255,255,.85) !important; }
+body.order-confirmation-page .oc-summary .oc-feats li::before { background: #BCB7F5 !important; }
+body.order-confirmation-page .oc-summary .oc-sessions:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e) { border-top: 1px solid rgba(255,255,255,.16) !important; }
+body.order-confirmation-page .oc-summary .oc-k:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e) { color: #BCB7F5 !important; }
+body.order-confirmation-page .oc-summary .oc-session strong:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e),
+body.order-confirmation-page .oc-summary .oc-session-count *:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e) { color: #FFFFFF !important; }
+body.order-confirmation-page .oc-summary .oc-session span:last-child:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e) { color: rgba(255,255,255,.7) !important; }
+body.order-confirmation-page .oc-summary .oc-between:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e) { background: rgba(255,255,255,.12) !important; color: #FFFFFF !important; }
+body.order-confirmation-page .oc-summary .oc-session-count:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e) { border-left-color: rgba(255,255,255,.16) !important; }
+body.order-confirmation-page .oc-summary > .border-t:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e) { border-color: rgba(255,255,255,.16) !important; }
+body.order-confirmation-page .oc-summary > .border-t span:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e) { color: #FFFFFF !important; }
+body.order-confirmation-page .oc-summary input[type="checkbox"]:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e) { border-color: rgba(255,255,255,.6) !important; background-color: transparent !important; accent-color: #FFFFFF; }
+body.order-confirmation-page .oc-summary input[type="checkbox"]:checked:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e) { background-color: #FFFFFF !important; background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='%232A1F5C' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e") !important; }
+
+/* Tutar satırları: tablo gibi */
+body.order-confirmation-page .oc-amount-row:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e) { padding: .8rem 0 !important; color: var(--od-muted) !important; font-size: .9rem !important; }
+body.order-confirmation-page .oc-amount-row span:last-child:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e) { color: var(--od-ink) !important; font-weight: 500; }
+body.order-confirmation-page .oc-amount-row--total strong:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e) { font-family: Outfit, sans-serif !important; font-weight: 600 !important; }
+body.order-confirmation-page .oc-amount-note:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e) { margin-top: .9rem !important; width: 100% !important; max-width: none !important; padding: .85rem 1rem !important; border-radius: 14px; background: #F4F1FF !important; font-weight: 500 !important; }
+
+/* Rıza kutuları ve ödeme yöntemi: yumuşak gri kutular */
+body.order-confirmation-page .order-layout .bg-surface-container-low.rounded-lg.border:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e) { background: #F8F7FD !important; border: 1px solid var(--od-line) !important; border-radius: 14px !important; box-shadow: none !important; }
+body.order-confirmation-page .order-layout .bg-surface-container-low.rounded-lg.border button:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e) { padding: .3rem .8rem !important; border: 1px solid var(--od-line) !important; border-radius: 999px !important; background: #FFFFFF !important; color: var(--od-accent) !important; font-size: .82rem !important; text-decoration: none !important; }
+
+/* Sağ: detaylar */
+body.order-confirmation-page .order-side { gap: 1rem !important; top: 5.5rem !important; }
+body.order-confirmation-page .order-side .oc-card:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e) { border-radius: 20px !important; border-color: var(--od-line) !important; }
+body.order-confirmation-page .oc-details h2:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e),
+body.order-confirmation-page .oc-help h2:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e) { font-family: Outfit, sans-serif !important; font-weight: 600 !important; font-size: 1rem !important; }
+body.order-confirmation-page .oc-details dl:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e) { gap: .7rem !important; }
+body.order-confirmation-page .oc-details dt:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e) { color: var(--od-muted) !important; font-size: .85rem !important; }
+body.order-confirmation-page .oc-details dd:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e) { font-size: .88rem !important; font-weight: 500 !important; }
+/* Büyük toplam (Amount due gibi) */
+body.order-confirmation-page .oc-details .oc-details-total:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e) {
+  display: grid !important; gap: .35rem; justify-content: stretch;
+  margin: .6rem -1.5rem -1.5rem !important; padding: 1.1rem 1.5rem 1.3rem !important;
+  border-top: 1px solid var(--od-line) !important; background: #F8F7FD; border-radius: 0 0 20px 20px;
+}
+body.order-confirmation-page .oc-details .oc-details-total dt:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e) { font-size: .8rem !important; }
+body.order-confirmation-page .oc-details .oc-details-total dd:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e) {
+  display: flex; align-items: center; gap: .6rem; text-align: left;
+  font-family: Outfit, sans-serif !important; font-size: 2.1rem !important; font-weight: 600 !important; color: var(--od-ink) !important; line-height: 1.1;
+}
+body.order-confirmation-page .oc-details .oc-details-total dd::after { content: "KDV dahil"; padding: .2rem .6rem; border-radius: 999px; background: #EEECFF; color: #51409D; font-family: inherit; font-size: .72rem; font-weight: 600; }
+
+/* Düğmeler */
+body.order-confirmation-page .order-side button#submit-order-btn:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e) {
+  min-height: 3.5rem !important; border-radius: 14px !important; background: var(--od-accent) !important; color: #FFFFFF !important;
+  font-size: 1rem !important; font-weight: 600 !important; box-shadow: 0 14px 28px -16px rgba(109, 63, 224, .9) !important;
+}
+body.order-confirmation-page .order-side button#submit-order-btn:not(:disabled):not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e):hover { background: var(--od-deep) !important; }
+body.order-confirmation-page .order-side button#submit-order-btn:disabled:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e) { background: #CFC6F5 !important; color: #FFFFFF !important; box-shadow: none !important; }
+body.order-confirmation-page a.oc-secondary:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e) { min-height: 3rem !important; border: 0 !important; background: #F1EEFD !important; color: var(--od-accent) !important; font-weight: 600 !important; }
+body.order-confirmation-page a.oc-secondary:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e):hover { background: #E6E0FB !important; }
+body.order-confirmation-page .oc-help-art svg { width: 3.5rem !important; height: 3.5rem !important; }
+
+@media (max-width: 1023px) {
+  body.order-confirmation-page .order-layout { grid-template-columns: minmax(0, 1fr) !important; }
+}
+@media (max-width: 640px) {
+  body.order-confirmation-page .order-layout > .flex.flex-col:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e) { padding: 1rem !important; }
+  body.order-confirmation-page .order-layout > .flex.flex-col > .oc-summary:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e) { padding: 1.25rem !important; }
+}
+/* "Ödemeden sonra ne olacak?" kutusu: iç boşluklu yumuşak kutu */
+body.order-confirmation-page .order-layout > .flex.flex-col > .oc-card.bg-surface-container-low:last-child:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e) {
+  margin-top: 1.5rem; padding: 1.5rem !important; border: 1px solid var(--od-line) !important; border-radius: 16px !important; background: #F8F7FD !important;
+}
+/* "Sorun mu var?" kartı kaldırıldı */
+body.order-confirmation-page .order-side .oc-help:not(#od-a):not(#od-b):not(#od-c):not(#od-d):not(#od-e) { display: none !important; }

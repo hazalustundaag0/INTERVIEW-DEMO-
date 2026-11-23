@@ -1,0 +1,209 @@
+/* yonetici-tokens.css: Yönetici panelinin donmuş tema katmanı (Etap 4, 85, K88).
+ *
+ * Neden: Etap 4'te kök theme.css Ultraviolet tasarımıyla yeniden yazıldı. Yeni dosyada yonetici.css'in
+ * kullandığı 28 değişken yok ve global !important kuralları (background-image:none, box-shadow:none,
+ * font zorlaması, submit rengi, animation/transition:none) paneli bozuyor. Hazal'dan yönetici tasarımı
+ * olmadığı için panel eski görünümünü korur.
+ *
+ * Nasıl: Yönetici sayfaları (giris-yonetici.html + 10 yonetici-*.html) ../theme.css'i HİÇ yüklemez;
+ * yerine bu dosyayı yükler (sıra: yonetici-tokens.css → yonetici.css). Böylece yeni theme.css'in global
+ * kuralları panele ulaşmaz, theme.css'e de dokunulmaz (aday/guru sayfaları etkilenmez).
+ *
+ * İçerik: Etap 3 sonu theme.css'ten (frontend @aaf8369) yalnız yönetici sayfalarında gerçekten eşleşen
+ * kurallar. Liste Chromium CSS kural kullanım ölçümüyle (CDP CSS.takeCoverageDelta; 11 sayfa, 1440 ve
+ * 390 px, modal, mobil menü, hover/odak) çıkarıldı; değerler birebir kopyadır. Tailwind sınıflarına
+ * (bg-primary, bg-[#…]) bağlı seçiciler panelde eşleşmediği için alınmadı.
+ *
+ * Bu dosya DONMUŞTUR: theme.css değişse de güncellenmez. Panel görünümü değişecekse yonetici.css'te
+ * değiştirin. Yeni değişken gerekirse aşağıdaki :root bloğuna ekleyin (theme.css'e değil).
+ */
+
+/* ---------- Değişkenler (aaf8369 theme.css :root) ---------- */
+:root {
+  color-scheme: light;
+  font-family: "IBM Plex Sans", sans-serif;
+
+  /* yonetici.css'in kullandığı 28 değişken (80 Etap 4 analizi §5) */
+  --primary: #51409D;
+  --theme-border: #e9e4f5;
+  --text-secondary: #4B5563;
+  --text-muted: #5B5F6B;
+  --text-primary: #1E1E1C;
+  --surface-low: #EDE9FE;
+  --theme-ink: #1e1b4b;
+  --theme-border-focus: #7e3af2;
+  --theme-border-subtle: #ddd6fe;
+  --theme-surface: #ffffff;
+  --theme-card-subtle: #f5f2ff;
+  --theme-violet: #6347d1;
+  --theme-violet-deep: #4338ca;
+  --theme-status-success: #047857;
+  --theme-status-success-bg: #ecfdf5;
+  --theme-status-success-border: #a7f3d0;
+  --theme-status-warning: #92400e;
+  --theme-status-warning-bg: #fffbeb;
+  --theme-status-warning-border: #fde68a;
+  --theme-shadow-elevation-hover: 0 12px 32px -4px rgba(30, 27, 75, 0.10), 0 4px 12px -2px rgba(30, 27, 75, 0.04);
+  --accent-indigo: #3730a3;
+  --accent-indigo-bg: #eef2ff;
+  --panel-item-color: rgba(255, 255, 255, .92);
+  --panel-item-hover-bg: rgba(255, 255, 255, .12);
+  --panel-item-active-bg: rgba(255, 255, 255, .18);
+  --panel-active-line: #fff;
+  --panel-border: rgba(255, 255, 255, .24);
+  --panel-user-bg: rgba(255, 255, 255, .1);
+  --panel-user-border: rgba(255, 255, 255, .28);
+
+  /* Aşağıdaki taban kuralların kullandıkları */
+  --sidebar-width: 260px;
+  --theme-canvas: #faf8ff;
+  --theme-muted-soft: #9ca3af;
+  --theme-orange: #9333ea;
+  --theme-shadow-elevation-sm: 0 2px 8px -2px rgba(30, 27, 75, 0.04), 0 1px 4px -1px rgba(30, 27, 75, 0.02);
+  --button-primary-color: #fff;
+  --panel-bg: linear-gradient(155deg, #352b78 0%, #433582 55%, #51409d 100%);
+  --header-bg: var(--panel-bg);
+  --header-text: #fff;
+  --header-border: rgba(255, 255, 255, .25);
+}
+
+/* ---------- Taban (aaf8369 theme.css'ten birebir) ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  max-width: 100%;
+}
+
+body { overflow-x: clip; }
+html { overflow-x: clip; }
+
+html body {
+  color: var(--theme-ink);
+  font-family: "IBM Plex Sans", sans-serif;
+}
+
+body[class] {
+  background-color: var(--theme-canvas) !important;
+  background-image: linear-gradient(145deg, rgba(221, 214, 254, 0.18), transparent 42%) !important;
+  color: var(--theme-ink);
+  font-family: "IBM Plex Sans", sans-serif;
+}
+
+body :is(h1, h2, h3, h4, h5, h6) {
+  color: var(--theme-ink);
+  font-family: "IBM Plex Sans", sans-serif;
+  letter-spacing: -0.025em;
+}
+
+body a:not([role="button"]) {
+  color: var(--theme-violet-deep);
+}
+
+/* Düğmeler */
+body button:not([aria-label]):not([class*="w-8"]):not([class*="w-9"]),
+body a[role="button"] {
+  border-radius: 999px;
+  font-family: "IBM Plex Sans", sans-serif;
+  font-weight: 600;
+  transition: background-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+body button[type="submit"],
+body a[role="button"] {
+  background: linear-gradient(110deg, var(--theme-violet), var(--theme-orange));
+  border-color: transparent;
+  border-radius: 999px !important;
+  box-shadow: var(--theme-shadow-elevation-sm);
+  color: var(--button-primary-color);
+}
+
+body button[type="submit"]:hover,
+body a[role="button"]:hover {
+  box-shadow: var(--theme-shadow-elevation-hover);
+  transform: translateY(-1px);
+}
+
+body :is(button, a[role="button"], [role="button"]) {
+  letter-spacing: 0.015em;
+}
+
+@media (max-width: 640px) {
+  body button[type="submit"],
+  body a[role="button"] {
+    max-width: 100%;
+  }
+}
+
+body button[type="submit"],
+body a[role="button"] {
+  background: #7e3af2;
+  border-color: #7e3af2;
+  border-radius: 9999px !important;
+  color: #fff;
+  transition: background-color 160ms ease, border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+body button[type="submit"]:hover,
+body a[role="button"]:hover {
+  background: #6d28d9;
+  border-color: #6d28d9;
+}
+
+body button[type="submit"]:focus-visible,
+body a[role="button"]:focus-visible {
+  outline: 3px solid rgba(126, 58, 242, 0.28);
+  outline-offset: 2px;
+}
+
+/* Form alanları */
+body input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]):not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="image"]):not([type="range"]):not([type="color"]),
+body select,
+body textarea {
+  background-color: var(--theme-card-subtle) !important;
+  border-color: var(--theme-border-subtle);
+  border-radius: 0.75rem;
+  box-shadow: inset 0 1px 2px rgba(30, 27, 75, 0.035) !important;
+  color: var(--theme-ink);
+  font-family: "IBM Plex Sans", sans-serif;
+  transition: background-color 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
+}
+
+body input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]):not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="image"]):not([type="range"]):not([type="color"])::placeholder,
+body textarea::placeholder {
+  color: var(--theme-muted-soft);
+  opacity: 1;
+}
+
+body[class] input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]):not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="image"]):not([type="range"]):not([type="color"]):focus,
+body select:focus,
+body textarea:focus {
+  background-color: #fff !important;
+  border-color: var(--theme-border-focus) !important;
+  box-shadow: 0 0 0 4px rgba(126, 58, 242, 0.15) !important;
+  outline: 0;
+}
+
+/* Yan menü ve giriş başlığı (yonetici.css sınıf kuralları çoğunu geçersiz kılar) */
+body :is(aside, [data-sidebar], nav[aria-label="Ana menü"]) {
+  background: var(--panel-bg);
+}
+
+body :is(aside, [data-sidebar], nav[aria-label="Ana menü"]) a {
+  color: var(--panel-item-color);
+}
+
+body :is(header, [role="banner"]) {
+  background: var(--header-bg) !important;
+  border-color: var(--header-border) !important;
+  color: var(--header-text) !important;
+}
+
+body :is(header, [role="banner"]) :is(a, button, span, p) {
+  color: inherit;
+}

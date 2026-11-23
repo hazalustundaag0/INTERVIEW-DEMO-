@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <script>
     tailwind.config = {
@@ -36,11 +36,11 @@
       }
     };
   </script>
-  <link rel="stylesheet" href="../theme.css">
-  <link rel="stylesheet" href="pattern.css">
-  <script src="js/advisors.js"></script>
-  <script src="gate.js"></script>
-<link rel="stylesheet" href="avatar.css"><link rel="stylesheet" href="header.css"></head>
+  <link rel="stylesheet" href="/theme.css">
+  <link rel="stylesheet" href="/demo/pattern.css">
+  <script src="/demo/config.js"></script><script src="/demo/routes.js"></script><script src="/demo/api-client.js"></script><script src="/demo/js/advisors.js"></script><script src="/demo/secim.js"></script><script src="/demo/gate.js"></script>
+  
+<link rel="stylesheet" href="/demo/avatar.css"><link rel="stylesheet" href="/demo/header.css"><link rel="stylesheet" href="/demo/odeme-ok-tema.css"></head>
 <body class="payment-success-page font-sans min-h-screen flex flex-col antialiased">
   <div id="site-header" data-variant="compact" data-menu="false"></div>
   <main class="payment-success-main flex-1 w-full">
@@ -94,18 +94,18 @@
           <p class="payment-success-thanks" id="payment-success-thanks" role="status" aria-live="polite">Teşekkürler</p>
           <h1 class="payment-success-title" id="payment-success-title">Ödemen alındı</h1>
           <p class="payment-success-intro">
-            Satış hikâyesi çalışman <strong data-receipt-advisor-name>Selin Arslan</strong> ile başlıyor. Randevu alabilmen için kısa bir profil formunu doldurman gerekiyor, 2 dakika sürer.
+            Satış hikâyesi çalışman <strong data-receipt-advisor-name></strong> ile başlıyor. Randevu alabilmen için kısa bir profil formunu doldurman gerekiyor, 2 dakika sürer.
           </p>
         </div>
 
         <div class="payment-success-advisor" aria-label="Danışman bilgisi">
-          <span class="payment-success-advisor-avatar" data-advisor-avatar aria-hidden="true" data-demo-avatar data-avatar-name="Selin Arslan">SA</span>
+          <span class="payment-success-advisor-avatar" data-advisor-avatar aria-hidden="true"></span>
           <div class="payment-success-advisor-copy">
-            <a class="payment-success-advisor-link" data-receipt-advisor-link href="danisman.html?id=selin-arslan"><strong data-receipt-advisor-name>Selin Arslan</strong></a>
-            <span data-receipt-advisor-title>Kıdemli Satış Direktörü &amp; Mentor</span>
+            <a class="payment-success-advisor-link" data-receipt-advisor-link data-nav-skip href="/danismanlar"><strong data-receipt-advisor-name></strong></a>
+            <span data-receipt-advisor-title></span>
           </div>
-          <span class="payment-success-duration" data-receipt-duration>50 dk</span>
-          <span class="payment-success-session-count" data-receipt-sessions>2 seans</span>
+          <span class="payment-success-duration" data-receipt-duration></span>
+          <span class="payment-success-session-count" data-receipt-sessions></span>
         </div>
 
         <div class="payment-success-actions">
@@ -113,8 +113,8 @@
             <span class="material-symbols-outlined" aria-hidden="true">info</span>
             <span>Profil, KVKK onayı ve CV'n tamamlanmadan seans randevusu alamazsın.</span>
           </p>
-          <a class="payment-success-primary" href="profil.html">Profilimi doldur <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span></a>
-          <a class="payment-success-secondary" href="ana.html">Daha sonra, ana ekrana dön</a>
+          <a class="payment-success-primary" href="/profil">Profilimi doldur <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span></a>
+          <a class="payment-success-secondary" href="/panel">Daha sonra, ana ekrana dön</a>
         </div>
       </section>
 
@@ -132,7 +132,7 @@
         <dl class="payment-success-receipt-grid">
           <div>
             <dt>Sipariş no</dt>
-            <dd data-receipt-order-number>#IV-2027-0001</dd>
+            <dd data-receipt-order-number>—</dd>
           </div>
           <div>
             <dt>Tarih</dt>
@@ -140,29 +140,29 @@
           </div>
           <div>
             <dt>Hizmet</dt>
-            <dd data-receipt-service>Satış hikâyesi oluşturma</dd>
+            <dd data-receipt-service>—</dd>
           </div>
           <div>
             <dt>Danışman</dt>
-            <dd data-receipt-advisor>Selin Arslan</dd>
+            <dd data-receipt-advisor>—</dd>
           </div>
           <div class="payment-success-receipt-total">
             <dt>Toplam tutar</dt>
-            <dd data-receipt-total>1.500 ₺ <span>KDV dahil</span></dd>
+            <dd data-receipt-total>— <span>KDV dahil</span></dd>
           </div>
         </dl>
-        <p class="payment-success-email-note">
+        <p class="payment-success-email-note" hidden style="display:none">
           <span class="material-symbols-outlined" aria-hidden="true">mark_email_read</span>
           E-postana gönderildi
         </p>
       </section>
 
-      <p class="payment-success-reference">Ödeme referansı: IY-48213907</p>
+      <p class="payment-success-reference" data-receipt-reference hidden></p>
     </div>
   </main>
-  <script src="nav.js"></script>
-  <script src="ortak.js"></script>
-  <script src="header.js"></script>
-  <script src="odeme-ok-demo.js"></script>
-<script src="avatar.js"></script></body>
+  <script src="/demo/nav.js"></script>
+  <script src="/demo/ortak.js"></script>
+  <script src="/demo/header.js"></script>
+  <script src="/demo/odeme-ok-demo.js"></script>
+<script src="/demo/avatar.js"></script></body>
 </html>

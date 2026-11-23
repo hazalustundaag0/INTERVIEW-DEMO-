@@ -1,0 +1,203 @@
+{
+  "locale": "tr",
+  "source": "frontend/demo/index.html + landing-page.js (Etap 12, 81 — K119/E6-13 seed)",
+  "content": {
+    "faq": {
+      "title": "Sıkça sorulan sorular",
+      "lead": "Satış hikâyeni kendi cümlelerinle yazarsın; yapay zekâ eksikleri gösterir, danışmanın hikâyeni okuyup seninle prova eder. Süreç, seanslar ve verilerin hakkında merak ettiklerin burada.",
+      "items": [
+        {
+          "order": 1,
+          "question": "Interview Demo nedir?",
+          "answer": "Üniversiteliler ve yeni mezunlar, profesyoneller ve yönetici adaylarının iş görüşmelerine hazırlandığı bir kariyer danışmanlığı platformudur. Kendi deneyiminden bir satış hikâyesi çıkarır, bunu deneyimli bir danışmanla birlikte geliştirir ve görüşmede rahatça anlatmayı çalışırsın."
+        },
+        {
+          "order": 2,
+          "question": "Satış hikâyesi süreci nasıl işliyor?",
+          "answer": "Hizmeti ve danışmanını seçip ödemeyi tamamlarsın. İlk 60 dakikalık seansta kariyer hedefini konuşursunuz. Ardından hikâyeni kendi cümlelerinle yazarsın; yapay zekâ eksik kalan yerleri öneri olarak gösterir. Hazır olduğunda hikâyeni danışmanına gönderir, ikinci 60 dakikalık seansta birlikte son hâline getirip prova edersiniz."
+        },
+        {
+          "order": 3,
+          "question": "Yapay zekâ hikâyemi benim yerime mi yazıyor?",
+          "answer": "Hayır. Hikâyeyi sen yazarsın ya da konuşarak anlatırsın. Yapay zekâ metnini okur; eksik eylemleri, belirsiz ifadeleri ve CV’nle uyuşmayan yerleri gösterir. Senin vermediğin rakam, unvan, şirket adı ya da tarihi eklemez; hangi öneriyi alacağına sen karar verirsin."
+        },
+        {
+          "order": 4,
+          "question": "Hikâyemi konuşarak anlatabilir miyim?",
+          "answer": "Evet. Yazmak yerine “Konuşarak yaz” ile anlatabilirsin. Hikâyen hazır olduğunda prova bölümünde sesli anlatır; süre, duraklar, vurgular ve atladığın cümleler hakkında kısa öneriler alırsın. Ses kaydı saklanmaz."
+        },
+        {
+          "order": 5,
+          "question": "CV yüklemem zorunlu mu?",
+          "answer": "Hayır, CV isteğe bağlıdır. Yüklersen hikâyende CV’nle uyuşmayan yerleri gösteririz. CV’ndeki bir bilgi ancak sen seçersen hikâyene girer."
+        },
+        {
+          "order": 6,
+          "question": "Danışmanımı nasıl seçerim?",
+          "answer": "Danışman profillerini giriş yapmadan inceleyebilirsin. Sektöre göre filtreleyip unvanlarına ve uzmanlık alanlarına bakarak sana uygun danışmanı seçersin."
+        },
+        {
+          "order": 7,
+          "question": "Seanslar nasıl yapılıyor?",
+          "answer": "Her seans 60 dakikadır ve görüntülü görüşmeyle yapılır; danışmanın görüşme bağlantısını seans kartına ekler, “Görüşmeye katıl” düğmesi seans saatinden 15 dakika önce açılır. Saatler kendi saat diliminde gösterilir; seans dilini Türkçe ya da İngilizce seçebilirsin. Randevu almadan önce profilini tamamlaman ve KVKK onayını vermen gerekir. Seanslar kaydedilmez."
+        },
+        {
+          "order": 8,
+          "question": "Danışmanım hikâyemi ne zaman görür?",
+          "answer": "Yalnızca senin gönderip onayladığın sürümü görür; üzerinde çalıştığın taslakları göremez. CV’ne ve ham yazılarına da senin iznin olmadan erişemez. Danışmanın gerekirse sana ödev verebilir ya da belge isteyebilir."
+        },
+        {
+          "order": 9,
+          "question": "Süreç sonunda elime ne geçiyor?",
+          "answer": "Satış hikâyen, networking için kısa özetin, mülakat sorularına cevap taslakların, CV özet paragrafın, hedef role uyarlanmış sürüm ve etki analizi. Çıktıları Türkçe ya da İngilizce hazırlayıp PDF olarak indirebilirsin."
+        },
+        {
+          "order": 10,
+          "question": "Ödeme nasıl yapılıyor?",
+          "answer": "Ödeme, satın alma sırasında güvenli bir ödeme sağlayıcısı üzerinden alınır. Ödemeden önce hizmeti, danışmanını, seans sayısını ve tutarı görürsün. Kart bilgilerin Interview Demo tarafından alınmaz ve saklanmaz."
+        },
+        {
+          "order": 11,
+          "question": "Kişisel verilerim nasıl korunuyor?",
+          "answer": "CV’n, yazdıkların ve hikâyen kişisel veri olarak işlenir. KVKK aydınlatma metni ve açık rıza onayın kaydedilir; verilere yalnızca yetkili kişiler, verdiğin izin kapsamında erişebilir."
+        }
+      ]
+    },
+    "audiences": {
+      "eyebrow": "Kimler için?",
+      "title": "Hikâyen, bulunduğun yere göre şekillenir.",
+      "note": "Öneriler ve örnekler seçtiğin hedef kitleye göre uyarlanır. Hikâyeni Türkçe ya da İngilizce hazırlayabilirsin.",
+      "items": [
+        {
+          "order": 1,
+          "title": "Üniversiteliler ve yeni mezunlar",
+          "text": "Henüz uzun bir iş geçmişin yoksa sorun değil. Eğitiminden, stajlarından ve projelerinden yola çıkarsın; olmayan bir deneyim hikâyene eklenmez.",
+          "tags": [
+            "Eğitim",
+            "Staj",
+            "Proje"
+          ]
+        },
+        {
+          "order": 2,
+          "title": "Profesyoneller",
+          "text": "Deneyimini hedeflediğin role bağlayan bir anlatıya dönüştürürsün; ister yeni bir iş, ister terfi, ister kariyer değişimi için.",
+          "tags": [
+            "Deneyim",
+            "Hedef rol",
+            "Kariyer geçişi"
+          ]
+        },
+        {
+          "order": 3,
+          "title": "Yönetici adayları",
+          "text": "Yönetim kapsamını ve kararlarının etkisini net cümlelerle anlatırsın. Unvan tek başına yetmez; her başarı senin verdiğin bilgiye dayanır.",
+          "tags": [
+            "Yönetim kapsamı",
+            "Karar etkisi",
+            "Hedef rol"
+          ]
+        }
+      ]
+    },
+    "howto": {
+      "process": {
+        "eyebrow": "Adım Adım Süreç",
+        "title": "Nasıl çalışır?",
+        "lead": "İki danışman seansı, arada senin çalışman.",
+        "steps": [
+          {
+            "order": 1,
+            "label": "Önce",
+            "text": "Hizmeti ve danışmanını seç. Profilini doldurup KVKK onayını verdikten sonra ilk randevunu al."
+          },
+          {
+            "order": 2,
+            "label": "1. seans · 60 dk",
+            "text": "Danışmanınla kariyer hedefini, geçiş noktalarını ve motivasyonlarını konuşursun. Seansın sonunda hikâye teman ve danışman notun hazır olur."
+          },
+          {
+            "order": 3,
+            "label": "Arada",
+            "text": "Hikâyeni kendi cümlelerinle yaz ya da konuşarak anlat; yapay zekâ eksikleri öneri olarak göstersin. Hazır olduğunda danışmanına gönder."
+          },
+          {
+            "order": 4,
+            "label": "2. seans · 60 dk",
+            "text": "Hikâyeni danışmanınla birlikte kurgular, canlı prova yapar ve geri bildirim alırsın."
+          },
+          {
+            "order": 5,
+            "label": "Sonra",
+            "text": "Satış hikâyen, kısa özetin, mülakat cevapların ve CV özetin Türkçe ya da İngilizce PDF olarak seninle."
+          }
+        ]
+      },
+      "story_tool": {
+        "title": "Satış hikâyeni nasıl oluşturursun?",
+        "steps": [
+          {
+            "order": 1,
+            "title": "Hikâyeni yaz ya da konuşarak anlat",
+            "text": "Sana “Kendinden bahseder misin?” diye sorulmuş gibi düşün ve nasıl anlatıyorsan öyle yaz. İstersen “Konuşarak yaz” ile anlat; söylediklerin yazıya dökülür, ses kaydı saklanmaz. Nereden başlayacağını bilmiyorsan yol gösteren sorular seni bekliyor."
+          },
+          {
+            "order": 2,
+            "title": "CV’ni ekle (isteğe bağlı)",
+            "text": "CV’ni PDF ya da Word olarak eklersen hikâyen her okumada CV’nle karşılaştırılır ve uyuşmayan yerler gösterilir. CV’ndeki rakam, proje ve sertifikalar sana listelenir; hangisinin hikâyene gireceğine sen karar verirsin."
+          },
+          {
+            "order": 3,
+            "title": "Yapay zekâ önerilerini incele",
+            "text": "Yapay zekâ metnini okur; eksik eylemleri, belirsiz ifadeleri ve CV’nle uyuşmayan yerleri kart kart gösterir. Her öneriyi kendi cümlenle ekler, örnekten başlar ya da geçersin. Senin vermediğin rakam, unvan, şirket adı ya da tarih metne eklenmez."
+          },
+          {
+            "order": 4,
+            "title": "Hikâyeni kur ve düzelt",
+            "text": "Önerileri tamamladığında yazdıklarının tamamı paragraflara kurulur. Her cümleye tıklayıp düzeltebilirsin; öneriden gelen cümleler işaretlidir ve her değişiklik yeni sürüm olarak saklanır. Hedef: kendi sesinle, 150–250 kelimelik bir anlatım."
+          },
+          {
+            "order": 5,
+            "title": "Danışmanına gönder",
+            "text": "Hikâyen hazır olduğunda onayladığın sürümü danışmanına gönderirsin. Danışmanın ikinci seanstan önce okur, not bırakır ve gerekirse ödev ya da belge ister. Üzerinde çalıştığın taslakları göremez; yalnızca gönderdiğin sürümü görür."
+          },
+          {
+            "order": 6,
+            "title": "Prova et, çıktılarını al",
+            "text": "Prova metninde vurgulanacak yerler ve duraklar işaretlidir. Hikâyeni sesli anlatır; süre, tempo, vurgu ve atladığın cümleler hakkında kısa öneriler alırsın. Ardından kısa özet, mülakat cevap taslakları, CV özet paragrafı, rol sürümü ve etki analizi Türkçe ya da İngilizce PDF olarak seninle."
+          }
+        ]
+      }
+    },
+    "roadmap": {
+      "title": "Yakında",
+      "items": [
+        {
+          "order": 1,
+          "title": "CV / ön yazı",
+          "description": null
+        },
+        {
+          "order": 2,
+          "title": "Demo iş görüşmesi",
+          "description": null
+        },
+        {
+          "order": 3,
+          "title": "Networking",
+          "description": null
+        },
+        {
+          "order": 4,
+          "title": "Koçluk",
+          "description": null
+        },
+        {
+          "order": 5,
+          "title": "Test geri bildirimi",
+          "description": null
+        }
+      ]
+    }
+  }
+}

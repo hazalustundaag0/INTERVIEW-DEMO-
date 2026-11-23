@@ -38,8 +38,8 @@
       return;
     }
 
-    const page = location.pathname.split('/').pop() || 'index.html';
-    const isIndex = page === 'index.html';
+    const page = window.Routes.page();
+    const isIndex = page === '/';
     const compact = config.variant === 'compact';
     const menuEnabled = config.menu !== false;
     const returnTarget = window.safeReturnPath?.(new URLSearchParams(location.search).get('return'));
@@ -47,17 +47,19 @@
     document.body.classList.add('has-site-header');
     const header = document.createElement('header');
     header.className = compact ? 'site-header site-header--compact' : 'site-header';
+    header.dataset.sessionRole = session.role || '';
+    lastConfig = Object.assign({}, config, { backLabel: undefined, backHref: undefined });
     header.setAttribute('aria-label', 'Site üst menüsü');
 
     const inner = document.createElement('div');
     inner.className = 'site-header-inner';
-    const brand = link('Interview Demo', 'index.html', 'site-header-brand');
+    const brand = link('Interview Demo', '/', 'site-header-brand');
     brand.setAttribute('aria-label', 'Ana sayfaya dön');
     inner.appendChild(brand);
 
     const toggle = document.createElement('button');
     toggle.className = 'site-header-toggle';
-    toggle.hidden = !menuEnabled;
+    toggle.hidden = true;   // görünürlüğü aşağıda setMenuOpen belirler (yalnız mobil)
     toggle.type = 'button';
     toggle.setAttribute('aria-label', 'Menüyü aç');
     toggle.setAttribute('aria-expanded', 'false');
@@ -77,14 +79,15 @@
       const navItems = [
         ['Nasıl çalışır', 'nasil-calisir'],
         ['Danışmanlar', 'danismanlar'],
-        ['Hizmetler', 'hizmetler']
+        ['Hizmetler', 'hizmetler'],
+        ['SSS', 'sss']
       ];
       navItems.forEach(([label, target]) => {
         const href = target === 'danismanlar'
-          ? 'danismanlar.html'
-          : isIndex ? '#' + target : 'index.html#' + target;
+          ? '/danismanlar'
+          : isIndex ? '#' + target : '/#' + target;
         const item = link(label, href, 'site-header-nav-link');
-        if ((target === 'danismanlar' && (page === 'danismanlar.html' || page === 'danisman.html')) ||
+        if ((target === 'danismanlar' && (page === '/danismanlar' || page === '/danisman')) ||
             (isIndex && location.hash === '#' + target)) {
           item.setAttribute('aria-current', 'page');
         }
@@ -113,32 +116,29 @@
     const actions = document.createElement('div');
     actions.className = 'site-header-actions';
     if (!session.role) {
-      if (page === 'giris.html') {
-        const href = returnTarget ? 'kayit.html?return=' + encodeURIComponent(returnTarget) : 'kayit.html';
+      if (page === '/giris') {
+        const href = returnTarget ? '/kayit?return=' + encodeURIComponent(returnTarget) : '/kayit';
         actions.appendChild(link('Hesap oluştur', href, 'site-header-button site-header-button--primary btn-header-primary'));
-      } else if (page === 'kayit.html') {
-        const href = returnTarget ? 'giris.html?return=' + encodeURIComponent(returnTarget) : 'giris.html';
+      } else if (page === '/kayit') {
+        const href = returnTarget ? '/giris?return=' + encodeURIComponent(returnTarget) : '/giris';
         actions.appendChild(link('Giriş yap', href, 'site-header-button site-header-button--secondary btn-header-secondary'));
       } else {
         actions.append(
-          link('Giriş yap', 'giris.html', 'site-header-button site-header-button--secondary btn-header-secondary'),
-          link('Kayıt ol', 'kayit.html', 'site-header-button site-header-button--primary btn-header-primary')
+          link('Giriş yap', '/giris', 'site-header-button site-header-button--secondary btn-header-secondary'),
+          link('Kayıt ol', '/kayit', 'site-header-button site-header-button--primary btn-header-primary')
         );
       }
     } else {
       const isAdvisor = session.role === 'danisman';
-      const homeHref = isAdvisor ? 'guru-danisanlar.html' : 'ana.html';
-      actions.appendChild(link(
-        isAdvisor ? 'Panele git' : 'Ana ekrana git',
-        homeHref,
-        'site-header-button site-header-button--primary btn-header-primary'
-      ));
+      const homeHref = isAdvisor ? '/guru/danisanlar' : '/panel';
+      // "Ana ekrana git / Panele git" düğmesi kaldırıldı: aynı bağlantı profil menüsünde ("Panelim").
 
       const user = document.createElement('div');
       user.className = 'site-header-user';
-      const initials = String(session.name || session.ad || (isAdvisor ? 'Selin Arslan' : 'Elif Yılmaz'))
-        .split(/\s+/).slice(0, 2).map(part => part.charAt(0).toLocaleUpperCase('tr-TR')).join('');
-      const name = String(session.name || session.ad || (isAdvisor ? 'Selin Arslan' : 'Elif Yılmaz'));
+      // İsim /auth/me önbelleğinden (gate.js getSession); sabit demo isimleri kaldırıldı (GAP-D06).
+      const name = String(session.name || session.ad || '');
+      const initials = name.split(/\s+/).filter(Boolean).slice(0, 2)
+        .map(part => part.charAt(0).toLocaleUpperCase('tr-TR')).join('');
       const trigger = document.createElement('button');
       trigger.className = 'site-header-user-trigger';
       trigger.type = 'button';
@@ -163,11 +163,11 @@
       menu.hidden = true;
       const panelLink = link('Panelim', homeHref, '');
       panelLink.setAttribute('role', 'menuitem');
-      const sessionsLink = link('Seanslarım', isAdvisor ? 'guru-seanslar.html' : 'seanslar.html', '');
+      const sessionsLink = link('Seanslarım', isAdvisor ? '/guru/seanslar' : '/seanslar', '');
       sessionsLink.setAttribute('role', 'menuitem');
-      const profileLink = link('Profilim', isAdvisor ? 'guru-profil.html' : 'profil.html', '');
+      const profileLink = link('Profilim', isAdvisor ? '/guru/profil' : '/profil', '');
       profileLink.setAttribute('role', 'menuitem');
-      const logoutLink = link('Çıkış yap', 'index.html', '');
+      const logoutLink = link('Çıkış yap', '/', '');
       logoutLink.setAttribute('role', 'menuitem');
       logoutLink.addEventListener('click', event => {
         event.preventDefault();
@@ -239,7 +239,9 @@
           console.error('Geri bağlantısı için kayıt/giriş içerik alanı bulunamadı.');
         }
       }
-      return;
+      // QA-025: menüsüz başlıkta da (ör. odeme-ok) oturum eylemleri ("Ana ekrana git", kullanıcı menüsü) varsa
+      // mobilde ☰ + kapalı panel kullanılır; aksi hâlde açık panel yapışkan başlığın altında içeriği örtüyordu.
+      if (!actions.childElementCount) return;
     }
 
     const mobile = window.matchMedia('(max-width: 767px)');
@@ -276,7 +278,7 @@
     });
     mobile.addEventListener('change', () => setMenuOpen(false, false));
 
-    if (config.backLabel && config.backHref) {
+    if (menuEnabled && config.backLabel && config.backHref) {
       const back = link(config.backLabel, config.backHref, 'site-header-back');
       back.setAttribute('aria-label', config.backLabel.replace(/^←\s*/, ''));
       const authCardStack = document.getElementById('auth-card-stack');
@@ -296,6 +298,29 @@
 
   window.renderSiteHeader = renderSiteHeader;
 
+  // /auth/me doğrulaması bittiğinde: rol değiştiyse (ör. geçersiz token temizlendi) üst barı
+  // yeniden kur; aynı rolse yalnız adı/baş harfleri tazele.
+  let lastConfig = null;
+  document.addEventListener('session:ready', event => {
+    const header = document.querySelector('header.site-header');
+    if (!header || !lastConfig) return;
+    const session = event.detail || getCurrentSession();
+    if ((session.role || '') !== header.dataset.sessionRole) {
+      const host = document.createElement('div');
+      host.id = 'site-header';
+      header.replaceWith(host);
+      renderSiteHeader(lastConfig);
+      return;
+    }
+    const name = String(session.name || '');
+    if (!name) return;
+    const nameNode = header.querySelector('.site-header-user-name');
+    const avatar = header.querySelector('.site-header-avatar');
+    if (nameNode) nameNode.textContent = name;
+    if (avatar) avatar.textContent = name.split(/\s+/).filter(Boolean).slice(0, 2)
+      .map(part => part.charAt(0).toLocaleUpperCase('tr-TR')).join('');
+  });
+
   function initializeSiteHeader() {
     let host = document.getElementById('site-header');
     if (!host) {
@@ -307,26 +332,26 @@
       host = document.createElement('div');
       host.id = 'site-header';
       previousHeader.replaceWith(host);
-      const page = location.pathname.split('/').pop();
-      if (page === 'hizmet.html' || page === 'siparis.html') host.dataset.variant = 'compact';
-      if (['giris.html', 'kayit.html', 'eposta.html'].includes(page)) host.dataset.variant = 'compact';
-      if (page === 'danismanlar.html') {
+      const page = window.Routes.page();
+      if (page === '/hizmet' || page === '/siparis') host.dataset.variant = 'compact';
+      if (['/giris', '/kayit', '/kayit/eposta'].includes(page)) host.dataset.variant = 'compact';
+      if (page === '/danismanlar') {
         host.dataset.backLabel = '← Geri';
-        host.dataset.backHref = 'index.html';
-      } else if (page === 'danisman.html') {
+        host.dataset.backHref = '/';
+      } else if (page === '/danisman') {
         host.dataset.backLabel = '← Danışmanlar';
-        host.dataset.backHref = 'danismanlar.html';
+        host.dataset.backHref = '/danismanlar';
       }
       document.body.classList.add('has-site-header');
     }
     renderSiteHeader({
       variant: host.dataset.variant || 'full',
       menu: host.dataset.menu !== 'false',
-      backLabel: host.dataset.backLabel || (['giris.html', 'kayit.html', 'eposta.html'].includes(location.pathname.split('/').pop())
+      backLabel: host.dataset.backLabel || (['/giris', '/kayit', '/kayit/eposta'].includes(window.Routes.page())
         ? '← Ana sayfaya dön'
         : undefined),
-      backHref: host.dataset.backHref || (['giris.html', 'kayit.html', 'eposta.html'].includes(location.pathname.split('/').pop())
-        ? 'index.html'
+      backHref: host.dataset.backHref || (['/giris', '/kayit', '/kayit/eposta'].includes(window.Routes.page())
+        ? '/'
         : undefined)
     });
   }

@@ -117,3 +117,16 @@ body.no-pattern::before {
     display: none;
   }
 }
+
+/* Danışan paneli (sol menülü aday sayfaları): kilim yerine akışkan üçgen alanı (desen-ucgen.svg).
+   Desen sabit durur, yalnız kartların arkasında ve kenar boşluklarında görünür. */
+body.sidebar-role-aday {
+  background-color: #F4F2FC;
+}
+body.sidebar-role-aday:not(.no-pattern)::before {
+  background-image: url('desen-ucgen.svg') !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  background-position: center !important;
+  opacity: 1 !important;
+}

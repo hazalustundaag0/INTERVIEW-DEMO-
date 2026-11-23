@@ -1,0 +1,181 @@
+/* guru-danisan-tema.css — Danışan detay sayfaları: Genel, Hikâye, Notlar, Ödevler
+   (guru-danisan-detay / guru-hikaye / guru-notlar / guru-odevler).
+   Aday tarafındaki Profilim (profil.css) ile aynı dil: desenli zemin, beyaz kartlar, mor vurgu.
+   DOM'a dokunmaz. theme.css'i aşmak için seçiciler :not(#gp-*) ile güçlendirildi. */
+
+body.guru-client-profile {
+  --gp-ink: #0F0A1C;
+  --gp-ink-2: #475569;
+  --gp-accent: #6D3FE0;
+  --gp-deep: #2A1F5C;
+  --gp-rule: rgba(109, 40, 217, .14);
+  --gp-field: #D9D2EE;
+  --gp-soft: #F8F6FE;
+  --gp-tint: #EEECFF;
+}
+
+body.guru-client-profile main section > div:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) { gap: 20px !important; }
+
+/* Geri bağlantısı */
+body.guru-client-profile main section > div > a[href="/guru/danisanlar"]:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) { color: var(--gp-ink-2) !important; font-weight: 500 !important; }
+body.guru-client-profile main section > div > a[href="/guru/danisanlar"]:hover:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) { color: var(--gp-accent) !important; }
+
+/* ─── Üst kart: avatar + ad + eylemler ──────────────────────────────────── */
+body.guru-client-profile main section .client-profile-card:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) {
+  display: flex !important; align-items: center !important; gap: 18px !important;
+  background: #FFFFFF !important; border: 1px solid var(--gp-rule) !important; border-radius: 20px !important;
+  box-shadow: 0 2px 4px rgba(15, 10, 28, .03), 0 18px 40px -18px rgba(109, 40, 217, .18) !important;
+  padding: 24px 28px !important;
+}
+body.guru-client-profile main section .client-profile-avatar:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) {
+  width: 64px !important; height: 64px !important; font-size: 20px !important; flex: none;
+  background: #FFFFFF !important; color: var(--gp-deep) !important;
+  border: 1.5px solid var(--gp-field) !important; box-shadow: 0 0 0 4px rgba(109, 63, 224, .08) !important;
+}
+body.guru-client-profile main section .client-profile-copy h1:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) {
+  font-family: Outfit, ui-sans-serif, system-ui, sans-serif !important;
+  font-size: clamp(1.5rem, 1.2rem + 1vw, 1.85rem) !important; font-weight: 500 !important;
+  letter-spacing: -.01em !important; color: var(--gp-ink) !important; margin: 0 !important;
+}
+body.guru-client-profile main section .client-profile-actions:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) { margin-left: auto !important; display: flex !important; gap: 10px !important; }
+body.guru-client-profile main section .client-profile-action:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) {
+  display: inline-flex !important; align-items: center; height: 44px !important; padding: 0 20px !important;
+  border-radius: 999px !important; border: 1.5px solid var(--gp-field) !important; background: #FFFFFF !important;
+  color: var(--gp-ink) !important; font-family: Outfit, ui-sans-serif, sans-serif !important; font-weight: 500 !important;
+  text-decoration: none !important; box-shadow: none !important;
+}
+body.guru-client-profile main section .client-profile-action:hover:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) { border-color: var(--gp-accent) !important; color: var(--gp-accent) !important; }
+body.guru-client-profile main section .client-profile-action--primary:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) {
+  background: var(--gp-accent) !important; border-color: var(--gp-accent) !important; color: #FFFFFF !important;
+  box-shadow: 0 10px 24px -12px rgba(109, 63, 224, .7) !important;
+}
+body.guru-client-profile main section .client-profile-action--primary:hover:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) { background: var(--gp-deep) !important; border-color: var(--gp-deep) !important; color: #FFFFFF !important; }
+
+/* ─── Sekmeler (CV'm sayfasındaki gibi) ─────────────────────────────────── */
+body.guru-client-profile main section .client-overview-tabs:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) { border-bottom: 1px solid var(--gp-rule) !important; gap: 4px !important; }
+body.guru-client-profile main section .client-overview-tab:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) {
+  background: transparent !important; border: 0 !important; border-bottom: 2px solid transparent !important; border-radius: 0 !important;
+  padding: 10px 14px !important; margin-bottom: -1px !important; color: var(--gp-ink-2) !important; font-weight: 500 !important;
+}
+body.guru-client-profile main section .client-overview-tab[aria-selected="true"]:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) { color: var(--gp-accent) !important; border-bottom-color: var(--gp-accent) !important; font-weight: 600 !important; }
+body.guru-client-profile main section .client-overview-tab:not([aria-selected="true"]):hover:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) { color: var(--gp-ink) !important; }
+body.guru-client-profile main section .client-overview-tab-count:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) { margin-left: 4px; color: inherit !important; opacity: .7; }
+
+/* ─── İçerik kartları ───────────────────────────────────────────────────── */
+body.guru-client-profile main section > div > div.bg-\[\#FFFFFF\]:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) {
+  background: #FFFFFF !important; border: 1px solid var(--gp-rule) !important; border-radius: 20px !important;
+  box-shadow: 0 1px 2px rgba(15, 10, 28, .04) !important; padding: 26px 28px !important; gap: 14px !important;
+}
+body.guru-client-profile main section > div > div.bg-\[\#FFFFFF\] > h2:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) {
+  font-family: Outfit, ui-sans-serif, sans-serif !important; font-weight: 500 !important; font-size: 18px !important;
+  color: var(--gp-ink) !important; border-bottom: 1px solid var(--gp-rule) !important; padding-bottom: 14px !important;
+}
+body.guru-client-profile main section .client-profile-info-grid p.text-muted:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d),
+body.guru-client-profile main section .client-session-overview:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) { color: var(--gp-ink-2) !important; font-size: 14px !important; }
+body.guru-client-profile main section .client-profile-info-grid:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) { color: var(--gp-ink) !important; }
+
+/* Seans satırları */
+body.guru-client-profile main section .client-session-row:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) { border-color: var(--gp-rule) !important; padding: 16px 0 !important; align-items: center !important; }
+body.guru-client-profile main section .client-session-row .material-symbols-outlined:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) { color: var(--gp-accent) !important; }
+body.guru-client-profile main section .client-session-row .material-symbols-outlined.text-outline:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) { color: #A79FC4 !important; }
+body.guru-client-profile main section .client-session-description:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) { color: var(--gp-ink) !important; font-size: 15px !important; font-weight: 500 !important; }
+body.guru-client-profile main section .client-session-status:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) {
+  display: inline-flex; border: 0 !important; border-radius: 999px !important; padding: 3px 10px !important;
+  background: var(--gp-tint) !important; color: var(--gp-accent) !important; font-size: 12px !important; font-weight: 600 !important;
+}
+body.guru-client-profile main section .client-session-status--pending:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) { background: #F1EEF8 !important; color: var(--gp-ink-2) !important; margin-left: auto; }
+body.guru-client-profile main section .client-session-complete:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d), body.guru-client-profile main section .client-session-plan:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) {
+  display: inline-flex !important; align-items: center; height: 42px !important; padding: 0 18px !important;
+  border-radius: 999px !important; font-family: Outfit, ui-sans-serif, sans-serif !important; font-weight: 500 !important;
+  text-decoration: none !important; box-shadow: none !important; white-space: nowrap;
+}
+body.guru-client-profile main section .client-session-complete:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) { background: var(--gp-accent) !important; border: 0 !important; color: #FFFFFF !important; }
+body.guru-client-profile main section .client-session-complete:not(:disabled):hover:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) { background: var(--gp-deep) !important; }
+body.guru-client-profile main section .client-session-complete:disabled:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) { background: #E6E1F4 !important; color: var(--gp-ink-2) !important; }
+body.guru-client-profile main section .client-session-plan:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) { background: #FFFFFF !important; border: 1.5px solid var(--gp-field) !important; color: var(--gp-ink) !important; }
+body.guru-client-profile main section .client-session-plan:hover:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) { border-color: var(--gp-accent) !important; color: var(--gp-accent) !important; }
+
+@media (max-width: 640px) {
+  body.guru-client-profile main section .client-profile-card:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) { flex-wrap: wrap; padding: 20px !important; }
+  body.guru-client-profile main section .client-profile-actions:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) { margin-left: 0 !important; width: 100%; }
+  body.guru-client-profile main section .client-profile-action:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) { flex: 1; justify-content: center; }
+  body.guru-client-profile main section > div > div.bg-\[\#FFFFFF\]:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) { padding: 20px !important; }
+}
+
+/* ─── Sekmeler: tüm detay sayfalarında profil kartının hemen altındaki satır ─ */
+body.guru-client-profile main section .client-profile-card + div:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) { border-bottom: 1px solid var(--gp-rule) !important; gap: 4px !important; margin-bottom: 0 !important; }
+body.guru-client-profile main section .client-profile-card + div > button:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) {
+  background: transparent !important; border: 0 !important; border-bottom: 2px solid transparent !important; border-radius: 0 !important;
+  padding: 10px 14px !important; margin-bottom: -1px !important; color: var(--gp-ink-2) !important; font-weight: 500 !important; font-size: 14px !important;
+}
+body.guru-client-profile main section .client-profile-card + div > button.border-b-2:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d),
+body.guru-client-profile main section .client-profile-card + div > button[aria-selected="true"]:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) { color: var(--gp-accent) !important; border-bottom-color: var(--gp-accent) !important; font-weight: 600 !important; }
+body.guru-client-profile main section .client-profile-card + div > button:hover:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) { color: var(--gp-ink) !important; }
+body.guru-client-profile main section .advisor-story-tab-count:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) { margin-left: 6px; padding: 1px 7px; border-radius: 999px; background: var(--gp-tint) !important; color: var(--gp-accent) !important; font-size: 12px; }
+body.guru-client-profile main section .client-profile-action[aria-current="page"]:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) { outline: 0 !important; }
+
+/* ─── Genel içerik kartları (Notlar / Ödevler) ──────────────────────────── */
+body.guru-client-profile main section div.bg-\[\#FFFFFF\]:not(.client-profile-card):not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) {
+  background: #FFFFFF !important; border: 1px solid var(--gp-rule) !important; border-radius: 20px !important;
+  box-shadow: 0 1px 2px rgba(15, 10, 28, .04) !important; padding: 26px 28px !important;
+}
+body.guru-client-profile main section div.bg-\[\#FFFFFF\] h2:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d), body.guru-client-profile main section > div > div h3:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) {
+  font-family: Outfit, ui-sans-serif, sans-serif !important; font-weight: 500 !important; color: var(--gp-ink) !important;
+}
+body.guru-client-profile main section div.bg-\[\#FFFFFF\] h2:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) { font-size: 20px !important; }
+body.guru-client-profile main section > div > div h3:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) { font-size: 17px !important; }
+
+/* Bilgi / boş durum kutusu */
+body.guru-client-profile main section .guru-state-box:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) {
+  background: var(--gp-soft) !important; border: 1px solid var(--gp-rule) !important; border-radius: 16px !important;
+  padding: 16px 18px !important; color: var(--gp-ink) !important;
+}
+body.guru-client-profile main section .guru-state-box .material-symbols-outlined:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) { color: var(--gp-accent) !important; }
+body.guru-client-profile main section .guru-state-box p:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) { color: var(--gp-ink-2) !important; }
+body.guru-client-profile main section .note-info-box:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) {
+  background: var(--gp-soft) !important; border: 1px solid var(--gp-rule) !important; border-radius: 14px !important;
+  color: var(--gp-ink-2) !important; padding: 12px 14px !important;
+}
+body.guru-client-profile main section .note-info-box .material-symbols-outlined:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) { color: var(--gp-accent) !important; }
+
+/* Form alanları (Profilim ile aynı) */
+body.guru-client-profile main section main label:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d), body.guru-client-profile main section label:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) { color: var(--gp-ink) !important; font-weight: 600 !important; letter-spacing: 0 !important; text-transform: none !important; font-size: 14px !important; }
+body.guru-client-profile main section input[type="text"]:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d), body.guru-client-profile main section input[type="date"]:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d), body.guru-client-profile main section textarea:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d), body.guru-client-profile main section select:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) {
+  background: #FFFFFF !important; border: 1.5px solid var(--gp-field) !important; border-radius: 14px !important;
+  color: var(--gp-ink) !important; box-shadow: none !important; padding: 10px 14px !important;
+}
+body.guru-client-profile main section input:focus:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d), body.guru-client-profile main section textarea:focus:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d), body.guru-client-profile main section select:focus:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) {
+  border-color: var(--gp-accent) !important; box-shadow: 0 0 0 4px rgba(109, 63, 224, .12) !important; outline: none !important;
+}
+body.guru-client-profile main section input::placeholder, body.guru-client-profile main section textarea::placeholder { color: #9A93B3 !important; }
+body.guru-client-profile main section select:disabled:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d), body.guru-client-profile main section textarea:disabled:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) { background: var(--gp-soft) !important; color: var(--gp-ink-2) !important; }
+body.guru-client-profile main section .note-character-count:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) { color: #8A84A3 !important; font-size: 12px !important; }
+
+/* Ödev / Belge seçimi */
+body.guru-client-profile main section #task-type-chips:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) { background: var(--gp-soft) !important; border: 1px solid var(--gp-rule) !important; border-radius: 999px !important; padding: 4px !important; }
+body.guru-client-profile main section #task-type-chips .theme-choice-chip:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) {
+  background: transparent !important; border: 0 !important; border-radius: 999px !important; color: var(--gp-ink-2) !important;
+  padding: 8px 18px !important; font-weight: 500 !important; box-shadow: none !important;
+}
+body.guru-client-profile main section #task-type-chips .theme-choice-chip[aria-pressed="true"]:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) { background: var(--gp-deep) !important; color: #FFFFFF !important; }
+
+/* Butonlar */
+body.guru-client-profile main section [data-action="assignment-create"]:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d), body.guru-client-profile main section .note-share:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) {
+  background: var(--gp-accent) !important; color: #FFFFFF !important; border: 0 !important; border-radius: 999px !important;
+  height: 44px !important; padding: 0 22px !important; font-family: Outfit, ui-sans-serif, sans-serif !important; font-weight: 500 !important;
+  box-shadow: 0 10px 24px -12px rgba(109, 63, 224, .7) !important;
+}
+body.guru-client-profile main section [data-action="assignment-create"]:not(:disabled):hover:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d), body.guru-client-profile main section .note-share:not(:disabled):hover:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) { background: var(--gp-deep) !important; }
+body.guru-client-profile main section [data-action="assignment-create"]:disabled:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d), body.guru-client-profile main section .note-share:disabled:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) { background: #CFC6F0 !important; box-shadow: none !important; }
+body.guru-client-profile main section .note-save-draft:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d), body.guru-client-profile main section .note-cancel-edit:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) {
+  background: #FFFFFF !important; color: var(--gp-ink) !important; border: 1.5px solid var(--gp-field) !important; border-radius: 999px !important;
+  height: 44px !important; padding: 0 20px !important; font-family: Outfit, ui-sans-serif, sans-serif !important; font-weight: 500 !important; box-shadow: none !important;
+}
+body.guru-client-profile main section .note-save-draft:not(:disabled):hover:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) { border-color: var(--gp-accent) !important; color: var(--gp-accent) !important; }
+body.guru-client-profile main section .note-save-draft:disabled:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) { color: #A79FC4 !important; }
+body.guru-client-profile main section div.bg-\[\#FFFFFF\] .border-t:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) { border-color: var(--gp-rule) !important; }
+
+/* Not düzenleyici: öğeler arasında nefes payı */
+body.guru-client-profile main section .note-editor-card:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) { display: flex !important; flex-direction: column; gap: 14px; }
+body.guru-client-profile main section .note-character-count:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) { margin-top: -8px !important; text-align: right; }
+body.guru-client-profile main section .note-save-actions:not(#gp-a):not(#gp-b):not(#gp-c):not(#gp-d) { display: flex; justify-content: flex-end; gap: 10px; }

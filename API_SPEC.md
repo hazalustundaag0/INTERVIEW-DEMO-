@@ -2,9 +2,9 @@
 
 ## 1. Durum ve kaynak ilkesi
 
-Repoda çalışan backend, route/controller, request/response DTO, OpenAPI tanımı veya migration bulunmadı. demo UI'sı HTTP çağrısı yapmıyor; localStorage, sabit mock'lar ve sayfa yönlendirmeleri kullanıyor. Aşağıdaki endpoint ve JSON'lar uygulanmış gerçekler değil, önerilen backend sözleşmesidir.
+Bu dosya eski bir öneri sözleşmesidir; güncel backend route/DTO sözleşmesinin kaynağı değildir. Örneklerdeki fiyat alanları gerçek fiyat kaynağı sayılmaz. Güncel arayüz fiyatı `GET /public/services` yanıtındaki veritabanı fiyat kuralından okur; kural yoksa fiyat belirlenmiş kabul edilmez.
 
-Backend eklendiğinde route/model/DTO/migration gerçekleri bu sözleşmenin kaynağı olur. Backend yokken UI yalnızca ekran alanı ve akış ihtiyacını gösterir. PRD.md, PAGES_MAP.md ve DATA_MODEL.md bu iş kapsamında değiştirilmemiştir. DATA_MODEL.md backend entity bulunmadığını söyler; burada geçen JSON'lar kalıcı model kararı değildir.
+Buradaki endpoint ve JSON'lar eski taslak niteliğindedir; çalışan backend'in gerçek davranışını garanti etmez. `PRD.md`, `PAGES_MAP.md` ve `DATA_MODEL.md` ayrı dokümanlardır.
 
 PAGES_MAP.md endpoint'leri /api/v1 öneki olmadan gösterir. Bu dosyada aynı uçlar /api/v1 ile yazılır. {id} path parametresidir. Sürüm öneki, HTTP/JSON ve JWT örnekleri varsayımdır.
 
@@ -91,21 +91,21 @@ Her uç ayrıca tabloda yazan özel hataları döndürebilir. CV, ham cevap, hik
 
 | Method / URL | Açıklama / auth | Request (path/query/body) | Başarılı response örneği | Özel hatalar |
 |---|---|---|---|---|
-| GET /api/v1/services | Aktif hizmet kataloğu / Public | Query active, limit, cursor | 200 {"data":[{"id":"svc_1","service":"Satış hikâyesi oluşturma","sessions":2,"minutes":50,"price":1500,"currency":"TRY","active":true}],"page":{"limit":20,"nextCursor":null,"hasMore":false}} | INVALID_FILTER |
-| GET /api/v1/gurus | Yayınlı Guru listesi / Public | Query q, sector, sort, order, limit, cursor | 200 {"data":[{"id":"selin-arslan","ad":"Selin Arslan","unvan":"Kıdemli Satış Direktörü & Mentor","deneyimYili":12,"sektorler":["Teknoloji","SaaS"],"uzmanlik":["Satış liderliği"],"ucret":1500,"yayinda":true}],"page":{"limit":20,"nextCursor":null,"hasMore":false}} | INVALID_FILTER, INVALID_SORT |
-| GET /api/v1/gurus/{guruId} | Yayınlı Guru detayı / Public | Path guruId | 200 {"id":"selin-arslan","ad":"Selin Arslan","unvan":"Mentor","deneyimYili":12,"sektorler":["Teknoloji"],"hakkinda":"…","uzmanlik":[],"deneyim":[],"egitim":[],"sertifikalar":[],"yaklasim":[],"kimlerleCalisirim":[],"sss":[],"ucret":1500,"yayinda":true} | GURU_NOT_PUBLISHED |
+| GET /api/v1/services | Aktif hizmet kataloğu / Public | Query active, limit, cursor | 200 {"data":[{"id":"svc_1","service":"Satış hikâyesi oluşturma","sessions":2,"minutes":60,"price":null,"currency":"TRY","active":true}],"page":{"limit":20,"nextCursor":null,"hasMore":false}} | INVALID_FILTER |
+| GET /api/v1/gurus | Yayınlı Guru listesi / Public | Query q, sector, sort, order, limit, cursor | 200 {"data":[{"id":"selin-arslan","ad":"Selin Arslan","unvan":"Kıdemli Satış Direktörü & Mentor","deneyimYili":12,"sektorler":["Teknoloji","SaaS"],"uzmanlik":["Satış liderliği"],"ucret":null,"yayinda":true}],"page":{"limit":20,"nextCursor":null,"hasMore":false}} | INVALID_FILTER, INVALID_SORT |
+| GET /api/v1/gurus/{guruId} | Yayınlı Guru detayı / Public | Path guruId | 200 {"id":"selin-arslan","ad":"Selin Arslan","unvan":"Mentor","deneyimYili":12,"sektorler":["Teknoloji"],"hakkinda":"…","uzmanlik":[],"deneyim":[],"egitim":[],"sertifikalar":[],"yaklasim":[],"kimlerleCalisirim":[],"sss":[],"ucret":null,"yayinda":true} | GURU_NOT_PUBLISHED |
 | GET /api/v1/gurus/{guruId}/availability | Adaya açık slotlar / Public | Path guruId; query from, to, timezone, limit, cursor | 200 {"data":[{"id":"slot_1","tarih":"2027-01-11","bas":"10:00","bit":"10:50","durum":"musait"}],"page":{"limit":100,"nextCursor":null,"hasMore":false}} | INVALID_DATE_RANGE |
-| POST /api/v1/enrollments | Seçimi enrollment'a çevir / Candidate | Body {"service":"Satış hikâyesi oluşturma","guru":"Selin Arslan"}; kimlik alanlarıyla body alternatifi açık karar | 201 {"id":"enr_1","service":"Satış hikâyesi oluşturma","sessions":2,"minutes":50,"price":1500,"guru":"Selin Arslan","status":"DRAFT"} | SERVICE_UNAVAILABLE, GURU_NOT_AVAILABLE |
-| GET /api/v1/me/enrollments | Aday enrollment listesi / Candidate | Query status, limit, cursor | 200 {"data":[{"id":"enr_1","service":"Satış hikâyesi oluşturma","sessions":2,"minutes":50,"price":1500,"guru":"Selin Arslan","status":"ACTIVE"}],"page":{"limit":20,"nextCursor":null,"hasMore":false}} | INVALID_FILTER |
-| GET /api/v1/enrollments/{enrollmentId} | Sipariş/enrollment özeti / sahibi Candidate; atanmış Guru sınırlı görünüm | Path enrollmentId | 200 {"id":"enr_1","service":"Satış hikâyesi oluşturma","sessions":2,"minutes":50,"price":1500,"guru":"Selin Arslan","status":"PENDING_PAYMENT","paymentStatus":"PENDING"} | ENROLLMENT_ACCESS_DENIED |
+| POST /api/v1/enrollments | Seçimi enrollment'a çevir / Candidate | Body {"service":"Satış hikâyesi oluşturma","guru":"Selin Arslan"}; kimlik alanlarıyla body alternatifi açık karar | 201 {"id":"enr_1","service":"Satış hikâyesi oluşturma","sessions":2,"minutes":60,"price":null,"guru":"Selin Arslan","status":"DRAFT"} | SERVICE_UNAVAILABLE, GURU_NOT_AVAILABLE |
+| GET /api/v1/me/enrollments | Aday enrollment listesi / Candidate | Query status, limit, cursor | 200 {"data":[{"id":"enr_1","service":"Satış hikâyesi oluşturma","sessions":2,"minutes":60,"price":null,"guru":"Selin Arslan","status":"ACTIVE"}],"page":{"limit":20,"nextCursor":null,"hasMore":false}} | INVALID_FILTER |
+| GET /api/v1/enrollments/{enrollmentId} | Sipariş/enrollment özeti / sahibi Candidate; atanmış Guru sınırlı görünüm | Path enrollmentId | 200 {"id":"enr_1","service":"Satış hikâyesi oluşturma","sessions":2,"minutes":60,"price":null,"guru":"Selin Arslan","status":"PENDING_PAYMENT","paymentStatus":"PENDING"} | ENROLLMENT_ACCESS_DENIED |
 | POST /api/v1/enrollments/{enrollmentId}/consents | Rıza kararı kaydet / enrollment sahibi Candidate | Body {"purpose":"EXPLICIT_CONSENT","documentVersion":"kvkk-1.0","decision":"GRANTED"} | 201 {"id":"cons_1","enrollmentId":"enr_1","purpose":"EXPLICIT_CONSENT","documentVersion":"kvkk-1.0","decision":"GRANTED","decidedAt":"2026-11-06T12:00:00Z"} | CONSENT_VERSION_INVALID, ENROLLMENT_ACCESS_DENIED |
 
 ### 3.3 Ödeme
 
 | Method / URL | Açıklama / auth | Request (path/query/body) | Başarılı response örneği | Özel hatalar |
 |---|---|---|---|---|
-| POST /api/v1/enrollments/{enrollmentId}/payments | Sağlayıcı checkout başlat / Candidate sahibi | Header Idempotency-Key; body {"method":"CARD"}; kart numarası/CCV gönderilmez | 201 {"id":"pay_1","enrollmentId":"enr_1","status":"PENDING","amount":1500,"currency":"TRY","checkoutUrl":"https://provider.example/…"} | PAYMENT_ALREADY_PAID, PAYMENT_PROVIDER_UNAVAILABLE, IDEMPOTENCY_CONFLICT |
-| GET /api/v1/payments/{paymentId} | Ödeme durumunu sorgula / Candidate sahibi, Admin | Path paymentId | 200 {"id":"pay_1","status":"PAID","amount":1500,"currency":"TRY","paidAt":"2026-11-06T12:01:00Z"} | PAYMENT_ACCESS_DENIED |
+| POST /api/v1/enrollments/{enrollmentId}/payments | Sağlayıcı checkout başlat / Candidate sahibi | Header Idempotency-Key; body {"method":"CARD"}; kart numarası/CCV gönderilmez | 201 {"id":"pay_1","enrollmentId":"enr_1","status":"PENDING","amount":null,"currency":"TRY","checkoutUrl":"https://provider.example/…"} | PAYMENT_ALREADY_PAID, PAYMENT_PROVIDER_UNAVAILABLE, IDEMPOTENCY_CONFLICT |
+| GET /api/v1/payments/{paymentId} | Ödeme durumunu sorgula / Candidate sahibi, Admin | Path paymentId | 200 {"id":"pay_1","status":"PAID","amount":null,"currency":"TRY","paidAt":"2026-11-06T12:01:00Z"} | PAYMENT_ACCESS_DENIED |
 | POST /api/v1/webhooks/payments/{provider} | Sağlayıcı bildirimi / Provider signature | Sağlayıcı imzalı raw body; imza başlığı sağlayıcıya göre | 200 {"received":true,"processed":true} | INVALID_PROVIDER_SIGNATURE, DUPLICATE_EVENT |
 
 ### 3.4 Profil ve CV
@@ -176,8 +176,8 @@ Her uç ayrıca tabloda yazan özel hataları döndürebilir. CV, ham cevap, hik
 
 | Method / URL | Açıklama / auth | Request (path/query/body) | Başarılı response örneği | Özel hatalar |
 |---|---|---|---|---|
-| GET /api/v1/guru/profile | Düzenleme profilini getir / Guru | Yok | 200 {"name":"Selin Arslan","title":"Mentor","experience":12,"sectors":["Teknoloji"],"about":"…","expertise":[],"experienceList":[],"education":[],"certificates":[],"approach":[],"clients":[],"faqs":[],"price":1500,"published":false} | — |
-| PUT /api/v1/guru/profile | Profil taslağını güncelle / Guru | guruProfile camelCase alanları | 200 {"name":"Selin Arslan","title":"Mentor","experience":12,"sectors":["Teknoloji"],"about":"…","expertise":[],"experienceList":[],"education":[],"certificates":[],"approach":[],"clients":[],"faqs":[],"price":1500,"published":false} | PROFILE_VALIDATION_FAILED |
+| GET /api/v1/guru/profile | Düzenleme profilini getir / Guru | Yok | 200 {"name":"Selin Arslan","title":"Mentor","experience":12,"sectors":["Teknoloji"],"about":"…","expertise":[],"experienceList":[],"education":[],"certificates":[],"approach":[],"clients":[],"faqs":[],"price":null,"published":false} | — |
+| PUT /api/v1/guru/profile | Profil taslağını güncelle / Guru | guruProfile camelCase alanları | 200 {"name":"Selin Arslan","title":"Mentor","experience":12,"sectors":["Teknoloji"],"about":"…","expertise":[],"experienceList":[],"education":[],"certificates":[],"approach":[],"clients":[],"faqs":[],"price":null,"published":false} | PROFILE_VALIDATION_FAILED |
 | POST /api/v1/guru/profile/publish | Profili yayınla / Guru | Body {} | 200 {"published":true} | PROFILE_INCOMPLETE, PUBLISH_REVIEW_REQUIRED |
 
 ### 3.9 Yönetici uçları — hedef kapsam, demo ekranı yok
@@ -193,7 +193,7 @@ Varsayım: PRD yönetici yapılandırma/denetim hedefi tanımlar. Aşağıdaki u
 | GET /api/v1/admin/question-sets | Soru setlerini listele / Admin | Query limit, cursor | 200 {"data":[],"page":{"limit":20,"nextCursor":null,"hasMore":false}} | — |
 | POST /api/v1/admin/question-sets | Soru seti sürümü oluştur / Admin | Body {"name":"Satış hikâyesi","language":"tr","questions":[]} | 201 {"id":"qs_1","version":1,"status":"DRAFT"} | QUESTION_SET_INVALID |
 | GET /api/v1/admin/services | Hizmet/fiyat config listele / Admin | Query limit, cursor | 200 {"data":[],"page":{"limit":20,"nextCursor":null,"hasMore":false}} | — |
-| PUT /api/v1/admin/services/{serviceId} | Hizmet/fiyat config güncelle / Admin | Body {"service":"…","sessions":2,"minutes":50,"price":1500,"active":true} | 200 {"id":"svc_1","service":"…","sessions":2,"minutes":50,"price":1500,"active":true} | SERVICE_INVALID, VERSION_CONFLICT |
+| PUT /api/v1/admin/services/{serviceId} | Hizmet/fiyat config güncelle / Admin | Body {"service":"…","sessions":2,"minutes":60,"price":null,"active":true} | 200 {"id":"svc_1","service":"…","sessions":2,"minutes":60,"price":null,"active":true} | SERVICE_INVALID, VERSION_CONFLICT |
 | GET /api/v1/admin/payments | Ödemeleri incele / Admin | Query status, from, to, limit, cursor | 200 {"data":[],"page":{"limit":20,"nextCursor":null,"hasMore":false}} | INVALID_FILTER |
 | GET /api/v1/admin/ai-requests | AI kullanımını incele / Admin | Query from, to, provider, limit, cursor | 200 {"data":[],"page":{"limit":20,"nextCursor":null,"hasMore":false}} | INVALID_FILTER |
 | GET /api/v1/admin/audit-logs | Audit kayıtlarını incele / Admin | Query actorId, entityType, from, to, limit, cursor | 200 {"data":[],"page":{"limit":20,"nextCursor":null,"hasMore":false}} | INVALID_FILTER |

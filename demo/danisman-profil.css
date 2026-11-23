@@ -1,0 +1,334 @@
+/* danisman-profil.css — Public danışman profili (danisman.html), ders platformu profil akışı, tema renkleri.
+   Üst kimlik şeridi → istatistik şeridi → tanıtım kartı → hizmet kartı → saat seçimi → gezinti izi.
+   theme.css'in genel kart/düğme kurallarını yenmek için bazı seçiciler :not(#ap-…) ile güçlendirildi. */
+
+body.public-advisor-page main.ap-page {
+  display: block !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 0 4rem !important;
+}
+body.public-advisor-page .ap-wrap {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 960px;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+/* 1) Üst kimlik şeridi */
+body.public-advisor-page .ap-top { background-color: #FFFFFF !important; border-bottom: 1px solid #ECE9FA; }
+body.public-advisor-page .ap-top-inner {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 1.25rem;
+  align-items: center;
+  padding-block: 1.75rem;
+}
+body.public-advisor-page div.ap-avatar:not(#ap-a):not(#ap-b):not(#ap-c):not(#ap-d) {
+  display: grid;
+  place-items: center;
+  width: 5.5rem !important;
+  height: 5.5rem !important;
+  overflow: hidden;
+  border-radius: 50% !important;
+  background-color: #2A1F5C !important;
+  color: #FFFFFF !important;
+  font-family: "Instrument Serif", Georgia, serif !important;
+  font-size: 2.1rem !important;
+  font-style: italic;
+}
+body.public-advisor-page .ap-avatar img,
+body.public-advisor-page .ap-tile-mono img { width: 100%; height: 100%; object-fit: cover; }
+body.public-advisor-page .ap-name-row { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem; }
+body.public-advisor-page .ap-name { margin: 0 !important; color: #1C1A33 !important; font-size: 1.8rem !important; font-weight: 700 !important; line-height: 1.15 !important; }
+body.public-advisor-page .ap-badge {
+  padding: .25rem .7rem;
+  border-radius: 999px;
+  background-color: #2A1F5C !important;
+  color: #FFFFFF !important;
+  font-size: .8rem;
+  font-weight: 600;
+}
+body.public-advisor-page .ap-sectors { display: flex; flex-wrap: wrap; gap: .4rem; margin: .45rem 0 0 !important; color: #2E2A47 !important; font-size: .95rem !important; font-weight: 600; }
+body.public-advisor-page .ap-dot { color: #BCB7F5; }
+body.public-advisor-page .ap-focus { display: flex; align-items: center; gap: .5rem; margin: .3rem 0 0 !important; color: #3D3957 !important; font-size: .92rem !important; }
+body.public-advisor-page .ap-focus-mark { width: .5rem; height: .5rem; border-radius: 50%; background-color: #7C4DE8; }
+body.public-advisor-page .ap-top-actions { display: grid; gap: .4rem; justify-items: end; }
+
+/* Ana eylem düğmesi (üst şerit, saat kartı, mobil çubuk) */
+body.public-advisor-page main.ap-page a.public-advisor-booking:not(#ap-a):not(#ap-b):not(#ap-c):not(#ap-d),
+body.public-advisor-page main.ap-page button.public-advisor-booking:not(#ap-a):not(#ap-b):not(#ap-c):not(#ap-d),
+body.public-advisor-page main.ap-page a.public-advisor-directory-cta:not(#ap-a):not(#ap-b):not(#ap-c):not(#ap-d) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .45rem;
+  min-height: 3rem !important;
+  margin: 0 !important;
+  padding: 0 1.4rem !important;
+  border: 0 !important;
+  border-radius: 14px !important;
+  background-color: #6D3FE0 !important;
+  box-shadow: 0 10px 22px -14px rgba(109, 63, 224, .9) !important;
+  color: #FFFFFF !important;
+  font-size: .95rem !important;
+  font-weight: 700 !important;
+  text-decoration: none !important;
+  white-space: nowrap;
+}
+body.public-advisor-page main.ap-page a.public-advisor-booking:not(#ap-a):not(#ap-b):not(#ap-c):not(#ap-d):hover,
+body.public-advisor-page main.ap-page a.public-advisor-directory-cta:not(#ap-a):not(#ap-b):not(#ap-c):not(#ap-d):hover { background-color: #2A1F5C !important; }
+body.public-advisor-page main.ap-page button.public-advisor-booking:disabled:not(#ap-a):not(#ap-b):not(#ap-c):not(#ap-d) { opacity: .45; box-shadow: none !important; }
+body.public-advisor-page main.ap-page .public-advisor-booking .material-symbols-outlined { font-size: 1.1rem; color: inherit !important; }
+body.public-advisor-page main.ap-page .public-advisor-login-link { color: #51409D !important; font-size: .85rem !important; font-weight: 600; text-decoration: underline; text-underline-offset: .2em; }
+
+/* 2) İstatistik şeridi */
+body.public-advisor-page .ap-stats { background-color: #F8F7FE !important; border-bottom: 1px solid #ECE9FA; }
+body.public-advisor-page .ap-stats-inner { display: flex; flex-wrap: wrap; gap: 1rem 3rem; padding-block: 1.1rem; }
+body.public-advisor-page .ap-stat { display: flex; align-items: center; gap: .7rem; }
+body.public-advisor-page .ap-stat-icon {
+  display: grid;
+  place-items: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 12px;
+  background-color: #EEECFF;
+  color: #51409D !important;
+  font-size: 1.3rem !important;
+}
+body.public-advisor-page .ap-stat strong { display: block; color: #1C1A33 !important; font-size: 1.05rem !important; font-weight: 700 !important; line-height: 1.2; }
+body.public-advisor-page .ap-stat span:not(.ap-stat-icon) { color: #5B5F6B !important; font-size: .85rem !important; }
+
+/* Ana sütun ve paneller */
+body.public-advisor-page .ap-body { display: grid; gap: 1.25rem; margin-top: 2rem; }
+body.public-advisor-page section.ap-panel:not(#ap-a):not(#ap-b):not(#ap-c):not(#ap-d) {
+  padding: 1.6rem !important;
+  border: 0 !important;
+  border-radius: 22px !important;
+  background-color: #FFFFFF !important;
+  box-shadow: 0 16px 40px -34px rgba(42, 31, 92, .55) !important;
+}
+body.public-advisor-page .ap-panel-title {
+  margin: 0 0 1.1rem !important;
+  padding-bottom: .9rem;
+  border-bottom: 1px solid #ECE9FA;
+  color: #1C1A33 !important;
+  font-size: 1.1rem !important;
+  font-weight: 700 !important;
+}
+body.public-advisor-page .ap-muted { color: #5B5F6B !important; }
+
+/* 3) Tanıtım kartı */
+body.public-advisor-page .ap-intro-top { display: grid; grid-template-columns: minmax(0, 1fr) 17rem; gap: 1.75rem; align-items: start; }
+body.public-advisor-page .ap-meta { display: grid; gap: .2rem; margin: 0 0 1rem !important; padding: 0; list-style: none; color: #6B6787 !important; font-size: .88rem; }
+body.public-advisor-page .ap-headline { margin: 0 !important; color: #1C1A33 !important; font-size: 1.1rem !important; font-weight: 700 !important; line-height: 1.4 !important; }
+body.public-advisor-page .ap-bio {
+  display: -webkit-box;
+  margin: .5rem 0 0 !important;
+  overflow: hidden;
+  color: #3D3957 !important;
+  font-size: .98rem !important;
+  line-height: 1.65 !important;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+body.public-advisor-page .ap-bio.is-open { display: block; -webkit-line-clamp: unset; }
+body.public-advisor-page button.ap-more:not(#ap-a):not(#ap-b):not(#ap-c):not(#ap-d) {
+  min-height: 0 !important;
+  margin-top: .6rem;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: #1C1A33 !important;
+  font-size: .92rem !important;
+  font-weight: 700 !important;
+  text-decoration: underline;
+  text-underline-offset: .2em;
+}
+body.public-advisor-page .ap-tile {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: 18px;
+  background-color: #2A1F5C !important;
+}
+body.public-advisor-page .ap-tile::before {
+  content: "";
+  position: absolute;
+  inset: -30% -10% auto auto;
+  width: 70%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background-color: rgba(188, 183, 245, .16);
+}
+body.public-advisor-page div.ap-tile-mono:not(#ap-a):not(#ap-b):not(#ap-c):not(#ap-d) {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 5.5rem !important;
+  height: 5.5rem !important;
+  overflow: hidden;
+  border: 2px solid rgba(255, 255, 255, .7) !important;
+  border-radius: 50% !important;
+  background-color: #7564C7 !important;
+  color: #FFFFFF !important;
+  font-family: "Instrument Serif", Georgia, serif !important;
+  font-size: 2.2rem !important;
+  font-style: italic;
+}
+body.public-advisor-page .ap-tile-caption {
+  position: absolute;
+  bottom: .8rem;
+  left: .9rem;
+  padding: .25rem .6rem;
+  border-radius: 999px;
+  background-color: rgba(255, 255, 255, .14);
+  color: #FFFFFF !important;
+  font-size: .75rem;
+  font-weight: 600;
+}
+body.public-advisor-page .ap-intro-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .6rem 1rem;
+  margin-top: 1.4rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid #ECE9FA;
+}
+body.public-advisor-page .ap-foot-label { color: #6B6787; font-size: .88rem; }
+body.public-advisor-page .ap-chips { display: flex; flex-wrap: wrap; gap: .4rem; margin: 0 !important; padding: 0; list-style: none; }
+body.public-advisor-page .ap-chips li {
+  padding: .3rem .75rem;
+  border: 1px solid #D6D0F2;
+  border-radius: 999px;
+  background-color: #FFFFFF;
+  color: #2A1F5C !important;
+  font-size: .82rem !important;
+  font-weight: 600;
+}
+
+/* 4) Hizmet kartı */
+body.public-advisor-page .ap-sessions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+body.public-advisor-page article.ap-session:not(#ap-a):not(#ap-b):not(#ap-c):not(#ap-d) {
+  display: flex;
+  flex-direction: column;
+  padding: 1.1rem 1.2rem !important;
+  border: 0 !important;
+  border-radius: 16px !important;
+  background-color: #F4F2FC !important;
+  box-shadow: none !important;
+}
+body.public-advisor-page .ap-session-head { display: flex; align-items: flex-start; justify-content: space-between; gap: .75rem; }
+body.public-advisor-page .ap-session h3 { margin: 0 !important; color: #1C1A33 !important; font-size: 1rem !important; font-weight: 700 !important; }
+body.public-advisor-page .ap-session-no {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 50%;
+  background-color: #FFFFFF;
+  color: #51409D;
+  font-size: .78rem;
+  font-weight: 700;
+}
+body.public-advisor-page .ap-session-purpose { flex: 1; margin: .45rem 0 0 !important; color: #3D3957 !important; font-size: .9rem !important; font-style: italic; line-height: 1.5; }
+body.public-advisor-page .ap-session-meta { margin: .9rem 0 0 !important; padding-top: .75rem; border-top: 1px solid #E1DCF7; color: #2A1F5C !important; font-size: .85rem !important; font-weight: 700; }
+body.public-advisor-page .ap-program-foot { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 1.1rem; }
+body.public-advisor-page .ap-price { display: flex; align-items: baseline; gap: .5rem; margin: 0 !important; }
+body.public-advisor-page .ap-price strong { color: #1C1A33 !important; font-size: 1.5rem !important; font-weight: 800 !important; }
+body.public-advisor-page .ap-price span { color: #5B5F6B !important; font-size: .88rem !important; }
+
+/* 5) Saat seçimi */
+body.public-advisor-page .ap-steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin: 0 !important; padding: 0; list-style: none; }
+body.public-advisor-page .ap-step { display: grid; gap: .3rem; padding: 1rem; border-radius: 16px; background-color: #F4F2FC; }
+body.public-advisor-page .ap-step-no {
+  display: grid;
+  place-items: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  margin-bottom: .3rem;
+  border-radius: 50%;
+  background-color: #2A1F5C;
+  color: #FFFFFF;
+  font-size: .8rem;
+  font-weight: 700;
+}
+body.public-advisor-page .ap-step strong { color: #1C1A33 !important; font-size: .95rem !important; }
+body.public-advisor-page .ap-step span:not(.ap-step-no) { color: #3D3957 !important; font-size: .85rem !important; line-height: 1.45; }
+body.public-advisor-page .ap-schedule-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: .75rem 1.25rem; margin-top: 1.25rem; }
+
+/* 6) Gezinti izi */
+body.public-advisor-page .ap-crumbs { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .5rem; color: #5B5F6B; font-size: .88rem; }
+body.public-advisor-page .ap-crumbs a { color: #5B5F6B !important; text-decoration: none; }
+body.public-advisor-page .ap-crumbs a:hover { color: #2A1F5C !important; text-decoration: underline; }
+body.public-advisor-page .ap-crumbs [aria-current] { color: #1C1A33; font-weight: 700; }
+body.public-advisor-page .ap-crumb-sep { color: #BCB7F5; }
+
+/* Benzer danışmanlar: aynı genişlikte */
+body.public-advisor-page main.ap-page .public-advisor-similar { margin-top: 2.5rem !important; }
+
+@media (max-width: 860px) {
+  body.public-advisor-page .ap-top-inner { grid-template-columns: auto minmax(0, 1fr); }
+  body.public-advisor-page .ap-top-actions { grid-column: 1 / -1; justify-items: stretch; }
+  body.public-advisor-page .ap-intro-top { grid-template-columns: minmax(0, 1fr); }
+  body.public-advisor-page .ap-tile { display: none; }
+  body.public-advisor-page .ap-sessions,
+  body.public-advisor-page .ap-steps { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 640px) {
+  body.public-advisor-page .ap-top-actions { display: none; }
+  body.public-advisor-page div.ap-avatar:not(#ap-a):not(#ap-b):not(#ap-c):not(#ap-d) { width: 4rem !important; height: 4rem !important; font-size: 1.6rem !important; }
+  body.public-advisor-page .ap-name { font-size: 1.45rem !important; }
+}
+
+/* ── Rapor V1 profil bölümleri ─────────────────────────────────────────────── */
+body.public-advisor-page .ap-panel-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem; margin-bottom: 1.1rem; padding-bottom: .9rem; border-bottom: 1px solid #ECE9FA; }
+body.public-advisor-page .ap-panel-head .ap-panel-title { margin: 0 !important; padding: 0; border: 0; }
+body.public-advisor-page .ap-about-text p { margin: 0 0 .8rem !important; color: #2E2A47 !important; font-size: 1rem !important; line-height: 1.75 !important; }
+body.public-advisor-page .ap-about-text p:last-child { margin-bottom: 0 !important; }
+body.public-advisor-page .ap-lang-toggle { display: inline-flex; gap: .2rem; padding: .25rem; border-radius: 999px; background-color: #EEECFF; }
+body.public-advisor-page .ap-lang-toggle button:not(#ap-a):not(#ap-b):not(#ap-c):not(#ap-d) {
+  min-height: 2rem !important;
+  padding: 0 .9rem !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  color: #2A1F5C !important;
+  font-size: .8rem !important;
+  font-weight: 700 !important;
+}
+body.public-advisor-page .ap-lang-toggle button[aria-pressed="true"]:not(#ap-a):not(#ap-b):not(#ap-c):not(#ap-d) { background-color: #2A1F5C !important; color: #FFFFFF !important; }
+
+body.public-advisor-page .ap-scope-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem 1.5rem; margin: 0 !important; }
+body.public-advisor-page .ap-scope-item dt { margin: 0 0 .45rem; color: #7564C7 !important; font-size: .72rem !important; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+body.public-advisor-page .ap-scope-item dd { display: flex; flex-wrap: wrap; gap: .4rem; margin: 0; }
+body.public-advisor-page .ap-scope-chip { padding: .35rem .8rem; border-radius: 12px; background-color: #F4F2FC; color: #1C1A33 !important; font-size: .88rem; font-weight: 600; }
+
+body.public-advisor-page .ap-timeline { position: relative; display: grid; gap: 1.1rem; margin: 0 !important; padding: 0 0 0 1.4rem; list-style: none; }
+body.public-advisor-page .ap-timeline::before { content: ""; position: absolute; top: .4rem; bottom: .4rem; left: .35rem; width: 2px; background-color: #E1DCF7; }
+body.public-advisor-page .ap-timeline-item { position: relative; display: grid; gap: .15rem; }
+body.public-advisor-page .ap-timeline-item::before { content: ""; position: absolute; top: .35rem; left: -1.4rem; width: .8rem; height: .8rem; border: 2px solid #FFFFFF; border-radius: 50%; background-color: #6D3FE0; box-shadow: 0 0 0 2px #E1DCF7; }
+body.public-advisor-page .ap-timeline-item:not(:first-child)::before { background-color: #BCB7F5; }
+body.public-advisor-page .ap-timeline-years { color: #7564C7 !important; font-size: .78rem !important; font-weight: 700; letter-spacing: .06em; }
+body.public-advisor-page .ap-timeline-item strong { color: #1C1A33 !important; font-size: 1rem !important; }
+body.public-advisor-page .ap-timeline-org { color: #5B5F6B !important; font-size: .9rem !important; }
+
+body.public-advisor-page .ap-docs-note { color: #5B5F6B; font-size: .82rem; }
+body.public-advisor-page .ap-docs-list { display: grid; gap: .75rem; margin: 0 !important; padding: 0; list-style: none; }
+body.public-advisor-page .ap-doc { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: .9rem; align-items: center; padding: .9rem 1rem; border-radius: 16px; background-color: #F4F2FC; }
+body.public-advisor-page .ap-doc-icon { display: grid; place-items: center; width: 2.6rem; height: 2.6rem; border-radius: 12px; background-color: #FFFFFF; color: #51409D !important; font-size: 1.35rem !important; }
+body.public-advisor-page .ap-doc-text strong { display: block; color: #1C1A33 !important; font-size: .95rem !important; }
+body.public-advisor-page .ap-doc-text span { color: #5B5F6B !important; font-size: .85rem !important; }
+body.public-advisor-page .ap-doc-badge { padding: .25rem .65rem; border-radius: 999px; background-color: #2A1F5C; color: #FFFFFF !important; font-size: .72rem; font-weight: 700; }
+@media (max-width: 640px) {
+  body.public-advisor-page .ap-scope-grid { grid-template-columns: minmax(0, 1fr); }
+  body.public-advisor-page .ap-doc { grid-template-columns: auto minmax(0, 1fr); }
+  body.public-advisor-page .ap-doc-badge { grid-column: 2; justify-self: start; }
+}

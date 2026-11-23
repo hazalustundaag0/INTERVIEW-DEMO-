@@ -1,0 +1,222 @@
+/* danismanlar.css — Danışman kataloğu: liste düzeni + sağda yapışkan ayrıntı paneli (tema renkleriyle).
+   Satır: solda kare portre, ortada ad/unvan/uzmanlık/sektörler/kısa tanıtım, sağda deneyim yılı ve eylemler.
+   theme.css'in genel kart/düğme kurallarını yenmek için seçiciler :not(#dl-…) ile güçlendirildi. */
+
+body.advisor-directory-page .advisor-browse {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 340px);
+  gap: 1.75rem;
+  align-items: start;
+  margin-top: 1rem;
+}
+body.advisor-directory-page .advisor-directory-grid#advisor-grid {
+  display: flex !important;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin: 0;
+}
+
+/* Satır kartı */
+body.advisor-directory-page article.advisor-row:not(#dl-a):not(#dl-b):not(#dl-c):not(#dl-d) {
+  display: grid !important;
+  grid-template-columns: 8.5rem minmax(0, 1fr) 13rem;
+  gap: 1.5rem;
+  padding: 1.5rem !important;
+  border: 1.5px solid #E1DCF7 !important;
+  border-radius: 20px !important;
+  background-color: #FFFFFF !important;
+  box-shadow: none !important;
+  transform: none !important;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+body.advisor-directory-page article.advisor-row:not(#dl-a):not(#dl-b):not(#dl-c):not(#dl-d):hover,
+body.advisor-directory-page article.advisor-row:not(#dl-a):not(#dl-b):not(#dl-c):not(#dl-d):focus-within {
+  border-color: #2A1F5C !important;
+  box-shadow: 0 18px 40px -30px rgba(42, 31, 92, .6) !important;
+}
+/* Etap 14 (TC-ADAY-03-003/010): satır kuralı :not(#dl-*) ile 4 id özgüllüğü taşıyor ve display:grid !important veriyor;
+   [hidden] kuralı aynı özgüllükte olmazsa arama/sektör filtresi kartları gizleyemez. */
+body.advisor-directory-page article.advisor-row[hidden],
+body.advisor-directory-page article.advisor-row:not(#dl-a):not(#dl-b):not(#dl-c):not(#dl-d)[hidden] { display: none !important; }
+
+body.advisor-directory-page span.advisor-row-avatar:not(#dl-a):not(#dl-b):not(#dl-c):not(#dl-d),
+body.advisor-directory-page span.advisor-detail-avatar:not(#dl-a):not(#dl-b):not(#dl-c):not(#dl-d) {
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border: 0 !important;
+  border-radius: 16px !important;
+  background-color: #2A1F5C !important;
+  color: #FFFFFF !important;
+  font-family: "Instrument Serif", Georgia, serif !important;
+  font-style: italic;
+  font-weight: 400 !important;
+}
+body.advisor-directory-page span.advisor-row-avatar:not(#dl-a):not(#dl-b):not(#dl-c):not(#dl-d) {
+  width: 8.5rem !important;
+  height: 8.5rem !important;
+  font-size: 3rem !important;
+}
+body.advisor-directory-page article.advisor-row:nth-child(3n+2) span.advisor-row-avatar:not(#dl-a):not(#dl-b):not(#dl-c):not(#dl-d) { background-color: #51409D !important; }
+body.advisor-directory-page article.advisor-row:nth-child(3n) span.advisor-row-avatar:not(#dl-a):not(#dl-b):not(#dl-c):not(#dl-d) { background-color: #7564C7 !important; }
+body.advisor-directory-page .advisor-row-avatar img,
+body.advisor-directory-page .advisor-detail-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 0 !important; }
+
+body.advisor-directory-page .advisor-row-main { min-width: 0; }
+body.advisor-directory-page .advisor-row-name { margin: 0 !important; font-size: 1.35rem !important; font-weight: 700 !important; line-height: 1.2 !important; }
+body.advisor-directory-page .advisor-row-name a { color: #1C1A33 !important; text-decoration: none !important; }
+body.advisor-directory-page .advisor-row-name a:hover { text-decoration: underline !important; text-underline-offset: .2em; }
+body.advisor-directory-page .advisor-row-title { margin: .25rem 0 0 !important; color: #51409D !important; font-size: .92rem !important; font-weight: 600 !important; }
+body.advisor-directory-page .advisor-row-meta { margin: .7rem 0 0 !important; color: #2E2A47 !important; font-size: .92rem !important; line-height: 1.5; }
+body.advisor-directory-page .advisor-row-meta-label {
+  margin-right: .5rem;
+  color: #7564C7 !important;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+body.advisor-directory-page .advisor-row-tags { display: flex; flex-wrap: wrap; gap: .4rem; margin: .7rem 0 0 !important; padding: 0; list-style: none; }
+body.advisor-directory-page .advisor-row-tags li {
+  padding: .25rem .7rem;
+  border-radius: 999px;
+  background-color: #EEECFF !important;
+  color: #2A1F5C !important;
+  font-size: .78rem !important;
+  font-weight: 600;
+}
+body.advisor-directory-page .advisor-row-bio {
+  display: -webkit-box;
+  margin: .85rem 0 0 !important;
+  overflow: hidden;
+  color: #3D3957 !important;
+  font-size: .95rem !important;
+  line-height: 1.55 !important;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+body.advisor-directory-page .advisor-row-more {
+  display: inline-block;
+  margin-top: .35rem;
+  color: #1C1A33 !important;
+  font-size: .9rem !important;
+  font-weight: 600 !important;
+  text-decoration: underline !important;
+  text-underline-offset: .2em;
+}
+
+body.advisor-directory-page .advisor-row-side { display: flex; flex-direction: column; gap: .65rem; }
+body.advisor-directory-page .advisor-row-stat { display: flex; align-items: baseline; gap: .4rem; margin: 0 0 .5rem !important; color: #1C1A33 !important; }
+body.advisor-directory-page .advisor-row-stat strong { font-size: 2.2rem !important; font-weight: 800 !important; line-height: 1 !important; }
+body.advisor-directory-page .advisor-row-stat span { color: #5B5F6B !important; font-size: .88rem !important; }
+
+/* Düğmeler (satır ve panel) */
+body.advisor-directory-page .advisor-row-btn:not(#dl-a):not(#dl-b):not(#dl-c):not(#dl-d) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem !important;
+  margin: 0 !important;
+  padding: 0 1rem !important;
+  border-radius: 14px !important;
+  box-shadow: none !important;
+  font-size: .95rem !important;
+  font-weight: 700 !important;
+  text-align: center;
+  text-decoration: none !important;
+  transition: background-color 160ms ease, border-color 160ms ease;
+}
+body.advisor-directory-page .advisor-row-btn--primary:not(#dl-a):not(#dl-b):not(#dl-c):not(#dl-d) {
+  border: 1.5px solid #2A1F5C !important;
+  background-color: #2A1F5C !important;
+  color: #FFFFFF !important;
+}
+body.advisor-directory-page a.advisor-row-btn--primary:not(#dl-a):not(#dl-b):not(#dl-c):not(#dl-d):hover { background-color: #51409D !important; border-color: #51409D !important; }
+body.advisor-directory-page span.advisor-row-btn--primary[aria-disabled="true"]:not(#dl-a):not(#dl-b):not(#dl-c):not(#dl-d) { opacity: .45; cursor: not-allowed; }
+body.advisor-directory-page .advisor-row-btn--ghost:not(#dl-a):not(#dl-b):not(#dl-c):not(#dl-d) {
+  border: 1.5px solid #D6D0F2 !important;
+  background-color: #FFFFFF !important;
+  color: #1C1A33 !important;
+}
+body.advisor-directory-page .advisor-row-btn--ghost:not(#dl-a):not(#dl-b):not(#dl-c):not(#dl-d):hover { border-color: #2A1F5C !important; }
+body.advisor-directory-page .advisor-row-btn:focus-visible,
+body.advisor-directory-page .advisor-row-more:focus-visible,
+body.advisor-directory-page .advisor-row-name a:focus-visible { outline: 2px solid #51409D !important; outline-offset: 3px; }
+
+/* Sağ ayrıntı paneli */
+body.advisor-directory-page .advisor-detail {
+  position: sticky;
+  top: 5.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+  padding: 1.5rem;
+  border-radius: 22px;
+  background-color: #2A1F5C !important;
+  color: #FFFFFF;
+}
+body.advisor-directory-page .advisor-detail[hidden] { display: none; }
+body.advisor-directory-page .advisor-detail-head { display: flex; align-items: center; gap: 1rem; margin-bottom: .25rem; }
+body.advisor-directory-page span.advisor-detail-avatar:not(#dl-a):not(#dl-b):not(#dl-c):not(#dl-d) {
+  flex: 0 0 auto;
+  width: 4.5rem !important;
+  height: 4.5rem !important;
+  background-color: #7564C7 !important;
+  font-size: 1.8rem !important;
+}
+body.advisor-directory-page .advisor-detail-name {
+  margin: 0 !important;
+  color: #FFFFFF !important;
+  font-family: "Instrument Serif", Georgia, serif !important;
+  font-size: 1.75rem !important;
+  font-weight: 400 !important;
+  line-height: 1.1 !important;
+}
+body.advisor-directory-page .advisor-detail-title { margin: .2rem 0 0 !important; color: #BCB7F5 !important; font-size: .88rem !important; font-weight: 600; }
+body.advisor-directory-page .advisor-detail-bio { margin: 0 !important; color: #E7E4FB !important; font-size: .92rem !important; line-height: 1.6 !important; }
+body.advisor-directory-page .advisor-detail-facts { display: grid; gap: .55rem; margin: .25rem 0 0 !important; padding: .9rem 0 0; border-top: 1px solid rgba(255, 255, 255, .15); }
+body.advisor-directory-page .advisor-detail-facts dt { margin: 0; color: #BCB7F5 !important; font-size: .7rem !important; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+body.advisor-directory-page .advisor-detail-facts dd { margin: .1rem 0 0; color: #FFFFFF !important; font-size: .9rem !important; line-height: 1.45; }
+body.advisor-directory-page .advisor-detail-note {
+  margin: .25rem 0 .25rem !important;
+  padding: .7rem .85rem;
+  border-radius: 12px;
+  background-color: rgba(255, 255, 255, .08) !important;
+  color: #D9D5F5 !important;
+  font-size: .82rem !important;
+  line-height: 1.45;
+}
+body.advisor-directory-page .advisor-detail .advisor-row-btn--primary:not(#dl-a):not(#dl-b):not(#dl-c):not(#dl-d) {
+  border-color: #FFFFFF !important;
+  background-color: #FFFFFF !important;
+  color: #2A1F5C !important;
+}
+body.advisor-directory-page .advisor-detail a.advisor-row-btn--primary:not(#dl-a):not(#dl-b):not(#dl-c):not(#dl-d):hover { background-color: #EEECFF !important; border-color: #EEECFF !important; }
+body.advisor-directory-page .advisor-detail .advisor-row-btn--ghost:not(#dl-a):not(#dl-b):not(#dl-c):not(#dl-d) {
+  border-color: rgba(255, 255, 255, .35) !important;
+  background-color: transparent !important;
+  color: #FFFFFF !important;
+}
+body.advisor-directory-page .advisor-detail .advisor-row-btn--ghost:not(#dl-a):not(#dl-b):not(#dl-c):not(#dl-d):hover { border-color: #FFFFFF !important; }
+
+/* Filtre satırı: seçili sektör koyu */
+body.advisor-directory-page .advisor-directory-filter[aria-pressed="true"]:not(#dl-a):not(#dl-b):not(#dl-c):not(#dl-d) {
+  background-color: #2A1F5C !important;
+  border-color: #2A1F5C !important;
+  color: #FFFFFF !important;
+}
+
+@media (max-width: 1180px) {
+  body.advisor-directory-page .advisor-browse { grid-template-columns: minmax(0, 1fr); }
+  body.advisor-directory-page .advisor-detail { display: none !important; }
+}
+@media (max-width: 760px) {
+  body.advisor-directory-page article.advisor-row:not(#dl-a):not(#dl-b):not(#dl-c):not(#dl-d) {
+    grid-template-columns: 5.5rem minmax(0, 1fr);
+    gap: 1rem;
+    padding: 1.1rem !important;
+  }
+  body.advisor-directory-page span.advisor-row-avatar:not(#dl-a):not(#dl-b):not(#dl-c):not(#dl-d) { width: 5.5rem !important; height: 5.5rem !important; font-size: 2rem !important; }
+  body.advisor-directory-page .advisor-row-side { grid-column: 1 / -1; }
+  body.advisor-directory-page .advisor-row-stat { margin-bottom: 0 !important; }
+}

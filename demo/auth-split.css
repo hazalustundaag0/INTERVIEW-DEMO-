@@ -1,0 +1,272 @@
+/* auth-split.css — Giriş / kayıt ekranları: lila çerçeve içinde mor panel, serif başlık, geometrik desen.
+   giris.html, giris-danisman.html, kayit.html. theme.css'in genel kurallarını yenmek için seçiciler
+   body.auth-split #auth-shell ile başlar; form alanları ve betiklerin kullandığı id'ler değişmedi. */
+
+body.auth-split,
+body.auth-split main,
+body.auth-split main.login-main {
+  background-color: #F6F5FB !important;
+}
+
+body.auth-split main .login-content,
+body.auth-split main > div {
+  min-height: 0 !important;
+  padding: 0 !important;
+  max-width: none !important;
+}
+
+body.auth-split #auth-shell {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: clamp(1rem, 3vw, 2.5rem) clamp(.75rem, 3vw, 2rem) clamp(2rem, 5vw, 4rem);
+}
+
+body.auth-split #auth-shell .auth-frame {
+  background-color: #D9D5F5 !important;
+  border-radius: 28px;
+  padding: clamp(.75rem, 4vw, 3.5rem);
+}
+
+body.auth-split #auth-shell .auth-panel {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 440px) clamp(120px, 14vw, 200px);
+  align-items: center;
+  gap: clamp(1.5rem, 3vw, 3rem);
+  min-height: 640px;
+  overflow: hidden;
+  border-radius: 22px;
+  background-color: #51409D !important;
+}
+
+/* Sol: başlık ve açıklama */
+body.auth-split #auth-shell .auth-copy {
+  padding: clamp(2.5rem, 5vw, 4.5rem) 0 clamp(2.5rem, 5vw, 4.5rem) clamp(1.75rem, 5vw, 4.5rem);
+  color: #FFFFFF !important;
+}
+
+body.auth-split #auth-shell .auth-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  margin: 0 0 1.25rem !important;
+  padding: .3rem .75rem;
+  border: 1px solid rgba(255, 255, 255, .35);
+  border-radius: 999px;
+  color: #EEECFF !important;
+  font-size: .78rem !important;
+  font-weight: 600 !important;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+body.auth-split #auth-shell .auth-title {
+  margin: 0 !important;
+  color: #FFFFFF !important;
+  font-family: "Instrument Serif", Georgia, "Times New Roman", serif !important;
+  font-size: clamp(2.3rem, 3.8vw, 3.6rem) !important;
+  font-weight: 400 !important;
+  line-height: 1.04 !important;
+  letter-spacing: -.015em !important;
+}
+
+body.auth-split #auth-shell .auth-title em {
+  color: #D9D5F5 !important;
+  font-family: inherit !important;
+  font-style: italic;
+}
+
+body.auth-split #auth-shell .auth-lead {
+  max-width: 30rem;
+  margin: 1.5rem 0 0 !important;
+  color: #E7E4FB !important;
+  font-size: 1rem !important;
+  line-height: 1.6 !important;
+}
+
+body.auth-split #auth-shell .auth-points {
+  display: grid;
+  gap: .7rem;
+  margin: 2rem 0 0 !important;
+  padding: 0 !important;
+  list-style: none;
+}
+
+body.auth-split #auth-shell .auth-points li {
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+  color: #FFFFFF !important;
+  font-size: .95rem !important;
+  line-height: 1.4 !important;
+}
+
+body.auth-split #auth-shell .auth-point-dot {
+  flex: 0 0 auto;
+  width: .55rem;
+  height: .55rem;
+  background-color: #BCB7F5 !important;
+  transform: rotate(45deg);
+}
+
+/* Orta: form kartı (tek beyaz yüzey) */
+body.auth-split #auth-shell .auth-form-col {
+  position: relative;
+  z-index: 1;
+  padding: clamp(1.5rem, 3vw, 2.5rem) 0;
+}
+
+body.auth-split #auth-shell #auth-card-stack {
+  box-sizing: border-box;
+  width: 100% !important;
+  max-width: 440px !important;
+  margin: 0 auto;
+  padding: clamp(1.5rem, 3vw, 2.25rem) !important;
+  border-radius: 20px;
+  background-color: #FFFFFF !important;
+  box-shadow: 0 24px 60px -24px rgba(23, 12, 74, .55);
+  gap: 1.25rem !important;
+}
+
+body.auth-split #auth-shell #auth-card-stack .login-card,
+body.auth-split #auth-shell #auth-card-stack > div[class*="bg-surface-container-lowest"] {
+  width: 100% !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+body.auth-split #auth-shell #auth-card-stack .registration-progress,
+body.auth-split #auth-shell #auth-card-stack [class*="w-[440px]"] {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+body.auth-split #auth-shell #auth-card-stack .registration-progress {
+  margin-bottom: 0 !important;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid #ECEAFB;
+}
+
+body.auth-split #auth-shell #auth-card-stack h1 {
+  color: #1C1A33 !important;
+}
+
+/* Kartın altındaki küçük satırlar (sürüm, danışman bağlantısı, e-posta notu) */
+body.auth-split #auth-shell #auth-card-stack > div:not(.login-card):not(.registration-progress):not([class*="bg-surface-container-lowest"]) {
+  margin-top: 0 !important;
+  padding: 0 !important;
+}
+
+/* Sağ: geometrik desen */
+body.auth-split #auth-shell .auth-geo {
+  align-self: stretch;
+  position: relative;
+  min-height: 100%;
+}
+
+body.auth-split #auth-shell .auth-geo-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+@media (max-width: 1100px) {
+  body.auth-split #auth-shell .auth-panel {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 420px);
+    padding-right: clamp(1.25rem, 3vw, 2.5rem);
+  }
+  body.auth-split #auth-shell .auth-geo {
+    display: none;
+  }
+}
+
+@media (max-width: 860px) {
+  body.auth-split #auth-shell .auth-panel {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
+    gap: 0;
+    padding: 0 clamp(1rem, 4vw, 2rem) clamp(1rem, 4vw, 2rem);
+  }
+  body.auth-split #auth-shell .auth-copy {
+    padding: 2.25rem .25rem 1.25rem;
+  }
+  body.auth-split #auth-shell .auth-points {
+    display: none;
+  }
+  body.auth-split #auth-shell .auth-form-col {
+    padding: .5rem 0 0;
+  }
+}
+
+@media (max-width: 480px) {
+  body.auth-split #auth-shell .auth-frame {
+    padding: .5rem;
+    border-radius: 20px;
+  }
+  body.auth-split #auth-shell .auth-panel {
+    border-radius: 16px;
+  }
+  body.auth-split #auth-shell #auth-card-stack {
+    padding: 1.25rem !important;
+  }
+}
+
+/* Kayıt "Devam et" düğmesi: giriş düğmesiyle aynı ana renk */
+body.auth-split #auth-shell #auth-card-stack #registerForm button[type="submit"][data-action="register"]:not(#auth-x) {
+  height: 48px !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  background-color: #6D28D9 !important;
+  color: #FFFFFF !important;
+  font-weight: 600 !important;
+  box-shadow: none !important;
+}
+body.auth-split #auth-shell #auth-card-stack #registerForm button[type="submit"][data-action="register"]:not(#auth-x):hover:not(:disabled) {
+  background-color: #51409D !important;
+}
+body.auth-split #auth-shell #auth-card-stack #registerForm button[type="submit"][data-action="register"]:not(#auth-x):focus-visible {
+  outline: 3px solid #51409D !important;
+  outline-offset: 2px;
+}
+
+/* Tam ekran: çerçeve ve yan boşluklar yok, panel başlığın altındaki alanı kaplar */
+body.auth-split #auth-shell {
+  max-width: none !important;
+  padding: 0 !important;
+}
+body.auth-split #auth-shell .auth-frame {
+  padding: 0 !important;
+  border-radius: 0 !important;
+  background-color: transparent !important;
+}
+body.auth-split #auth-shell .auth-panel {
+  min-height: calc(100vh - 4rem);
+  border-radius: 0 !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 460px) minmax(0, 1fr);
+}
+body.auth-split #auth-shell .auth-copy {
+  justify-self: end;
+  width: 100%;
+  max-width: 560px;
+}
+@media (max-width: 1100px) {
+  body.auth-split #auth-shell .auth-panel { grid-template-columns: minmax(0, 1fr) minmax(0, 420px); }
+  body.auth-split #auth-shell .auth-copy { justify-self: stretch; max-width: none; }
+}
+@media (max-width: 860px) {
+  body.auth-split #auth-shell .auth-panel { grid-template-columns: minmax(0, 1fr); min-height: calc(100vh - 4rem); }
+}
+@media (max-width: 480px) {
+  body.auth-split #auth-shell .auth-panel { border-radius: 0 !important; }
+}
+
+/* Giriş/kayıt ekranlarında başlıktaki "Hesap oluştur" düğmesi gösterilmez */
+body.auth-split .site-header-button--primary {
+  display: none !important;
+}

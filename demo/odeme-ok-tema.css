@@ -1,0 +1,123 @@
+/* odeme-ok-tema.css — "Ödemen alındı" sayfası: makbuz (bilet) kartı.
+   Kart ve makbuz özeti tek bir bilet gibi görünür: üstte onay simgesi + başlık, delikli kesme çizgisi,
+   altta makbuz satırları, danışman kutusu ve düğmeler. Yol haritası biletin altına iner.
+   DOM/JS değişmez (.payment-success-card display:contents ile içeriği yeniden sıralanır). */
+body.payment-success-page {
+  --ok-bg: linear-gradient(180deg, #F1EFFF 0%, #DCD6FA 100%) fixed;
+  --ok-deep: #2A1F5C; --ok-accent: #6D3FE0; --ok-ink: #1C1A33; --ok-muted: #6B6880; --ok-line: #E4E0F7;
+  --ok-w: 30rem;
+}
+body.payment-success-page:not(#ok-a):not(#ok-b):not(#ok-c):not(#ok-d):not(#ok-e),
+body.payment-success-page .payment-success-main:not(#ok-a):not(#ok-b):not(#ok-c):not(#ok-d):not(#ok-e) { background: var(--ok-bg) !important; }
+body.payment-success-page .payment-success-content:not(#ok-a):not(#ok-b):not(#ok-c):not(#ok-d):not(#ok-e) { gap: 0 !important; padding-top: 3rem !important; padding-bottom: 4rem !important; }
+body.payment-success-page section.payment-success-card:not(#ok-a):not(#ok-b):not(#ok-c):not(#ok-d):not(#ok-e) { display: contents !important; }
+
+/* Bilet parçaları: ortak beyaz zemin, aynı genişlik */
+body.payment-success-page .payment-success-card > div:first-child:not(#ok-a):not(#ok-b):not(#ok-c):not(#ok-d):not(#ok-e),
+body.payment-success-page .payment-success-receipt:not(#ok-a):not(#ok-b):not(#ok-c):not(#ok-d):not(#ok-e),
+body.payment-success-page .payment-success-advisor:not(#ok-a):not(#ok-b):not(#ok-c):not(#ok-d):not(#ok-e),
+body.payment-success-page .payment-success-actions:not(#ok-a):not(#ok-b):not(#ok-c):not(#ok-d):not(#ok-e) {
+  width: 100% !important; max-width: var(--ok-w) !important; margin: 0 !important;
+  background: #FFFFFF !important; border: 0 !important; border-radius: 0 !important; box-shadow: none !important;
+}
+body.payment-success-page .payment-success-card > div:first-child:not(#ok-a):not(#ok-b):not(#ok-c):not(#ok-d):not(#ok-e) {
+  order: 1; padding: 2.25rem 2rem 1.25rem !important; border-radius: 20px 20px 0 0 !important;
+  box-shadow: 0 -10px 30px -24px rgba(42,31,92,.35) !important;
+}
+body.payment-success-page .payment-success-receipt:not(#ok-a):not(#ok-b):not(#ok-c):not(#ok-d):not(#ok-e) { order: 2; position: relative; padding: .5rem 2rem 0 !important; }
+body.payment-success-page .payment-success-advisor:not(#ok-a):not(#ok-b):not(#ok-c):not(#ok-d):not(#ok-e) { order: 3; padding: 1rem 2rem 0 !important; }
+body.payment-success-page .payment-success-actions:not(#ok-a):not(#ok-b):not(#ok-c):not(#ok-d):not(#ok-e) {
+  order: 4; padding: 1.25rem 2rem 2rem !important; border-radius: 0 0 20px 20px !important;
+  box-shadow: 0 24px 40px -28px rgba(42,31,92,.45) !important;
+}
+body.payment-success-page .payment-success-next:not(#ok-a):not(#ok-b):not(#ok-c):not(#ok-d):not(#ok-e) { order: 5; margin-top: 2.5rem !important; }
+body.payment-success-page .payment-success-reference { order: 6; }
+
+/* Üst: onay rozeti + başlık */
+body.payment-success-page .payment-success-icon:not(#ok-a):not(#ok-b):not(#ok-c):not(#ok-d):not(#ok-e) {
+  display: grid; place-items: center; width: 4.5rem !important; height: 4.5rem !important; margin: 0 auto 1rem !important;
+  border-radius: 50%; background: #EEECFF !important; box-shadow: none !important;
+}
+body.payment-success-page .payment-success-icon svg:not(#ok-a):not(#ok-b):not(#ok-c):not(#ok-d):not(#ok-e) { width: 2.6rem !important; height: 2.6rem !important; }
+body.payment-success-page .payment-success-icon svg circle { fill: var(--ok-accent) !important; }
+body.payment-success-page .payment-success-icon svg .payment-success-check { stroke-width: 9 !important; }
+body.payment-success-page .payment-success-title:not(#ok-a):not(#ok-b):not(#ok-c):not(#ok-d):not(#ok-e) { order: -1; margin: 0 !important; font-family: Outfit, sans-serif !important; font-size: 1.45rem !important; font-weight: 600 !important; color: var(--ok-ink) !important; }
+body.payment-success-page .payment-success-thanks:not(#ok-a):not(#ok-b):not(#ok-c):not(#ok-d):not(#ok-e) { order: 0; margin: .25rem 0 0 !important; color: var(--ok-muted) !important; font-size: .92rem !important; font-weight: 500 !important; text-transform: none !important; letter-spacing: 0 !important; }
+body.payment-success-page .payment-success-card > div:first-child > .payment-success-icon { order: -2; }
+body.payment-success-page .payment-success-intro:not(#ok-a):not(#ok-b):not(#ok-c):not(#ok-d):not(#ok-e) { order: 1; margin: .9rem 0 0 !important; color: var(--ok-muted) !important; font-size: .88rem !important; line-height: 1.55 !important; }
+body.payment-success-page .payment-success-intro strong { color: var(--ok-ink) !important; }
+
+/* Kesme çizgisi + yan delikler */
+body.payment-success-page .payment-success-receipt-heading:not(#ok-a):not(#ok-b):not(#ok-c):not(#ok-d):not(#ok-e) {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  margin: 0 0 .9rem !important; padding: 0 0 .9rem !important; border: 0 !important; border-bottom: 1px solid var(--ok-line) !important;
+}
+body.payment-success-page .payment-success-receipt-heading .payment-success-section-label { display: none !important; }
+body.payment-success-page .payment-success-receipt-heading h2:not(#ok-a):not(#ok-b):not(#ok-c):not(#ok-d):not(#ok-e) { margin: 0 !important; font-family: Outfit, sans-serif !important; font-size: .95rem !important; font-weight: 600 !important; color: var(--ok-ink) !important; }
+body.payment-success-page .payment-success-print:not(#ok-a):not(#ok-b):not(#ok-c):not(#ok-d):not(#ok-e) {
+  display: inline-flex; align-items: center; gap: .3rem; padding: .3rem .75rem !important; min-height: 0 !important;
+  border: 1px solid var(--ok-line) !important; border-radius: 999px !important; background: #FFFFFF !important;
+  color: var(--ok-accent) !important; font-size: .78rem !important; font-weight: 600 !important; box-shadow: none !important;
+}
+body.payment-success-page .payment-success-print .material-symbols-outlined { font-size: 1rem !important; color: inherit !important; }
+
+/* Makbuz satırları: sol etiket, sağ değer; toplamdan önce kesme çizgisi */
+body.payment-success-page .payment-success-receipt-grid:not(#ok-a):not(#ok-b):not(#ok-c):not(#ok-d):not(#ok-e) { display: flex !important; flex-direction: column; gap: .75rem !important; margin: 0 !important; }
+body.payment-success-page .payment-success-receipt-grid > div:not(#ok-a):not(#ok-b):not(#ok-c):not(#ok-d):not(#ok-e) {
+  display: flex !important; align-items: baseline; justify-content: space-between; gap: 1rem;
+  padding: 0 !important; border: 0 !important; background: transparent !important; box-shadow: none !important;
+}
+body.payment-success-page .payment-success-receipt-grid dt:not(#ok-a):not(#ok-b):not(#ok-c):not(#ok-d):not(#ok-e) { color: var(--ok-muted) !important; font-size: .86rem !important; font-weight: 400 !important; text-transform: none !important; letter-spacing: 0 !important; }
+body.payment-success-page .payment-success-receipt-grid dd:not(#ok-a):not(#ok-b):not(#ok-c):not(#ok-d):not(#ok-e) { margin: 0 !important; color: var(--ok-ink) !important; font-size: .88rem !important; font-weight: 500 !important; text-align: right; }
+body.payment-success-page .payment-success-receipt-grid > div:nth-child(3):not(#ok-a):not(#ok-b):not(#ok-c):not(#ok-d):not(#ok-e) {
+  position: relative; margin-top: .8rem; padding-top: 1.55rem !important;
+  background: linear-gradient(90deg, #D6D0F2 55%, transparent 0) top / 14px 2px repeat-x !important;
+}
+body.payment-success-page .payment-success-receipt-grid > div:nth-child(3)::before,
+body.payment-success-page .payment-success-receipt-grid > div:nth-child(3)::after {
+  content: ""; position: absolute; top: -.75rem; width: 1.5rem; height: 1.5rem; border-radius: 50%; background: var(--ok-bg);
+}
+body.payment-success-page .payment-success-receipt-grid > div:nth-child(3)::before { left: -2.75rem; }
+body.payment-success-page .payment-success-receipt-grid > div:nth-child(3)::after { right: -2.75rem; }
+body.payment-success-page .payment-success-receipt-total dd:not(#ok-a):not(#ok-b):not(#ok-c):not(#ok-d):not(#ok-e) { font-family: Outfit, sans-serif !important; font-size: 1.25rem !important; font-weight: 600 !important; color: var(--ok-accent) !important; }
+body.payment-success-page .payment-success-receipt-total dd span { margin-left: .3rem; color: var(--ok-muted) !important; font-family: Onest, sans-serif; font-size: .72rem !important; font-weight: 400; }
+
+/* Danışman kutusu: gri bilgi kutusu */
+body.payment-success-page .payment-success-advisor:not(#ok-a):not(#ok-b):not(#ok-c):not(#ok-d):not(#ok-e) { display: grid !important; grid-template-columns: auto minmax(0,1fr) auto auto; align-items: center; gap: .7rem; }
+body.payment-success-page .payment-success-advisor::before {
+  content: ""; grid-area: 1 / 1 / 2 / -1; align-self: stretch; margin: -.85rem -1rem; border-radius: 14px; background: #F3F1FB; z-index: 0;
+}
+body.payment-success-page .payment-success-advisor > *:not(#ok-a):not(#ok-b):not(#ok-c):not(#ok-d):not(#ok-e) { position: relative; z-index: 1; grid-row: 1; }
+body.payment-success-page .payment-success-advisor:not(#ok-a):not(#ok-b):not(#ok-c):not(#ok-d):not(#ok-e) { padding-top: 2rem !important; padding-bottom: .85rem !important; }
+body.payment-success-page .payment-success-advisor-copy strong:not(#ok-a):not(#ok-b):not(#ok-c):not(#ok-d):not(#ok-e) { color: var(--ok-ink) !important; font-size: .9rem !important; }
+body.payment-success-page .payment-success-advisor-copy span:not(#ok-a):not(#ok-b):not(#ok-c):not(#ok-d):not(#ok-e) { color: var(--ok-muted) !important; font-size: .8rem !important; }
+body.payment-success-page .payment-success-duration:not(#ok-a):not(#ok-b):not(#ok-c):not(#ok-d):not(#ok-e),
+body.payment-success-page .payment-success-session-count:not(#ok-a):not(#ok-b):not(#ok-c):not(#ok-d):not(#ok-e) { padding: .2rem .6rem !important; border: 0 !important; border-radius: 999px !important; background: #FFFFFF !important; color: var(--ok-deep) !important; font-size: .75rem !important; font-weight: 600 !important; }
+
+/* Düğmeler */
+body.payment-success-page .payment-success-note:not(#ok-a):not(#ok-b):not(#ok-c):not(#ok-d):not(#ok-e) { width: 100% !important; margin: 0 0 1rem !important; padding: 0 !important; border: 0 !important; background: transparent !important; color: var(--ok-muted) !important; font-size: .8rem !important; justify-content: center; text-align: center; }
+body.payment-success-page a.payment-success-primary:not(#ok-a):not(#ok-b):not(#ok-c):not(#ok-d):not(#ok-e) { min-height: 3.2rem !important; border-radius: 14px !important; background: var(--ok-accent) !important; color: #FFFFFF !important; font-weight: 600 !important; border: 0 !important; box-shadow: 0 14px 28px -16px rgba(109,63,224,.9) !important; }
+body.payment-success-page a.payment-success-primary:not(#ok-a):not(#ok-b):not(#ok-c):not(#ok-d):not(#ok-e):hover { background: var(--ok-deep) !important; }
+body.payment-success-page a.payment-success-primary * { color: inherit !important; }
+body.payment-success-page a.payment-success-secondary:not(#ok-a):not(#ok-b):not(#ok-c):not(#ok-d):not(#ok-e) { min-height: 3rem !important; margin-top: .6rem !important; border: 0 !important; border-radius: 14px !important; background: #F1EEFD !important; color: var(--ok-accent) !important; font-weight: 600 !important; }
+
+/* Yol haritası: biletin altında sade kart */
+body.payment-success-page .payment-success-next:not(#ok-a):not(#ok-b):not(#ok-c):not(#ok-d):not(#ok-e) { max-width: 46rem !important; border-radius: 20px !important; border: 1px solid var(--ok-line) !important; background: rgba(255,255,255,.75) !important; box-shadow: none !important; }
+
+@media (max-width: 560px) {
+  body.payment-success-page .payment-success-card > div:first-child:not(#ok-a):not(#ok-b):not(#ok-c):not(#ok-d):not(#ok-e),
+  body.payment-success-page .payment-success-receipt:not(#ok-a):not(#ok-b):not(#ok-c):not(#ok-d):not(#ok-e),
+  body.payment-success-page .payment-success-advisor:not(#ok-a):not(#ok-b):not(#ok-c):not(#ok-d):not(#ok-e),
+  body.payment-success-page .payment-success-actions:not(#ok-a):not(#ok-b):not(#ok-c):not(#ok-d):not(#ok-e) { padding-left: 1.25rem !important; padding-right: 1.25rem !important; }
+  body.payment-success-page .payment-success-receipt-grid > div:nth-child(3)::before { left: -2rem; }
+  body.payment-success-page .payment-success-receipt-grid > div:nth-child(3)::after { right: -2rem; }
+  body.payment-success-page .payment-success-advisor:not(#ok-a):not(#ok-b):not(#ok-c):not(#ok-d):not(#ok-e) { grid-template-columns: auto minmax(0,1fr); }
+  body.payment-success-page .payment-success-duration,
+  body.payment-success-page .payment-success-session-count { display: none !important; }
+}
+body.payment-success-page .payment-success-advisor > .payment-success-advisor-avatar { grid-column: 1; }
+body.payment-success-page .payment-success-advisor > .payment-success-advisor-copy { grid-column: 2; }
+body.payment-success-page .payment-success-advisor > .payment-success-duration { grid-column: 3; }
+body.payment-success-page .payment-success-advisor > .payment-success-session-count { grid-column: 4; }
+body.payment-success-page .payment-success-advisor::before { grid-column: 1 / 5 !important; }
+@media (max-width: 560px) { body.payment-success-page .payment-success-advisor::before { grid-column: 1 / 3 !important; } }

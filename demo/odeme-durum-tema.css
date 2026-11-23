@@ -1,0 +1,69 @@
+/* odeme-durum-tema.css — "Ödemen kontrol ediliyor" (odeme-bekle) ve "Ödeme tamamlanamadı" (odeme-hata):
+   odeme-ok ile aynı bilet kartı. DOM/JS değişmez; yalnız body sınıfı eklendi. */
+body.payment-status-page {
+  --os-bg: linear-gradient(180deg, #F1EFFF 0%, #DCD6FA 100%) fixed;
+  --os-deep: #2A1F5C; --os-accent: #6D3FE0; --os-ink: #1C1A33; --os-muted: #6B6880;
+}
+body.payment-status-page:not(#os-a):not(#os-b):not(#os-c):not(#os-d):not(#os-e),
+body.payment-status-page main:not(#os-a):not(#os-b):not(#os-c):not(#os-d):not(#os-e) { background: var(--os-bg) !important; }
+body.payment-status-page main .max-w-\[560px\]:not(#os-a):not(#os-b):not(#os-c):not(#os-d):not(#os-e) {
+  max-width: 30rem !important; padding: 2.5rem 2rem 2rem !important;
+  border: 0 !important; border-radius: 20px !important; background: #FFFFFF !important;
+  box-shadow: 0 24px 48px -30px rgba(42,31,92,.45) !important;
+}
+/* Rozet */
+body.payment-status-page main .max-w-\[560px\] > div:first-child:not(#os-a):not(#os-b):not(#os-c):not(#os-d):not(#os-e) {
+  width: 4.5rem !important; height: 4.5rem !important; margin-bottom: 1.1rem !important; background: #EEECFF !important;
+}
+body.payment-status-page main .max-w-\[560px\] > div:first-child .material-symbols-outlined:not(#os-a):not(#os-b):not(#os-c):not(#os-d):not(#os-e) {
+  display: grid; place-items: center; width: 2.6rem; height: 2.6rem; border-radius: 50%;
+  background: var(--os-accent) !important; color: #FFFFFF !important; font-size: 1.6rem !important;
+  font-variation-settings: 'FILL' 0, 'wght' 500;
+}
+body.payment-pending main .max-w-\[560px\] > div:first-child { position: relative; }
+body.payment-pending main .max-w-\[560px\] > div:first-child::after {
+  content: ""; position: absolute; inset: 0; border-radius: 50%;
+  border: 3px solid transparent; border-top-color: var(--os-accent); animation: os-spin 1.1s linear infinite;
+}
+@keyframes os-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { body.payment-pending main .max-w-\[560px\] > div:first-child::after { animation: none; } }
+body.payment-failed main .max-w-\[560px\] > div:first-child:not(#os-a):not(#os-b):not(#os-c):not(#os-d):not(#os-e) { background: #FDECF3 !important; }
+body.payment-failed main .max-w-\[560px\] > div:first-child .material-symbols-outlined:not(#os-a):not(#os-b):not(#os-c):not(#os-d):not(#os-e) { background: #D83278 !important; }
+
+/* Metin */
+body.payment-status-page main .max-w-\[560px\] h1:not(#os-a):not(#os-b):not(#os-c):not(#os-d):not(#os-e) {
+  margin-bottom: .5rem !important; font-family: Outfit, sans-serif !important; font-size: 1.45rem !important; font-weight: 600 !important; color: var(--os-ink) !important;
+}
+body.payment-status-page main .max-w-\[560px\] h1 + p:not(#os-a):not(#os-b):not(#os-c):not(#os-d):not(#os-e) {
+  margin-bottom: 1.75rem !important; color: var(--os-muted) !important; font-size: .92rem !important; line-height: 1.6 !important;
+}
+
+/* Kesme çizgisi + delikler, altında düğmeler */
+body.payment-status-page main .max-w-\[560px\] > div:last-child:not(#os-a):not(#os-b):not(#os-c):not(#os-d):not(#os-e) {
+  position: relative; width: calc(100% + 4rem) !important; margin: 0 -2rem !important; padding: 1.75rem 2rem 0 !important;
+  background:
+    linear-gradient(#FFFFFF, #FFFFFF) top left / 2rem 2px no-repeat,
+    linear-gradient(#FFFFFF, #FFFFFF) top right / 2rem 2px no-repeat,
+    linear-gradient(90deg, #D6D0F2 55%, transparent 0) top center / 14px 2px repeat-x !important;
+}
+body.payment-status-page main .max-w-\[560px\] > div:last-child::before,
+body.payment-status-page main .max-w-\[560px\] > div:last-child::after {
+  content: ""; position: absolute; top: -.75rem; width: 1.5rem; height: 1.5rem; border-radius: 50%; background: var(--os-bg);
+}
+body.payment-status-page main .max-w-\[560px\] > div:last-child::before { left: -.75rem; }
+body.payment-status-page main .max-w-\[560px\] > div:last-child::after { right: -.75rem; }
+body.payment-status-page main .max-w-\[560px\] button:not(#os-a):not(#os-b):not(#os-c):not(#os-d):not(#os-e) {
+  height: 3.2rem !important; border: 0 !important; border-radius: 14px !important; background: var(--os-accent) !important; color: #FFFFFF !important;
+  font-weight: 600 !important; box-shadow: 0 14px 28px -16px rgba(109,63,224,.9) !important;
+}
+body.payment-status-page main .max-w-\[560px\] button:not(#os-a):not(#os-b):not(#os-c):not(#os-d):not(#os-e):hover { background: var(--os-deep) !important; }
+body.payment-status-page main .max-w-\[560px\] > div:last-child a:not(#os-a):not(#os-b):not(#os-c):not(#os-d):not(#os-e) {
+  width: 100%; min-height: 3rem; padding: 0 !important; border-radius: 14px; background: #F1EEFD !important;
+  color: var(--os-accent) !important; font-size: .95rem !important; font-weight: 600 !important; text-decoration: none !important;
+}
+body.payment-status-page main .max-w-\[560px\] > div:last-child a:not(#os-a):not(#os-b):not(#os-c):not(#os-d):not(#os-e):hover { background: #E6E0FB !important; }
+body.payment-status-page [data-payment-reference]:not(#os-a):not(#os-b):not(#os-c):not(#os-d):not(#os-e) { color: var(--os-muted) !important; font-size: .8rem !important; }
+@media (max-width: 560px) {
+  body.payment-status-page main .max-w-\[560px\]:not(#os-a):not(#os-b):not(#os-c):not(#os-d):not(#os-e) { padding: 2rem 1.25rem 1.5rem !important; }
+  body.payment-status-page main .max-w-\[560px\] > div:last-child:not(#os-a):not(#os-b):not(#os-c):not(#os-d):not(#os-e) { width: calc(100% + 2.5rem) !important; margin: 0 -1.25rem !important; padding: 1.5rem 1.25rem 0 !important; }
+}

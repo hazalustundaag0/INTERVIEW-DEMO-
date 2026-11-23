@@ -1,0 +1,105 @@
+/* profil-foto.css — Aday profil fotoğrafı bloğu (83, Etap 4 · K83/K90/K91, GAP-B23).
+   Ultraviolet token'larıyla (theme.css :root); Hazal'ın profil formu alan düzenini izler
+   (etiket + "(İsteğe bağlı)" + 13 px yardımcı metin). Avatar dairesi ortak avatar.css'ten. */
+
+.profile-photo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-card);
+  background: var(--color-paper);
+}
+
+body[class] .profile-photo .profile-photo-avatar.demo-avatar {
+  width: 4rem !important;
+  height: 4rem !important;
+  min-width: 4rem;
+  font-size: 1.25rem !important;
+}
+
+.profile-photo-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  min-width: 0;
+}
+
+.profile-photo-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  margin-top: 0.25rem;
+}
+
+/* Genel düğme kuralları (theme.css) !important taşıdığı için kapsamlı ve eşit öncelikli. */
+body[class] .profile-photo .profile-photo-button {
+  min-height: 2.5rem;
+  padding: 0.5rem 1.125rem;
+  border: 1px solid var(--color-rule-2) !important;
+  border-radius: var(--radius-pill) !important;
+  background: var(--color-paper-2) !important;
+  color: var(--color-ink) !important;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+body[class] .profile-photo .profile-photo-button:hover:not(:disabled) {
+  background: var(--color-accent-soft) !important;
+}
+
+body[class] .profile-photo .profile-photo-remove {
+  min-height: 2.5rem;
+  padding: 0.5rem 0.25rem;
+  border: 0 !important;
+  background: transparent !important;
+  color: var(--color-accent-deep) !important;
+  font-size: 0.875rem;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  cursor: pointer;
+}
+
+body[class] .profile-photo :is(.profile-photo-button, .profile-photo-remove):focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+body[class] .profile-photo :is(.profile-photo-button, .profile-photo-remove):disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.profile-photo-status:empty {
+  display: none;
+}
+
+.profile-photo .api-alert {
+  margin-top: 0.25rem;
+}
+
+body[class] .profile-photo :is(.profile-photo-button, .profile-photo-remove) {
+  white-space: nowrap;
+}
+
+.profile-photo-body > div:first-child {
+  flex-wrap: wrap;
+}
+
+/* Dar ekranda avatar üstte, metin ve düğmeler tam genişlikte. */
+@media (max-width: 480px) {
+  .profile-photo {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .profile-photo-body {
+    width: 100%;
+  }
+}
+
+/* Form alan etiketleriyle aynı mürekkep rengi (text-tertiary vurgu rengine eşlenir). */
+.profile-photo .profile-photo-title {
+  color: var(--color-ink);
+}

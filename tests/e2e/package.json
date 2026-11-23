@@ -1,0 +1,15 @@
+{
+  "name": "interview-demo-e2e",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Interview Demo Etap 2 tarayıcı (Playwright + Chromium) uçtan uca testleri — K65",
+  "type": "module",
+  "scripts": {
+    "install-browser": "playwright install chromium",
+    "s1": "node s1-public.mjs",
+    "test": "node run-all.mjs"
+  },
+  "devDependencies": {
+    "playwright": "1.48.2"
+  }
+}

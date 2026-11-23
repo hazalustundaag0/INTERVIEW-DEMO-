@@ -1,0 +1,194 @@
+/* guru-profil-tema.css — Danışman "Profilim" (guru-profil.html).
+   Aday Profilim (profil.css) ile aynı dil: desenli zemin, beyaz kartlar, beyaz alanlar, mor vurgu.
+   DOM'a dokunmaz (guru-profil.js aynı kalır). theme.css'i aşmak için seçiciler :not(#gr-*) ile güçlendirildi. */
+
+body.guru-profile-editor {
+  --gr-ink: #0F0A1C;
+  --gr-ink-2: #475569;
+  --gr-accent: #6D3FE0;
+  --gr-deep: #2A1F5C;
+  --gr-rule: rgba(109, 40, 217, .14);
+  --gr-field: #D9D2EE;
+  --gr-soft: #F8F6FE;
+  --gr-tint: #EEECFF;
+}
+
+/* ─── Başlık + tamamlanma ───────────────────────────────────────────────── */
+body.guru-profile-editor main .guru-profile-heading:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) { display: grid !important; grid-template-columns: minmax(0, 1fr) minmax(260px, 340px); align-items: end; column-gap: 24px; row-gap: 6px; margin-bottom: 20px !important; }
+body.guru-profile-editor main .guru-profile-heading h1:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) {
+  grid-column: 1; margin: 0 !important; font-family: Outfit, ui-sans-serif, system-ui, sans-serif !important;
+  font-size: clamp(1.6rem, 1.2rem + 1vw, 2rem) !important; font-weight: 500 !important; letter-spacing: -.01em; color: var(--gr-ink) !important;
+}
+body.guru-profile-editor main .guru-profile-heading > p:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) { grid-column: 1; margin: 0 !important; color: var(--gr-ink-2) !important; font-size: 15px !important; }
+body.guru-profile-editor main .guru-profile-completion:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) {
+  grid-column: 2; grid-row: 1 / span 2; align-self: stretch;
+  background: #FFFFFF !important; border: 1px solid var(--gr-rule) !important; border-radius: 16px !important;
+  box-shadow: none !important; padding: 14px 16px !important; margin: 0 !important;
+}
+body.guru-profile-editor main .guru-profile-completion h2:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) { font-size: 13px !important; font-weight: 600 !important; color: var(--gr-ink) !important; }
+body.guru-profile-editor main #guru-profile-completion-value:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) { font-family: Outfit, ui-sans-serif, sans-serif !important; color: var(--gr-accent) !important; font-weight: 600 !important; }
+body.guru-profile-editor main .guru-profile-completion-track:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) { height: 6px !important; border-radius: 999px !important; background: var(--gr-tint) !important; border: 0 !important; margin: 10px 0 !important; overflow: hidden; }
+body.guru-profile-editor main #guru-profile-completion-fill:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) { background: var(--gr-accent) !important; border-radius: 999px !important; }
+body.guru-profile-editor main #guru-profile-missing:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) { font-size: 12px !important; color: var(--gr-ink-2) !important; }
+body.guru-profile-editor main #guru-profile-missing a:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) { color: var(--gr-accent) !important; font-weight: 500; }
+
+/* ─── İki sütun ─────────────────────────────────────────────────────────── */
+body.guru-profile-editor main .guru-profile-columns:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) { gap: 24px !important; align-items: start !important; }
+
+/* Form kartı */
+body.guru-profile-editor main .guru-profile-form-card:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) {
+  background: #FFFFFF !important; border: 1px solid var(--gr-rule) !important; border-radius: 20px !important;
+  box-shadow: 0 2px 4px rgba(15, 10, 28, .03), 0 18px 40px -18px rgba(109, 40, 217, .18) !important;
+  padding: 26px 32px 0 !important; overflow: visible !important;
+}
+body.guru-profile-editor main .guru-profile-form-card > .api-alert:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) { border-radius: 12px !important; margin: 0 0 16px !important; position: static !important; }
+
+/* Sekmeler: CV'm / danışan detayı ile aynı */
+body.guru-profile-editor main .guru-profile-tabs-shell:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) { background: none !important; border: 0 !important; box-shadow: none !important; padding: 0 !important; overflow: visible !important; }
+body.guru-profile-editor main .guru-profile-tabs:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) { display: flex !important; gap: 4px !important; border-bottom: 1px solid var(--gr-rule) !important; background: none !important; padding: 0 !important; overflow-x: auto; }
+body.guru-profile-editor main .guru-profile-tab:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) {
+  display: inline-flex !important; align-items: center; gap: 8px; flex: none;
+  background: transparent !important; border: 0 !important; border-bottom: 2px solid transparent !important; border-radius: 0 !important;
+  padding: 10px 14px !important; margin-bottom: -1px !important; color: var(--gr-ink-2) !important; font-weight: 500 !important; box-shadow: none !important;
+}
+body.guru-profile-editor main .guru-profile-tab[aria-selected="true"]:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) { color: var(--gr-accent) !important; border-bottom-color: var(--gr-accent) !important; font-weight: 600 !important; }
+body.guru-profile-editor main .guru-profile-tab:not([aria-selected="true"]):hover:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) { color: var(--gr-ink) !important; }
+body.guru-profile-editor main .guru-profile-tab-dot:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) { width: 6px !important; height: 6px !important; border-radius: 999px !important; background: #C9C1E3 !important; }
+body.guru-profile-editor main .guru-profile-tab[aria-selected="true"] .guru-profile-tab-dot:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) { background: var(--gr-accent) !important; }
+
+body.guru-profile-editor main .guru-profile-tab-panels:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) { padding: 24px 0 8px !important; }
+
+/* Fotoğraf kutusu (aday Profilim'deki gibi) */
+body.guru-profile-editor main .guru-profile-photo:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) {
+  background: var(--gr-soft) !important; border: 1px solid var(--gr-rule) !important; border-radius: 16px !important;
+  box-shadow: none !important; padding: 18px 20px !important; margin-bottom: 26px !important;
+}
+body.guru-profile-editor main .guru-profile-photo-avatar:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) {
+  background: #FFFFFF !important; color: var(--gr-deep) !important; border: 1.5px solid var(--gr-field) !important;
+  box-shadow: 0 0 0 4px rgba(109, 63, 224, .08) !important;
+}
+body.guru-profile-editor main .guru-profile-photo-body strong:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d), body.guru-profile-editor main .guru-profile-photo-body h3:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) { color: var(--gr-ink) !important; font-weight: 600 !important; }
+body.guru-profile-editor main .guru-profile-photo-body p:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) { color: var(--gr-ink-2) !important; }
+body.guru-profile-editor main .guru-profile-photo-upload:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d), body.guru-profile-editor main .guru-profile-photo-remove:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) {
+  background: #FFFFFF !important; color: var(--gr-ink) !important; border: 1.5px solid var(--gr-field) !important;
+  border-radius: 999px !important; box-shadow: none !important; font-weight: 500 !important;
+}
+body.guru-profile-editor main .guru-profile-photo-upload:not(:disabled):hover:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) { border-color: var(--gr-accent) !important; color: var(--gr-accent) !important; }
+
+/* Bölüm başlıkları ve alanlar */
+body.guru-profile-editor main .guru-profile-editor-section h2:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) {
+  font-family: Outfit, ui-sans-serif, sans-serif !important; font-weight: 500 !important; font-size: 18px !important;
+  color: var(--gr-ink) !important; margin-bottom: 14px !important;
+}
+body.guru-profile-editor main .guru-profile-section-body:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) { gap: 20px !important; }
+body.guru-profile-editor main .guru-profile-field label:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d), body.guru-profile-editor main .guru-profile-section-body label:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) {
+  color: var(--gr-ink) !important; font-weight: 600 !important; font-size: 14px !important; letter-spacing: 0 !important; text-transform: none !important;
+}
+body.guru-profile-editor main .guru-profile-field > input[type="text"]:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d),
+body.guru-profile-editor main .guru-profile-field > textarea:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d),
+body.guru-profile-editor main .guru-profile-tag-input-box:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) {
+  width: 100% !important; max-width: none !important;
+  background: #FFFFFF !important; border: 1.5px solid var(--gr-field) !important; border-radius: 14px !important;
+  color: var(--gr-ink) !important; box-shadow: none !important;
+}
+body.guru-profile-editor main .guru-profile-field > input[type="text"]:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) { height: 46px !important; padding: 0 14px !important; }
+body.guru-profile-editor main .guru-profile-field > input:focus:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d),
+body.guru-profile-editor main .guru-profile-field > textarea:focus:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d),
+body.guru-profile-editor main .guru-profile-tag-input-box:focus-within:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) {
+  border-color: var(--gr-accent) !important; box-shadow: 0 0 0 4px rgba(109, 63, 224, .12) !important; outline: none !important;
+}
+body.guru-profile-editor main .guru-profile-field > input:disabled:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d), body.guru-profile-editor main .guru-profile-field > input[readonly]:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) { background: var(--gr-soft) !important; color: var(--gr-ink-2) !important; }
+body.guru-profile-editor main .guru-profile-tag-input-box:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 7px 10px !important; min-height: 46px; }
+body.guru-profile-editor main .guru-profile-tag-input-box input:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) {
+  flex: 1; min-width: 160px; border: 0 !important; background: transparent !important; box-shadow: none !important; outline: none !important;
+  padding: 4px !important; height: auto !important; color: var(--gr-ink) !important; border-radius: 0 !important;
+}
+body.guru-profile-editor main .guru-profile-tag-input-box :is(span, li, button):not(.material-symbols-outlined):not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) {
+  border-radius: 999px !important;
+}
+body.guru-profile-editor main .guru-profile-field input::placeholder, body.guru-profile-editor main .guru-profile-tag-input-box input::placeholder { color: #9A93B3 !important; }
+body.guru-profile-editor main .guru-profile-field p:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d), body.guru-profile-editor main .guru-profile-section-body > p:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) { color: #6B6585 !important; font-size: 13px !important; }
+
+/* Alt eylem çubuğu: kartın içinde, aşağıya yapışık */
+body.guru-profile-editor main .guru-profile-action-bar:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) {
+  position: sticky !important; bottom: 0 !important; left: auto !important; right: auto !important; transform: none !important;
+  width: auto !important; margin: 8px -32px 0 !important; padding: 16px 32px !important;
+  display: flex !important; align-items: center !important; justify-content: space-between !important; gap: 12px;
+  background: rgba(255, 255, 255, .96) !important; border: 0 !important; border-top: 1px solid var(--gr-rule) !important;
+  border-radius: 0 0 20px 20px !important; box-shadow: none !important; z-index: 5;
+}
+body.guru-profile-editor main .guru-profile-change-status:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) { color: var(--gr-ink-2) !important; font-size: 14px !important; }
+body.guru-profile-editor main .guru-profile-action-buttons:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) { display: flex !important; gap: 10px !important; }
+body.guru-profile-editor main .guru-profile-cancel:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d), body.guru-profile-editor main .guru-profile-save:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) {
+  height: 46px !important; padding: 0 24px !important; border-radius: 999px !important;
+  font-family: Outfit, ui-sans-serif, sans-serif !important; font-weight: 500 !important;
+}
+body.guru-profile-editor main .guru-profile-cancel:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) { background: #FFFFFF !important; color: var(--gr-ink) !important; border: 1.5px solid var(--gr-field) !important; box-shadow: none !important; }
+body.guru-profile-editor main .guru-profile-cancel:not(:disabled):hover:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) { border-color: var(--gr-accent) !important; color: var(--gr-accent) !important; }
+body.guru-profile-editor main .guru-profile-save:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) { background: var(--gr-accent) !important; color: #FFFFFF !important; border: 0 !important; box-shadow: 0 10px 24px -12px rgba(109, 63, 224, .7) !important; }
+body.guru-profile-editor main .guru-profile-save:not(:disabled):hover:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) { background: var(--gr-deep) !important; }
+body.guru-profile-editor main .guru-profile-save:disabled:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) { background: #CFC6F0 !important; box-shadow: none !important; }
+
+/* ─── Sağ: danışanın göreceği önizleme ─────────────────────────────────── */
+body.guru-profile-editor main .guru-profile-preview:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) {
+  background: #FFFFFF !important; border: 1px solid var(--gr-rule) !important; border-radius: 20px !important;
+  box-shadow: 0 1px 2px rgba(15, 10, 28, .04) !important; padding: 22px !important; top: 24px !important;
+}
+body.guru-profile-editor main .guru-profile-preview-header h2:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) { font-family: Outfit, ui-sans-serif, sans-serif !important; font-weight: 500 !important; font-size: 16px !important; color: var(--gr-ink) !important; }
+body.guru-profile-editor main .guru-profile-visitor-preview:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) { color: var(--gr-accent) !important; font-weight: 500 !important; }
+body.guru-profile-editor main .guru-profile-publish-toggle:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) { color: var(--gr-ink) !important; font-weight: 500 !important; }
+body.guru-profile-editor main .guru-profile-publish-toggle input:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) { accent-color: var(--gr-accent); }
+body.guru-profile-editor main .guru-profile-preview-card:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) {
+  background: var(--gr-soft) !important; border: 1px solid var(--gr-rule) !important; border-radius: 16px !important;
+  box-shadow: none !important; padding: 18px !important; margin-top: 14px !important;
+}
+body.guru-profile-editor main .guru-profile-preview-avatar:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) {
+  background: #FFFFFF !important; color: var(--gr-deep) !important; border: 1.5px solid var(--gr-field) !important;
+  box-shadow: 0 0 0 4px rgba(109, 63, 224, .08) !important;
+}
+body.guru-profile-editor main #preview-name:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) { font-family: Outfit, ui-sans-serif, sans-serif !important; font-weight: 500 !important; font-size: 18px !important; color: var(--gr-ink) !important; }
+body.guru-profile-editor main #preview-title:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) { color: var(--gr-ink-2) !important; }
+body.guru-profile-editor main .guru-profile-preview-section:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) { border-color: var(--gr-rule) !important; }
+body.guru-profile-editor main .guru-profile-preview-section h3:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) { color: var(--gr-ink) !important; font-weight: 600 !important; font-size: 13px !important; }
+body.guru-profile-editor main .guru-profile-preview-section p:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d), body.guru-profile-editor main .guru-profile-preview-section dl:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) { color: var(--gr-ink-2) !important; font-size: 13px !important; }
+body.guru-profile-editor main .guru-profile-preview-tags li:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) {
+  background: #FFFFFF !important; border: 1px solid #DDD6FE !important; color: var(--gr-deep) !important; border-radius: 999px !important;
+}
+body.guru-profile-editor main .guru-profile-preview-experience:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) { background: var(--gr-tint) !important; color: var(--gr-accent) !important; border-radius: 999px !important; border: 0 !important; }
+
+@media (max-width: 1023px) {
+  body.guru-profile-editor main .guru-profile-heading:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) { grid-template-columns: minmax(0, 1fr); }
+  body.guru-profile-editor main .guru-profile-completion:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) { grid-column: 1; grid-row: auto; margin-top: 10px !important; }
+}
+@media (max-width: 640px) {
+  body.guru-profile-editor main .guru-profile-form-card:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) { padding: 20px 20px 0 !important; }
+  body.guru-profile-editor main .guru-profile-action-bar:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) { margin: 8px -20px 0 !important; padding: 14px 20px !important; flex-wrap: wrap; }
+}
+
+/* Sekme kabuğunun kaydırma gölgeleri bu düzende gerekmiyor (ilk sekmenin üstünü örtüyordu) */
+body.guru-profile-editor main .guru-profile-tabs-shell::before, body.guru-profile-editor main .guru-profile-tabs-shell::after,
+body.guru-profile-editor main .guru-profile-tabs::before, body.guru-profile-editor main .guru-profile-tabs::after { display: none !important; content: none !important; }
+/* Fotoğraf avatarı (boş/baş harf durumunda da görünür) */
+body.guru-profile-editor main .guru-profile-photo:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) { display: flex !important; align-items: flex-start; gap: 18px; }
+body.guru-profile-editor main .guru-profile-photo-avatar:not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) {
+  display: inline-flex !important; align-items: center; justify-content: center; flex: none;
+  width: 64px !important; height: 64px !important; border-radius: 999px !important; font-size: 20px !important; font-weight: 600;
+}
+body.guru-profile-editor main .guru-profile-section-body :is(legend, .guru-profile-field-label, fieldset > span:first-child):not(#gr-a):not(#gr-b):not(#gr-c):not(#gr-d) { color: var(--gr-ink) !important; font-weight: 600 !important; font-size: 14px !important; }
+
+/* E6-21 (Etap 12): Belgeler ve sertifikalar (guru-belgeler.js) */
+body.guru-profile-editor .guru-docs-list { list-style: none; margin: 1rem 0; padding: 0; display: grid; gap: .6rem; }
+body.guru-profile-editor .guru-docs-item { display: grid; grid-template-columns: 1fr auto; gap: .4rem 1rem; align-items: center; padding: .8rem 1rem; border: 1px solid var(--color-rule); border-radius: 12px; background: var(--color-paper); }
+body.guru-profile-editor .guru-docs-text { display: flex; flex-direction: column; gap: .15rem; min-width: 0; overflow-wrap: anywhere; }
+body.guru-profile-editor .guru-docs-text span { color: var(--color-muted); font-size: .85rem; }
+body.guru-profile-editor .guru-docs-note { color: #9b1c1c !important; }
+body.guru-profile-editor .guru-docs-badge { justify-self: end; padding: .2rem .6rem; border-radius: 999px; font-size: .75rem; font-weight: 600; background: var(--color-paper-2); color: var(--color-ink-2); }
+body.guru-profile-editor .guru-docs-badge.is-verified { background: #DCFCE7; color: #166534; }
+body.guru-profile-editor .guru-docs-badge.is-pending { background: #FEF3C7; color: #92400E; }
+body.guru-profile-editor .guru-docs-badge.is-rejected { background: #FEE2E2; color: #991B1B; }
+body.guru-profile-editor .guru-docs-actions { grid-column: 1 / -1; display: flex; gap: .5rem; }
+body.guru-profile-editor .guru-docs-btn { padding: .35rem .8rem; border-radius: 999px; border: 1px solid var(--color-rule-2); background: transparent; font-size: .8rem; cursor: pointer; }
+body.guru-profile-editor .guru-docs-btn--danger { color: #991B1B; }
+body.guru-profile-editor .guru-docs-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: .75rem 1rem; margin-top: .5rem; }
+body.guru-profile-editor .guru-docs-form .guru-profile-photo-actions,
+body.guru-profile-editor .guru-docs-form [data-doc-error] { grid-column: 1 / -1; }

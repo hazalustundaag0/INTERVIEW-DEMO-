@@ -2,9 +2,12 @@
   --sidebar-width: 272px;
 }
 
+/* K114 (Etap 8): overflow-x "hidden" body'yi kaydırma kabı yapıyordu (overflow-y: auto hesaplanır). Sayfaların
+   body{overscroll-behavior:none} kuralıyla birleşince gerçek Chrome'da tekerlek kaydırması body'de takılıp
+   belgeye zincirlenmiyordu (guru-danisanlar, guru-seanslar …). "clip" kaydırma kabı oluşturmaz. */
 body.shared-sidebar-page {
   min-width: 0;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body.shared-sidebar-page > #sidebar {
@@ -152,14 +155,22 @@ body.shared-sidebar-page > #sidebar {
   line-height: 1.35;
 }
 
+/* Etap 4 (81): kullanıcı kartı + "Çıkış yap" menünün en altında (K85). */
+#sidebar .sidebar-footer {
+  display: flex;
+  flex-direction: column;
+  gap: .25rem;
+  margin-top: auto;
+  padding-top: .75rem;
+  border-top: 1px solid var(--color-rule);
+}
+
 #sidebar .sidebar-user {
   display: flex;
   min-width: 0;
   align-items: center;
   gap: .7rem;
-  margin-top: auto;
-  padding: .75rem .25rem .25rem;
-  border-top: 1px solid var(--color-rule);
+  padding: 0 .25rem .25rem;
 }
 
 #sidebar .sidebar-avatar {
@@ -235,45 +246,126 @@ body.shared-sidebar-page :is(html, body, main) {
   overflow-x: clip;
 }
 
-@media (max-width: 760px) {
-  :root {
-    --sidebar-width: 224px;
-  }
+/* "Çıkış yap": menü öğesi görünümü (K85, QA-011). Tıklamayı gate.js [data-logout] yakalar. */
+#sidebar .sidebar-logout {
+  width: 100%;
+  margin: 0;
+  cursor: pointer;
+  text-align: left;
+  appearance: none;
 }
 
-@media (max-width: 560px) {
+/* theme.css'in genel düğme kuralı (çerçeve, paper zemin, !important) menü öğesi görünümünü bozmasın.
+   O kuralın :not(#skills-list …):not(#file-tab) zinciri 3 ID özgüllüğü taşıdığı için burada
+   ID dört kez yinelenir. */
+body #sidebar#sidebar#sidebar#sidebar .sidebar-logout {
+  min-height: 44px;
+    border-color: transparent !important;
+  background-color: transparent !important;
+  color: var(--color-ink-2) !important;
+  font-weight: 400 !important;
+}
+
+body #sidebar#sidebar#sidebar#sidebar .sidebar-logout:hover {
+  background-color: var(--color-accent-soft) !important;
+  color: var(--color-ink) !important;
+}
+
+#sidebar .sidebar-logout:disabled,
+#sidebar .sidebar-logout[aria-busy="true"] {
+  cursor: progress;
+  opacity: .7;
+}
+
+#sidebar .sidebar-link:focus-visible,
+.sidebar-toggle:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+#sidebar .sidebar-locked:hover {
+  background: transparent;
+  color: var(--color-muted);
+}
+
+/* ☰ yalnız çekmece kipinde görünür. */
+.sidebar-toggle {
+  display: none;
+}
+
+/* ─── Mobil çekmece (K84 / QA-013): ≤768 px'te menü ekran dışında, ☰ ile açılır ─────────────
+   Ultraviolet görünümü korunur (paper-2 zemin, hap öğeler); içerik ilk ekranda başlar. */
+@media (max-width: 768px) {
   :root {
     --sidebar-width: 0px;
+    --sidebar-drawer-width: min(86vw, 288px);
   }
 
   body.shared-sidebar-page > #sidebar {
-    position: relative !important;
-    width: 100%;
-    height: auto;
+    position: fixed !important;
+    inset: 0 auto 0 0;
+    width: var(--sidebar-drawer-width);
+    height: 100vh;
+    height: 100dvh;
     min-height: 0;
-    padding: .75rem;
+    padding: 1rem .85rem .85rem;
+    border-radius: 0 var(--radius-card) var(--radius-card) 0;
+    transform: translateX(-100%);
+    visibility: hidden;
+    z-index: 1001;
   }
 
-  #sidebar .sidebar-panel {
-    min-height: 0;
+  body.shared-sidebar-page.sidebar-open > #sidebar {
+    transform: none;
+    visibility: visible;
   }
 
-  #sidebar .sidebar-nav {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  /* Kapat düğmesi markanın üstüne binmesin. */
+  #sidebar .sidebar-brand {
+    padding-left: 3.5rem;
   }
 
-  #sidebar .sidebar-user {
-    margin-top: .75rem;
+  body.shared-sidebar-page.sidebar-open::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: oklch(18% 0.02 300 / .35);
   }
 
-  body.shared-sidebar-page > main {
-    width: 100%;
-    margin: 0;
-    padding: 1rem;
+  body.shared-sidebar-page > .sidebar-toggle {
+    position: fixed;
+    top: .75rem;
+    left: .75rem;
+    z-index: 1002;
+    display: inline-flex;
+    width: 48px;
+    height: 48px;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 1.5px solid var(--color-rule-2);
+    border-radius: var(--radius-pill);
+    background: var(--color-paper-2);
+    color: var(--color-ink);
+    cursor: pointer;
   }
 
+  body.shared-sidebar-page > .sidebar-toggle .sidebar-svg {
+    display: block;
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  body.shared-sidebar-page > main,
   body.shared-sidebar-page > main.sidebar-content-grid {
     width: 100%;
+    margin: 0;
+    padding: 4.5rem 1rem 1rem;
   }
 }

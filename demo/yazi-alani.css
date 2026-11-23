@@ -1,0 +1,25 @@
+/* yazi-alani.css — Çizgili kâğıt yazı alanı.
+   Hikâyem'deki "Hikâyen" alanının (hikaye-akis.css .sf-textarea) görünümünü tüm metin kutularına taşır:
+   açık mor zemin + satır yüksekliğine oturan ince çizgiler; çizgiler metinle birlikte kayar (local).
+   Sayfa temalarındaki textarea kurallarını aşmak için :not(#ya-*) ile güçlendirildi.
+   Hikâye akışının kendi alanları (#story-flow .sf-textarea) zaten çizgili; onlara dokunulmaz. */
+
+body textarea:not(.sf-textarea):not(#ya-a):not(#ya-b):not(#ya-c):not(#ya-d):not(#ya-e) {
+  --ya-line: 1.9rem;
+  --ya-top: .55rem;
+  background-color: #F4F1FF !important;
+  background-image: repeating-linear-gradient(to bottom,
+    transparent 0, transparent calc(var(--ya-line) - 1px),
+    rgba(81, 64, 157, .2) calc(var(--ya-line) - 1px), rgba(81, 64, 157, .2) var(--ya-line)) !important;
+  background-position: 0 var(--ya-top) !important;
+  background-attachment: local !important;
+  background-repeat: repeat !important;
+  background-size: 100% var(--ya-line) !important;
+  padding-top: var(--ya-top) !important;
+  padding-bottom: 0 !important;
+  line-height: var(--ya-line) !important;
+  color: #1C1A33 !important;
+}
+body textarea:not(.sf-textarea):not(#ya-a):not(#ya-b):not(#ya-c):not(#ya-d):not(#ya-e)::placeholder { color: #9A93C9 !important; }
+body textarea:not(.sf-textarea):focus:not(#ya-a):not(#ya-b):not(#ya-c):not(#ya-d):not(#ya-e) { background-color: #F7F5FF !important; }
+body textarea:not(.sf-textarea):disabled:not(#ya-a):not(#ya-b):not(#ya-c):not(#ya-d):not(#ya-e) { background-color: #F1EEF8 !important; opacity: .85; }

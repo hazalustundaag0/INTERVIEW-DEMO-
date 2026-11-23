@@ -1,0 +1,148 @@
+/* guru-danisanlar.css — Danışan paneli "Danışanlarım" (guru-danisanlar.html).
+   Referans: koyu zemin üstünde köşeleri kesik, numaralı büyük kartlar.
+   Tablo DOM'u korunur (guru-danisanlar.js ve e2e testleri tabloya bağlı); satırlar CSS ile karta dönüşür.
+   theme.css'i aşmak için seçiciler :not(#gd-*) ile güçlendirildi. */
+
+body.guru-clients-page {
+  --gd-ink: #0F0A1C;
+  --gd-ink-2: #475569;
+  --gd-accent: #6D3FE0;
+  --gd-deep: #2A1F5C;
+  --gd-night: #1C1440;
+  --gd-rule: rgba(109, 40, 217, .14);
+  --gd-tint: #EEECFF;
+  --gd-cut: 34px;
+  --gd-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, monospace;
+}
+
+/* ─── Koyu sahne: başlık + kart alanı ───────────────────────────────────── */
+body.guru-clients-page main section:not(#gd-a):not(#gd-b):not(#gd-c):not(#gd-d) {
+  position: relative; isolation: isolate;
+  padding: 40px 40px 48px !important;
+  border-radius: 24px; overflow: hidden;
+  background:
+    repeating-linear-gradient(90deg, rgba(255,255,255,.06) 0 1px, transparent 1px 156px),
+    repeating-linear-gradient(0deg, rgba(255,255,255,.06) 0 1px, transparent 1px 156px),
+    radial-gradient(90% 120% at 100% 0%, rgba(139, 92, 246, .35) 0%, rgba(139, 92, 246, 0) 55%),
+    linear-gradient(160deg, var(--gd-deep) 0%, var(--gd-night) 100%) !important;
+  box-shadow: 0 30px 60px -36px rgba(28, 20, 64, .8);
+}
+body.guru-clients-page main section > div > div:first-child:not(#gd-a):not(#gd-b):not(#gd-c):not(#gd-d) { gap: 12px !important; margin-bottom: 14px; }
+body.guru-clients-page main section h1:not(#gd-a):not(#gd-b):not(#gd-c):not(#gd-d) {
+  color: #FFFFFF !important; margin: 0 !important;
+  font-family: Outfit, ui-sans-serif, system-ui, sans-serif !important;
+  font-size: clamp(2.2rem, 1.4rem + 2.6vw, 3.6rem) !important; font-weight: 600 !important;
+  letter-spacing: -.01em !important; line-height: 1 !important; text-transform: uppercase;
+}
+body.guru-clients-page main section h1::before {
+  content: "Danışan paneli"; display: flex; align-items: center; gap: 14px; margin-bottom: 18px;
+  font: 500 12px/1 var(--gd-mono); letter-spacing: .18em; text-transform: uppercase; color: rgba(255,255,255,.6);
+}
+body.guru-clients-page main section h1 + p:not(#gd-a):not(#gd-b):not(#gd-c):not(#gd-d) {
+  display: flex; align-items: center; gap: 16px;
+  color: rgba(255,255,255,.78) !important; font-size: 15px !important; max-width: 46ch;
+}
+body.guru-clients-page main section h1 + p::before {
+  content: ""; flex: none; width: 72px; height: 2px;
+  background: linear-gradient(90deg, rgba(255,255,255,0), #FFFFFF);
+}
+
+/* Tablo kabını şeffaflaştır */
+body.guru-clients-page main section .overflow-hidden:not(#gd-a):not(#gd-b):not(#gd-c):not(#gd-d) { background: transparent !important; border: 0 !important; box-shadow: none !important; overflow: visible !important; }
+body.guru-clients-page main section .overflow-x-auto:not(#gd-a):not(#gd-b):not(#gd-c):not(#gd-d) { overflow: visible !important; }
+body.guru-clients-page main section table:not(#gd-a):not(#gd-b):not(#gd-c):not(#gd-d), body.guru-clients-page main section tbody:not(#gd-a):not(#gd-b):not(#gd-c):not(#gd-d) { display: block !important; width: 100% !important; }
+body.guru-clients-page main section thead:not(#gd-a):not(#gd-b):not(#gd-c):not(#gd-d) { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+/* ─── Kart ızgarası ─────────────────────────────────────────────────────── */
+body.guru-clients-page main section tbody:not(#gd-a):not(#gd-b):not(#gd-c):not(#gd-d) {
+  display: grid !important; gap: 22px !important; counter-reset: gd-aday;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 290px), 1fr));
+  border: 0 !important;
+}
+body.guru-clients-page main section tbody > tr:not(#gd-a):not(#gd-b):not(#gd-c):not(#gd-d) {
+  counter-increment: gd-aday;
+  position: relative; display: flex !important; flex-direction: column; gap: 0;
+  min-height: 330px; padding: 26px 28px 24px !important;
+  background: #FFFFFF !important; border: 0 !important;
+  clip-path: polygon(0 0, calc(100% - var(--gd-cut)) 0, 100% var(--gd-cut), 100% 100%, var(--gd-cut) 100%, 0 calc(100% - var(--gd-cut)));
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+body.guru-clients-page main section tbody > tr:hover:not(#gd-a):not(#gd-b):not(#gd-c):not(#gd-d) { background: #FFFFFF !important; transform: translateY(-4px); }
+/* Üst satır: ADAY —— 01 */
+body.guru-clients-page main section tbody > tr::before {
+  content: "ADAY"; display: flex; align-items: center; gap: 12px;
+  font: 600 15px/1 var(--gd-mono); letter-spacing: .06em; color: var(--gd-deep);
+  background: none;
+}
+body.guru-clients-page main section tbody > tr > td:first-child::before {
+  content: counter(gd-aday, decimal-leading-zero);
+  position: absolute; top: 26px; left: 128px;
+  font: 600 15px/1 var(--gd-mono); color: var(--gd-deep);
+}
+body.guru-clients-page main section tbody > tr > td:first-child::after {
+  content: ""; position: absolute; top: 33px; left: 76px; width: 42px; height: 1.5px; background: var(--gd-deep); opacity: .7;
+}
+/* Barkod */
+body.guru-clients-page main section tbody > tr::after {
+  content: ""; position: absolute; right: 28px; bottom: 26px; width: 58px; height: 30px;
+  background: repeating-linear-gradient(90deg, var(--gd-deep) 0 2px, transparent 2px 8px);
+  opacity: .9;
+}
+body.guru-clients-page main section tbody > tr > td:not(#gd-a):not(#gd-b):not(#gd-c):not(#gd-d) { display: block !important; padding: 0 !important; border: 0 !important; text-align: left !important; }
+
+/* Ad + avatar */
+body.guru-clients-page main section tbody > tr > td:first-child:not(#gd-a):not(#gd-b):not(#gd-c):not(#gd-d) { margin-top: 34px; }
+body.guru-clients-page main section tbody > tr > td:first-child > span:not(#gd-a):not(#gd-b):not(#gd-c):not(#gd-d) { display: flex !important; flex-direction: column; align-items: flex-start !important; gap: 16px !important; }
+body.guru-clients-page main section .guru-client-row-avatar:not(#gd-a):not(#gd-b):not(#gd-c):not(#gd-d) {
+  width: 52px !important; height: 52px !important; font-size: 15px !important;
+  background: var(--gd-tint) !important; color: var(--gd-deep) !important;
+  border: 0 !important; border-radius: 14px !important;
+  box-shadow: 0 0 0 4px #FFFFFF, 0 0 0 5.5px rgba(109, 40, 217, .2) !important;
+}
+body.guru-clients-page main section .guru-client-row-avatar img { border-radius: 14px !important; }
+body.guru-clients-page main section tbody > tr > td:first-child > span > span:last-child:not(#gd-a):not(#gd-b):not(#gd-c):not(#gd-d) {
+  font-family: Outfit, ui-sans-serif, system-ui, sans-serif !important;
+  font-size: clamp(1.6rem, 1.2rem + .9vw, 2rem) !important; font-weight: 600 !important;
+  line-height: 1.05 !important; letter-spacing: -.005em; text-transform: uppercase; color: var(--gd-ink) !important;
+}
+
+/* Hikâye durumu */
+body.guru-clients-page main section tbody > tr > td:nth-child(2):not(#gd-a):not(#gd-b):not(#gd-c):not(#gd-d) { margin-top: 22px; }
+body.guru-clients-page main section tbody > tr > td:nth-child(2)::before {
+  content: "Hikâye durumu"; display: block; margin-bottom: 8px;
+  font: 500 11px/1 var(--gd-mono); letter-spacing: .14em; text-transform: uppercase; color: #7C6FB0;
+}
+body.guru-clients-page main section tbody > tr > td:nth-child(2) > span:not(#gd-a):not(#gd-b):not(#gd-c):not(#gd-d) {
+  border-radius: 0 !important; padding: 6px 12px !important; font: 600 12px/1.2 var(--gd-mono) !important;
+  letter-spacing: .04em; text-transform: uppercase;
+  background: var(--gd-tint) !important; color: var(--gd-accent) !important; border: 1px solid #D6CCF7 !important;
+}
+
+/* Aç → : koyu, köşesi kesik buton (alt solda) */
+body.guru-clients-page main section tbody > tr > td:last-child:not(#gd-a):not(#gd-b):not(#gd-c):not(#gd-d) { margin-top: auto; padding-top: 26px !important; padding-right: 80px !important; }
+body.guru-clients-page main section tbody > tr > td:last-child > a:not(#gd-a):not(#gd-b):not(#gd-c):not(#gd-d) {
+  display: inline-flex !important; align-items: center; gap: 10px;
+  padding: 11px 18px !important; background: var(--gd-deep) !important; color: #FFFFFF !important;
+  font: 600 13px/1 var(--gd-mono) !important; letter-spacing: .1em; text-transform: uppercase; text-decoration: none !important;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%);
+  transition: background-color .15s ease;
+}
+body.guru-clients-page main section tbody > tr > td:last-child > a:hover:not(#gd-a):not(#gd-b):not(#gd-c):not(#gd-d) { background: var(--gd-accent) !important; }
+
+/* Yükleniyor / boş / hata satırı: düz bilgi kutusu */
+body.guru-clients-page main section tbody > tr:has(td[colspan]):not(#gd-a):not(#gd-b):not(#gd-c):not(#gd-d) {
+  grid-column: 1 / -1; min-height: 0; clip-path: none; padding: 22px 24px !important;
+  background: rgba(255,255,255,.08) !important; border: 1px dashed rgba(255,255,255,.3) !important;
+}
+body.guru-clients-page main section tbody > tr:has(td[colspan])::before,
+body.guru-clients-page main section tbody > tr:has(td[colspan])::after,
+body.guru-clients-page main section tbody > tr:has(td[colspan]) > td::before,
+body.guru-clients-page main section tbody > tr:has(td[colspan]) > td::after { display: none !important; }
+body.guru-clients-page main section tbody > tr:has(td[colspan]) > td:not(#gd-a):not(#gd-b):not(#gd-c):not(#gd-d) { margin: 0 !important; color: rgba(255,255,255,.85) !important; }
+body.guru-clients-page main section tbody > tr:has(td[colspan]):hover:not(#gd-a):not(#gd-b):not(#gd-c):not(#gd-d) { transform: none; background: rgba(255,255,255,.08) !important; }
+
+@media (max-width: 640px) {
+  body.guru-clients-page main section:not(#gd-a):not(#gd-b):not(#gd-c):not(#gd-d) { padding: 26px 18px 30px !important; border-radius: 18px; }
+  body.guru-clients-page main section tbody > tr:not(#gd-a):not(#gd-b):not(#gd-c):not(#gd-d) { min-height: 280px; }
+}
+@media (prefers-reduced-motion: reduce) { body.guru-clients-page main section tbody > tr:not(#gd-a):not(#gd-b):not(#gd-c):not(#gd-d) { transition: none; } }

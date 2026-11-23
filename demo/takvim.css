@@ -1,0 +1,434 @@
+/* takvim.css — Seans takvimi (takvim.html) ve Seanslarım sekmeleri (seanslar.html).
+   Düzen: hap biçimli adım çubuğu, yan yana iki ay, yuvarlak köşeli gün kutuları, sağda koyu mor panel.
+   theme.css'in genel düğme kuralını yenmek için düğme seçicileri :not(#bk-a):not(#bk-b):not(#bk-c):not(#bk-d) ile güçlendirildi. */
+
+/* ── Adım çubuğu: hap içinde bölümler, geçerli adım koyu ─────────────────────── */
+body.booking-page .booking-stepper:not(#bk-a):not(#bk-b):not(#bk-c):not(#bk-d) {
+  padding: .4rem !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  background-color: #E4E0FA !important;
+  box-shadow: none !important;
+}
+body.booking-page .booking-stepper > div { gap: .25rem; }
+body.booking-page .booking-stepper > div > .h-\[2px\] { display: none !important; }
+body.booking-page .booking-stepper > div > div:not(.h-\[2px\]) {
+  flex: 1 1 0;
+  justify-content: center;
+  padding: .7rem 1rem;
+  border-radius: 999px;
+}
+body.booking-page .booking-stepper > div > div:not(.h-\[2px\]) > span:first-child {
+  width: 1.25rem !important; height: 1.25rem !important;
+  background-color: transparent !important;
+  color: #51409D !important;
+}
+body.booking-page .booking-stepper > div > div:not(.h-\[2px\]) > span:last-child {
+  color: #2A1F5C !important;
+  font-size: .82rem !important;
+  font-weight: 600 !important;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+body.booking-page .booking-stepper > div > div:not(.h-\[2px\]):last-child { background-color: #2A1F5C !important; }
+body.booking-page .booking-stepper > div > div:not(.h-\[2px\]):last-child > span:last-child,
+body.booking-page .booking-stepper > div > div:not(.h-\[2px\]):last-child > span:first-child { color: #FFFFFF !important; }
+body.booking-page .booking-stepper > div > div:not(.h-\[2px\]):last-child > span:first-child { border: 1.5px solid rgba(255,255,255,.7); }
+
+/* ── Kart ve düzen ──────────────────────────────────────────────────────────── */
+body.booking-page main section > .bg-\[\#FFFFFF\] {
+  border: 0 !important;
+  border-radius: 28px !important;
+  background-color: #FCFBFF !important;
+  box-shadow: 0 20px 50px -34px rgba(42, 31, 92, .45) !important;
+}
+body.booking-page .appointment-layout.booking-layout {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 340px) !important;
+  gap: 2rem !important;
+  align-items: start;
+}
+body.booking-page .booking-layout > .appointment-calendar { grid-column: 1; min-width: 0; }
+body.booking-page .booking-layout > .booking-panel { grid-column: 2; grid-row: 1 / span 3; }
+
+/* ── İki ay ─────────────────────────────────────────────────────────────────── */
+body.booking-page .booking-months {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2.25rem;
+}
+body.booking-page .booking-month-head {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  margin-bottom: 1.25rem;
+}
+body.booking-page .booking-month-title {
+  margin: 0 !important;
+  color: #2A1F5C !important;
+  font-size: 1.05rem !important;
+  font-weight: 700 !important;
+  letter-spacing: .06em !important;
+  text-transform: uppercase;
+}
+body.booking-page button.booking-arrow:not(#bk-a):not(#bk-b):not(#bk-c):not(#bk-d) {
+  position: absolute;
+  top: 50%;
+  display: grid;
+  place-items: center;
+  width: 2.5rem !important;
+  height: 2.5rem !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 50% !important;
+  background: transparent !important;
+  color: #2A1F5C !important;
+  font-size: 1.5rem !important;
+  line-height: 1 !important;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+body.booking-page button.booking-arrow--prev:not(#bk-a):not(#bk-b):not(#bk-c):not(#bk-d) { left: 0; }
+body.booking-page button.booking-arrow--next:not(#bk-a):not(#bk-b):not(#bk-c):not(#bk-d) { right: 0; }
+body.booking-page button.booking-arrow:not(#bk-a):not(#bk-b):not(#bk-c):not(#bk-d):hover:not(:disabled) { background: #EEECFF !important; }
+body.booking-page button.booking-arrow:not(#bk-a):not(#bk-b):not(#bk-c):not(#bk-d):disabled { opacity: .3; cursor: default; }
+body.booking-page button.booking-arrow:not(#bk-a):not(#bk-b):not(#bk-c):not(#bk-d):focus-visible { outline: 2px solid #51409D !important; outline-offset: 2px; }
+
+body.booking-page .booking-weekdays,
+body.booking-page .booking-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: .45rem;
+}
+body.booking-page .booking-weekdays { margin-bottom: .75rem; }
+body.booking-page .booking-weekdays span {
+  color: #2A1F5C;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* Gün kutuları */
+body.booking-page .booking-grid button.calendar-date:not(#bk-a):not(#bk-b):not(#bk-c):not(#bk-d) {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 12px !important;
+  background-color: #EEECFF !important;
+  box-shadow: none !important;
+  color: #A8A2CF !important;
+  font-size: .95rem !important;
+  font-weight: 400 !important;
+  line-height: 1 !important;
+  transition: background-color 140ms ease, color 140ms ease, transform 140ms ease;
+}
+body.booking-page .booking-grid button.calendar-date--unavailable:not(#bk-a):not(#bk-b):not(#bk-c):not(#bk-d) { cursor: default; }
+body.booking-page .booking-grid button.calendar-date--available:not(#bk-a):not(#bk-b):not(#bk-c):not(#bk-d) {
+  background-color: #DCD7F7 !important;
+  color: #2A1F5C !important;
+  font-weight: 700 !important;
+  cursor: pointer;
+}
+body.booking-page .booking-grid button.calendar-date--available:not(#bk-a):not(#bk-b):not(#bk-c):not(#bk-d):hover {
+  background-color: #C9C2F3 !important;
+  transform: translateY(-1px);
+}
+body.booking-page .booking-grid button.calendar-date--selected:not(#bk-a):not(#bk-b):not(#bk-c):not(#bk-d) {
+  background-color: #2A1F5C !important;
+  color: #FFFFFF !important;
+  font-weight: 700 !important;
+}
+body.booking-page .booking-grid button.calendar-date--today:not(#bk-a):not(#bk-b):not(#bk-c):not(#bk-d)::after {
+  content: "";
+  position: absolute;
+  bottom: 18%;
+  width: .3rem;
+  height: .3rem;
+  border-radius: 50%;
+  background-color: currentColor;
+}
+body.booking-page .booking-grid button.calendar-date:not(#bk-a):not(#bk-b):not(#bk-c):not(#bk-d):focus-visible { outline: 2px solid #51409D !important; outline-offset: 2px; }
+
+body.booking-page .booking-empty {
+  margin: 1.25rem 0 0 !important;
+  padding: .7rem 1rem;
+  border-radius: 12px;
+  background-color: #F1EEFF !important;
+  color: #433582 !important;
+  font-size: .85rem !important;
+  font-weight: 500;
+  text-align: center;
+}
+body.booking-page .booking-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem 1.25rem;
+  margin: 1.5rem 0 0 !important;
+  color: #5B5F6B !important;
+  font-size: .8rem !important;
+}
+body.booking-page .booking-legend-item { display: inline-flex; align-items: center; gap: .45rem; }
+body.booking-page .booking-legend-swatch { width: .9rem; height: .9rem; border-radius: 4px; background-color: #EEECFF; }
+body.booking-page .booking-legend-swatch--open { background-color: #DCD7F7; }
+body.booking-page .booking-legend-swatch--selected { background-color: #2A1F5C; }
+
+/* ── Sağ panel: koyu mor, saatler + seçim + onay ─────────────────────────────── */
+body.booking-page .booking-panel {
+  position: sticky;
+  top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 1.75rem 1.5rem;
+  border-radius: 24px;
+  background-color: #2A1F5C !important;
+  color: #FFFFFF;
+}
+body.booking-page .booking-panel-eyebrow {
+  margin: 0 !important;
+  color: #BCB7F5 !important;
+  font-size: .75rem !important;
+  font-weight: 700 !important;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+body.booking-page .booking-panel .md\:col-span-5 { width: 100%; }
+body.booking-page .booking-panel h2 {
+  color: #FFFFFF !important;
+  font-family: "Instrument Serif", Georgia, serif !important;
+  font-size: 1.65rem !important;
+  font-weight: 400 !important;
+  line-height: 1.15 !important;
+}
+body.booking-page .booking-panel p,
+body.booking-page .booking-panel .appointment-slot-count { color: #D9D5F5 !important; }
+body.booking-page .booking-panel .appointment-slot-group h3 {
+  color: #BCB7F5 !important;
+  font-size: .75rem !important;
+  font-weight: 700 !important;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+body.booking-page .booking-panel button.appointment-slot:not(#bk-a):not(#bk-b):not(#bk-c):not(#bk-d) {
+  min-height: 3rem !important;
+  border: 1px solid rgba(255, 255, 255, .25) !important;
+  border-radius: 999px !important;
+  background-color: rgba(255, 255, 255, .06) !important;
+  color: #FFFFFF !important;
+}
+body.booking-page .booking-panel button.appointment-slot:not(#bk-a):not(#bk-b):not(#bk-c):not(#bk-d):hover { background-color: rgba(255, 255, 255, .14) !important; }
+body.booking-page .booking-panel button.appointment-slot--selected:not(#bk-a):not(#bk-b):not(#bk-c):not(#bk-d) {
+  border-color: #FFFFFF !important;
+  background-color: #FFFFFF !important;
+  color: #2A1F5C !important;
+}
+body.booking-page .booking-panel button.appointment-slot:not(#bk-a):not(#bk-b):not(#bk-c):not(#bk-d) * { color: inherit !important; }
+body.booking-page .booking-panel .appointment-slot-empty {
+  padding: .9rem 1rem;
+  border: 1px dashed rgba(255, 255, 255, .3);
+  border-radius: 14px;
+  color: #D9D5F5 !important;
+  text-align: center;
+}
+body.booking-page .booking-panel .appointment-selection-summary {
+  margin: 0 !important;
+  padding: 1rem 0 0 !important;
+  border: 0 !important;
+  border-top: 1px solid rgba(255, 255, 255, .18) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+body.booking-page .booking-panel .appointment-selection-summary h3 { color: #BCB7F5 !important; font-size: .8rem !important; }
+body.booking-page .booking-panel .appointment-summary-text { color: #FFFFFF !important; font-weight: 600; }
+body.booking-page .booking-panel button.appointment-confirm-button:not(#bk-a):not(#bk-b):not(#bk-c):not(#bk-d) {
+  width: 100%;
+  min-height: 3rem !important;
+  margin-top: .9rem;
+  border: 0 !important;
+  border-radius: 999px !important;
+  background-color: #FFFFFF !important;
+  color: #2A1F5C !important;
+  font-weight: 700 !important;
+}
+body.booking-page .booking-panel button.appointment-confirm-button:not(#bk-a):not(#bk-b):not(#bk-c):not(#bk-d):hover:not(:disabled) { background-color: #EEECFF !important; }
+body.booking-page .booking-panel button.appointment-confirm-button:not(#bk-a):not(#bk-b):not(#bk-c):not(#bk-d):disabled {
+  background-color: rgba(255, 255, 255, .18) !important;
+  color: rgba(255, 255, 255, .6) !important;
+}
+body.booking-page .booking-panel .appointment-info-card:not(#bk-a):not(#bk-b):not(#bk-c):not(#bk-d) {
+  margin: 0 !important;
+  padding: .9rem 1rem !important;
+  border: 0 !important;
+  border-radius: 14px !important;
+  background-color: rgba(255, 255, 255, .07) !important;
+  box-shadow: none !important;
+}
+body.booking-page .booking-panel .appointment-info-card * { color: #D9D5F5 !important; }
+
+@media (max-width: 1180px) {
+  body.booking-page .appointment-layout.booking-layout { grid-template-columns: minmax(0, 1fr) !important; }
+  body.booking-page .booking-layout > .booking-panel { grid-column: 1; grid-row: auto; position: static; }
+}
+@media (max-width: 640px) {
+  body.booking-page .booking-months { grid-template-columns: minmax(0, 1fr); }
+  body.booking-page .booking-month--next { display: none; }
+  body.booking-page .booking-month:first-child .booking-month-head { padding-right: 2.75rem; }
+  body.booking-page .booking-stepper > div > div:not(.h-\[2px\]):not(:last-child) > span:last-child { display: none; }
+}
+
+/* ── Seanslarım: sekmeler hap biçiminde ─────────────────────────────────────── */
+body .candidate-session-tabs:not(#bk-a):not(#bk-b):not(#bk-c):not(#bk-d) {
+  width: fit-content !important;
+  max-width: 100%;
+  display: inline-flex !important;
+  gap: .25rem;
+  padding: .35rem !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  background-color: #E4E0FA !important;
+}
+body .candidate-session-tabs button.candidate-session-tab:not(#bk-a):not(#bk-b):not(#bk-c):not(#bk-d) {
+  min-height: 2.6rem !important;
+  padding: 0 1.4rem !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  color: #2A1F5C !important;
+  font-size: .82rem !important;
+  font-weight: 600 !important;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+body .candidate-session-tabs button.candidate-session-tab:not(#bk-a):not(#bk-b):not(#bk-c):not(#bk-d)::after { display: none !important; }
+body .candidate-session-tabs button.candidate-session-tab[aria-selected="true"]:not(#bk-a):not(#bk-b):not(#bk-c):not(#bk-d) {
+  background-color: #2A1F5C !important;
+  color: #FFFFFF !important;
+}
+body .candidate-session-tabs button.candidate-session-tab:not(#bk-a):not(#bk-b):not(#bk-c):not(#bk-d):focus-visible { outline: 2px solid #51409D !important; outline-offset: 2px; }
+
+body.booking-page .booking-grid .calendar-date::before { display: none !important; }
+
+/* ── Müsaitlik ekle: iki aylık tarih seçici ─────────────────────────────────── */
+body.availability-add-page .booking-native-date { display: none !important; }
+body.availability-add-page .booking-picker {
+  margin-top: .75rem;
+  padding: 1.5rem;
+  border-radius: 20px;
+  background-color: #FCFBFF;
+  font-weight: 400;
+}
+body.availability-add-page .booking-picker .booking-months { gap: 2rem; }
+body.availability-add-page .booking-picker .booking-grid button.calendar-date:not(#bk-a):not(#bk-b):not(#bk-c):not(#bk-d) { max-height: 3rem; aspect-ratio: auto; height: 2.75rem !important; }
+body.availability-add-page .booking-picker-choice {
+  margin: 1.25rem 0 0 !important;
+  color: #2A1F5C !important;
+  font-size: .9rem !important;
+  font-weight: 600 !important;
+}
+
+/* ── Danışman · haftalık müsaitlik takvimi ──────────────────────────────────── */
+body .availability-calendar:not(#bk-a):not(#bk-b):not(#bk-c):not(#bk-d) {
+  border: 0 !important;
+  border-radius: 28px !important;
+  background-color: #FCFBFF !important;
+  box-shadow: 0 20px 50px -34px rgba(42, 31, 92, .45) !important;
+}
+body .availability-calendar > div:first-child:not(#bk-a):not(#bk-b):not(#bk-c):not(#bk-d) {
+  padding: 1rem 1.25rem !important;
+  border-bottom: 0 !important;
+  background-color: transparent !important;
+}
+body .availability-calendar [data-week-label] {
+  color: #2A1F5C !important;
+  font-size: .95rem !important;
+  font-weight: 700 !important;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+body .availability-calendar button.availability-week-today:not(#bk-a):not(#bk-b):not(#bk-c):not(#bk-d) {
+  min-height: 2.5rem !important;
+  padding: 0 1.1rem !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  background-color: #2A1F5C !important;
+  color: #FFFFFF !important;
+  font-size: .78rem !important;
+  font-weight: 700 !important;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+body .availability-calendar .availability-week-nav { border: 0 !important; }
+body .availability-calendar .availability-week-nav:first-child { margin-left: .35rem; }
+body .availability-calendar div:has(> .availability-week-nav) { gap: .35rem; border: 0 !important; overflow: visible !important; }
+body .availability-calendar button.availability-week-nav:not(#bk-a):not(#bk-b):not(#bk-c):not(#bk-d) {
+  width: 2.5rem !important;
+  height: 2.5rem !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 50% !important;
+  background-color: #E4E0FA !important;
+  color: #2A1F5C !important;
+}
+body .availability-calendar button.availability-week-nav:not(#bk-a):not(#bk-b):not(#bk-c):not(#bk-d):hover { background-color: #D4CEF6 !important; }
+body .availability-calendar .rounded-full.bg-\[\#51409D\] { border-radius: 4px !important; background-color: #2A1F5C !important; }
+body .availability-calendar .rounded-full.bg-\[\#EEECFF\] { border-radius: 4px !important; border: 0 !important; background-color: #DCD7F7 !important; }
+
+body .availability-calendar .availability-calendar-header:not(#bk-a):not(#bk-b):not(#bk-c):not(#bk-d) {
+  border-bottom: 0 !important;
+  background-color: transparent !important;
+}
+body .availability-calendar .availability-calendar-header > div:not(#bk-a):not(#bk-b):not(#bk-c):not(#bk-d) {
+  margin: 0 .2rem .5rem;
+  padding: .55rem .25rem !important;
+  border: 0 !important;
+  border-radius: 14px;
+  background-color: transparent !important;
+}
+body .availability-calendar .availability-calendar-header > div > div:first-child {
+  color: #2A1F5C !important;
+  font-size: .72rem !important;
+  font-weight: 700 !important;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+body .availability-calendar .availability-calendar-header > div[data-today="true"]:not(#bk-a):not(#bk-b):not(#bk-c):not(#bk-d) { background-color: #2A1F5C !important; }
+body .availability-calendar .availability-calendar-header > div[data-today="true"] * { color: #FFFFFF !important; }
+
+body .availability-calendar .availability-day-cell { border-color: #EEEBFA !important; }
+body .availability-calendar .availability-hour-row { border-color: #EEEBFA !important; }
+body .availability-calendar .availability-time-label:not(#bk-a):not(#bk-b):not(#bk-c):not(#bk-d) {
+  border: 0 !important;
+  background-color: transparent !important;
+  color: #7A75A0 !important;
+}
+body .availability-calendar .availability-slot:not(#bk-a):not(#bk-b):not(#bk-c):not(#bk-d) {
+  border: 0 !important;
+  border-radius: 12px !important;
+  box-shadow: none !important;
+}
+body .availability-calendar .availability-slot--available:not(#bk-a):not(#bk-b):not(#bk-c):not(#bk-d) {
+  background-color: #DCD7F7 !important;
+  color: #2A1F5C !important;
+}
+body .availability-calendar .availability-slot--available:not(#bk-a):not(#bk-b):not(#bk-c):not(#bk-d):hover { background-color: #C9C2F3 !important; }
+body .availability-calendar .availability-slot--reserved:not(#bk-a):not(#bk-b):not(#bk-c):not(#bk-d) {
+  background-color: #2A1F5C !important;
+  color: #FFFFFF !important;
+}
+body .availability-calendar .availability-slot * { color: inherit !important; }
+body .availability-calendar .availability-slot-time { font-weight: 700 !important; }
+body .availability-calendar .availability-calendar-header > div[data-today="true"] > div:first-child { color: #FFFFFF !important; }
